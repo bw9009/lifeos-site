@@ -317,6 +317,7 @@ runDemo();
 
 // ---------- waitlist ----------
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const CONTACT_EMAIL = 'b.w.90.09.18@gmail.com';
 
 function wire(formId, inputId, noteId, buttonId) {
   const form   = document.getElementById(formId);
@@ -352,12 +353,18 @@ function wire(formId, inputId, noteId, buttonId) {
       note.textContent = "You're on the list. I'll email you once — when it's ready.";
       note.className = 'formnote ok';
     } catch (err) {
-      // Never claim success we didn't get. A silently dropped signup is a
-      // lost customer who thinks they're on the list.
-      button.disabled = false;
-      button.textContent = 'Try again';
-      note.textContent = "Couldn't save that — check your connection and try again.";
-      note.className = 'formnote err';
+      // On a static host there's no backend to receive this. Rather than
+      // pretend the signup worked — a person who thinks they're on the list
+      // and isn't is worse than one who never signed up — hand them a real
+      // way to reach us that cannot silently fail.
+      const subject = encodeURIComponent('Life early access');
+      const body = encodeURIComponent(`Add me to the list: ${email}`);
+      form.style.display = 'none';
+      note.innerHTML =
+        `Signups aren't wired up on this page yet. ` +
+        `<a href="mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}">` +
+        `Email me instead</a> and you're on the list.`;
+      note.className = 'formnote';
     }
   });
 }
