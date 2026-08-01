@@ -84,18 +84,34 @@ class Handler(BaseHTTPRequestHandler):
     def _json(self, code: int, obj: dict):
         self._send(code, json.dumps(obj).encode(), "application/json")
 
+    # Google's OAuth verification requires the privacy policy to live on the
+    # verified domain and be linked from the homepage, so these are served
+    # as first-class pages, not an afterthought.
+    PAGES = {
+        "/": "index.html",
+        "/index.html": "index.html",
+        "/privacy": "privacy.html",
+        "/privacy.html": "privacy.html",
+        "/terms": "terms.html",
+        "/terms.html": "terms.html",
+    }
+
     def do_GET(self):
         path = self.path.split("?")[0]
-        if path in ("/", "/index.html"):
+
+        if path in self.PAGES:
+            filename = self.PAGES[path]
             try:
-                self._send(200, (ROOT / "index.html").read_bytes(),
+                self._send(200, (ROOT / filename).read_bytes(),
                            "text/html; charset=utf-8")
             except OSError:
-                self._send(500, b"index.html missing", "text/plain")
+                self._send(500, f"{filename} missing".encode(), "text/plain")
             return
+
         if path == "/healthz":
             self._send(200, b"ok", "text/plain")
             return
+
         self._send(404, b"not found", "text/plain")
 
     def do_POST(self):

@@ -27,8 +27,17 @@
   .wrap { max-width:680px; margin:0 auto; padding:0 24px; }
   section { padding:72px 0; }
 
+  /* ---------- wordmark ---------- */
+  /* The period can't go in the Play Store title field, so the brand carries
+     it everywhere else — this is where "Life." actually gets seen. */
+  .wordmark {
+    text-align:center; padding:36px 0 0;
+    font-size:1.6rem; font-weight:800; letter-spacing:-.02em;
+  }
+  .wordmark .dot { color:var(--accent); }
+
   /* ---------- hero ---------- */
-  .hero { padding:96px 0 72px; text-align:center; }
+  .hero { padding:44px 0 72px; text-align:center; }
   .badge {
     display:inline-block; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
     color:var(--accent); background:var(--accent-soft);
@@ -127,6 +136,8 @@
 </style>
 </head>
 <body>
+
+<div class="wordmark">Life<span class="dot">.</span></div>
 
 <!-- ===================== HERO ===================== -->
 <div class="wrap hero">
@@ -243,7 +254,16 @@
 </section>
 
 <footer class="wrap">
-  Life — built by <a href="#">Barret</a>
+  <p style="margin-bottom:10px">
+    <strong>Life<span style="color:var(--accent)">.</span></strong> — built by Barret
+  </p>
+  <p style="font-size:.88rem">
+    <a href="/privacy.html" style="color:var(--dim)">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="/terms.html" style="color:var(--dim)">Terms of Service</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:b.w.90.09.18@gmail.com" style="color:var(--dim)">Contact</a>
+  </p>
 </footer>
 
 <script>
