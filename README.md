@@ -14,7 +14,7 @@ tool without an API key or an account to log into.
 
 ## What's here
 
-- Hook: "Dump your thoughts. I'll organize them."
+- Hook: "Type like a maniac. Leave organized."
 - Live typing demo showing the **actual** classifications the app produces
 - Expandable "See what you can throw at it" section
 - Privacy/offline positioning
