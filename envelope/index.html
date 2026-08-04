@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EnvelopePrint — address an envelope from your phone, at true size.</title>
+<meta name="description" content="Type the addresses, place them where you want, add your own postage, and print a #10 envelope to any Wi-Fi printer. Exactly 9.5 x 4.125 inches, never scaled.">
+
+<meta property="og:title" content="EnvelopePrint — at true size, or not at all.">
+<meta property="og:description" content="Print a #10 envelope from your phone. No account, no cloud, no scaling.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  :root {
+    --bg:#0b0f0d; --panel:#131a17; --line:#1f2a25;
+    --fg:#eef4f0; --dim:#8ba297; --accent:#34c76e; --accent-soft:rgba(52,199,110,.14);
+    --paper:#f7f5ef; --ink:#141a17;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:680px; margin:0 auto; padding:0 24px; }
+  section { padding:64px 0; }
+
+  .topbar { padding:28px 0 0; text-align:center; font-size:.95rem; }
+  .topbar a { color:var(--dim); text-decoration:none; font-weight:650; }
+  .topbar a:hover { color:var(--accent); }
+  .topbar .dot { color:var(--accent); }
+
+  .hero { padding:40px 0 60px; text-align:center; }
+  .badge {
+    display:inline-block; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); background:var(--accent-soft);
+    padding:6px 14px; border-radius:999px; margin-bottom:26px; font-weight:700;
+  }
+  h1 {
+    font-size:clamp(2rem,6.6vw,3.2rem); line-height:1.13; font-weight:800;
+    letter-spacing:-.02em; margin-bottom:18px;
+  }
+  .sub { font-size:clamp(1.02rem,3.3vw,1.25rem); color:var(--dim); max-width:36ch; margin:0 auto 40px; }
+
+  /* ---------- the envelope itself, drawn to scale ---------- */
+  /* 9.5 : 4.125 exactly — the page shouldn't lie about proportions either. */
+  .envelope {
+    position:relative; width:100%; aspect-ratio:9.5 / 4.125;
+    background:var(--paper); border-radius:4px; color:var(--ink);
+    box-shadow:0 14px 40px rgba(0,0,0,.5);
+    container-type:inline-size;
+  }
+  .envelope .blk { position:absolute; line-height:1.3; }
+  .envelope .sender    { left:5%;  top:9%;  font-size:2.6cqw; }
+  .envelope .recipient { left:36%; top:47%; font-size:3.1cqw; }
+  .envelope .stamp {
+    right:5.5%; top:8%; width:15%; aspect-ratio:1 / .78;
+    border:1px dashed rgba(20,26,23,.45); border-radius:2px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.1cqw; color:rgba(20,26,23,.55); text-align:center;
+  }
+  .caption { color:var(--dim); font-size:.86rem; margin-top:14px; text-align:center; }
+
+  .divider { height:1px; background:var(--line); }
+
+  h2 { font-size:1.6rem; letter-spacing:-.01em; margin-bottom:14px; }
+  h3 { font-size:.95rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:16px; }
+  p { color:var(--dim); margin-bottom:16px; }
+  p strong { color:var(--fg); font-weight:650; }
+  .lede { font-size:1.14rem; color:var(--fg); }
+
+  ul.plain { list-style:none; }
+  ul.plain li { padding:11px 0; border-bottom:1px solid var(--line); color:var(--dim); }
+  ul.plain li:last-child { border:0; }
+  ul.plain b { color:var(--fg); font-weight:600; }
+
+  .callout {
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; padding:18px 20px; margin:24px 0;
+  }
+  .callout p:last-child { margin-bottom:0; }
+
+  .steps { counter-reset:step; list-style:none; }
+  .steps li {
+    position:relative; padding:0 0 22px 44px; color:var(--dim);
+  }
+  .steps li::before {
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%;
+    background:var(--accent-soft); color:var(--accent);
+    font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center;
+  }
+  .steps b { color:var(--fg); font-weight:650; }
+
+  .price { display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
+  .price .amt { font-size:2rem; font-weight:800; color:var(--fg); }
+  .price .per { color:var(--dim); }
+
+  footer { padding:52px 0 72px; text-align:center; color:var(--dim); font-size:.9rem; }
+  footer a { color:var(--dim); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a href="/">BarretOps<span class="dot">.</span></a></div>
+
+<!-- ===================== HERO ===================== -->
+<div class="wrap hero">
+  <span class="badge">Android · in testing</span>
+  <h1>Address an envelope<br>from your phone.</h1>
+  <p class="sub">Type it, place it, print it. Exactly the size a #10 envelope actually is.</p>
+
+  <div class="envelope">
+    <div class="blk sender">
+      Barret W.<br>
+      1420 Copper Ridge Rd<br>
+      Henderson, NV 89052
+    </div>
+    <div class="blk stamp">postage</div>
+    <div class="blk recipient">
+      Jane Whitfield<br>
+      ATTN: Accounts Payable<br>
+      900 Market Ave, Suite 400<br>
+      Austin, TX 78701
+    </div>
+  </div>
+  <p class="caption">Drawn at true proportions — 9.5 × 4.125 in, same as the print.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===================== PROBLEM ===================== -->
+<section class="wrap">
+  <h2>Handwriting it is fine. Until it isn't.</h2>
+  <p class="lede">Twelve invoices. A stack of holiday cards. Anything going somewhere that judges you by the envelope.</p>
+  <p>The alternative is a word processor template, a printer dialog you don't trust, and an envelope that comes out <strong>94% of the size it should be</strong> — because "Fit to Page" was checked and nothing told you.</p>
+  <p><strong>This app's whole job is that last part.</strong> The page it builds is exactly 9.5 × 4.125 inches. It is never scaled, never padded, never "adjusted to fit." Before you print, it tells you plainly which setting to pick and which one ruins it.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== HOW ===================== -->
+<section class="wrap">
+  <h3>How it goes</h3>
+  <h2>Four steps, about a minute.</h2>
+  <ol class="steps">
+    <li><b>Type the addresses.</b> Name, company or ATTN line, street, suite, city/state/ZIP. Your own return address is saved, so you type it once, ever.</li>
+    <li><b>Drag them where you want.</b> The preview is the envelope, to scale. What you see is what lands on the paper — there's no second layout hiding behind it.</li>
+    <li><b>Add postage if you have it.</b> Import a stamp image from your gallery. It keeps its exact proportions when you resize, so a barcode can't get stretched out of tolerance.</li>
+    <li><b>Print or save.</b> Straight to any printer your phone can see on Wi-Fi, or export a PDF and print it later.</li>
+  </ol>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== DETAILS ===================== -->
+<section class="wrap">
+  <h3>The details that matter</h3>
+  <h2>Made for one job, done properly.</h2>
+  <ul class="plain">
+    <li><b>True size, verified.</b> The page is 684 × 297 points — 9.5 × 4.125 inches at 72 points per inch. That's checked automatically on every build, not just hoped for.</li>
+    <li><b>Honest print instructions.</b> Actual Size / 100%. Never "Fit to Page" or "Shrink to Fit." The app says it out loud before every print, because that one setting is what wastes the envelope.</li>
+    <li><b>Postage stays scannable.</b> Aspect ratio locks when you resize, and you get warned if the image is too low-resolution or dragged too small to scan reliably.</li>
+    <li><b>Nothing leaves your phone.</b> The PDF is built on the device and handed straight to Android's printing. There's no upload, no account, and no analytics.</li>
+    <li><b>Print a test first.</b> The app recommends it and so do I — one sheet of plain paper held against a real envelope tells you everything about your printer's tray.</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Being straight with you:</strong> a few printer drivers ignore custom page sizes no matter what the app sends. That's the printer, not the file — and the plain-paper test catches it in ten seconds instead of after twenty ruined envelopes.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== PRICE ===================== -->
+<section class="wrap">
+  <h3>Price</h3>
+  <div class="price"><span class="amt">Free</span><span class="per">while it's in testing</span></div>
+  <p>No subscription, no ads, no account. If you want in on testing, email <a href="mailto:support@barretops.com?subject=EnvelopePrint%20testing" style="color:var(--accent)">support@barretops.com</a> and I'll send you the link.</p>
+</section>
+
+<footer class="wrap">
+  <p style="margin-bottom:10px"><strong>EnvelopePrint</strong> — a <a href="/" style="color:var(--dim)">BarretOps</a> app</p>
+  <p style="font-size:.88rem">
+    <a href="/envelope/privacy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="/support.html">Support</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:support@barretops.com">Contact</a>
+  </p>
+</footer>
+
+</body>
+</html>

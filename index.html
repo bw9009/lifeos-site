@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Life — Type like a maniac. Leave organized.</title>
-<meta name="description" content="Stop translating your thoughts into an app's format. Type anything — Life figures out what it is, where it belongs, and when it matters.">
+<title>BarretOps — Small, sharp apps that do one thing right.</title>
+<meta name="description" content="BarretOps builds small Android apps that work offline, don't need an account, and don't collect your data. Life. EnvelopePrint.">
 
-<!-- Social preview: this is what people see when the link gets shared. -->
-<meta property="og:title" content="Type like a maniac. Leave organized.">
-<meta property="og:description" content="Every other app makes you pick a category first. Life does the translating.">
+<meta property="og:title" content="BarretOps — small, sharp apps that do one thing right.">
+<meta property="og:description" content="No accounts. No cloud. No analytics. Just apps that work.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -24,353 +23,134 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     line-height:1.6; -webkit-font-smoothing:antialiased;
   }
-  .wrap { max-width:680px; margin:0 auto; padding:0 24px; }
-  section { padding:72px 0; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 24px; }
+  section { padding:64px 0; }
 
-  /* ---------- wordmark ---------- */
-  /* The period can't go in the Play Store title field, so the brand carries
-     it everywhere else — this is where "Life." actually gets seen. */
   .wordmark {
-    text-align:center; padding:36px 0 0;
-    font-size:1.6rem; font-weight:800; letter-spacing:-.02em;
+    text-align:center; padding:40px 0 0;
+    font-size:1.5rem; font-weight:800; letter-spacing:-.02em;
   }
   .wordmark .dot { color:var(--accent); }
 
-  /* ---------- hero ---------- */
-  .hero { padding:44px 0 72px; text-align:center; }
-  .badge {
-    display:inline-block; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--accent); background:var(--accent-soft);
-    padding:6px 14px; border-radius:999px; margin-bottom:28px; font-weight:600;
-  }
+  .hero { padding:40px 0 56px; text-align:center; }
   h1 {
-    font-size:clamp(2.1rem,7vw,3.4rem); line-height:1.12; font-weight:800;
-    letter-spacing:-.02em; margin-bottom:20px;
+    font-size:clamp(2rem,6.4vw,3.1rem); line-height:1.14; font-weight:800;
+    letter-spacing:-.02em; margin-bottom:18px;
   }
-  .sub { font-size:clamp(1.05rem,3.4vw,1.3rem); color:var(--dim); max-width:34ch; margin:0 auto 36px; }
-
-  /* ---------- waitlist ---------- */
-  .signup { display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap; }
-  input[type=email] {
-    flex:1 1 220px; min-width:0;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px;
-    padding:15px 16px; color:var(--fg); font-size:1rem; font-family:inherit;
-  }
-  input[type=email]:focus { outline:none; border-color:var(--accent); }
-  button {
-    flex:0 0 auto; background:var(--accent); color:#04140b; border:0; border-radius:10px;
-    padding:15px 26px; font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit;
-    transition:transform .08s, opacity .15s;
-  }
-  button:hover { opacity:.92; }
-  button:active { transform:translateY(1px); }
-  button[disabled] { opacity:.55; cursor:default; }
-  .formnote { font-size:.85rem; color:var(--dim); margin-top:14px; }
-  .formnote.err { color:#e0705f; }
-  .formnote.ok { color:var(--accent); }
-
-  /* ---------- demo ---------- */
-  .demo {
-    background:var(--panel); border:1px solid var(--line); border-radius:16px;
-    padding:8px; margin-top:56px; text-align:left;
-  }
-  .demo-bar { display:flex; gap:6px; padding:10px 12px 14px; }
-  .demo-bar i { width:10px; height:10px; border-radius:50%; background:var(--line); }
-  .exchange { padding:0 16px 18px; }
-  .typed {
-    background:#0b100e; border:1px solid var(--line); border-radius:10px;
-    padding:14px 16px; font-size:1.02rem; min-height:56px;
-  }
-  .caret { display:inline-block; width:2px; height:1.1em; background:var(--accent);
-           vertical-align:text-bottom; animation:blink 1s steps(2) infinite; }
-  @keyframes blink { 50% { opacity:0; } }
-  .result {
-    margin-top:12px; display:flex; align-items:flex-start; gap:10px;
-    padding:13px 15px; border-radius:10px; background:var(--accent-soft);
-    opacity:0; transform:translateY(6px); transition:opacity .35s, transform .35s;
-  }
-  .result.show { opacity:1; transform:none; }
-  .result .tick { color:var(--accent); font-weight:800; }
-  .result .what { font-weight:650; }
-  .result .when { color:var(--dim); font-size:.9rem; }
-
-  /* ---------- content ---------- */
-  h2 { font-size:1.6rem; letter-spacing:-.01em; margin-bottom:14px; }
-  h3 { font-size:1rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:16px; }
-  p { color:var(--dim); margin-bottom:16px; }
-  p strong { color:var(--fg); font-weight:650; }
-  .lede { font-size:1.15rem; color:var(--fg); }
+  .sub { font-size:clamp(1.02rem,3.2vw,1.22rem); color:var(--dim); max-width:38ch; margin:0 auto; }
 
   .divider { height:1px; background:var(--line); }
 
+  /* ---------- app cards ---------- */
+  .cards { display:grid; gap:18px; }
+  .card {
+    display:block; text-decoration:none; color:inherit;
+    background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    padding:26px 24px; transition:border-color .15s, transform .08s;
+  }
+  .card:hover { border-color:var(--accent); }
+  .card:active { transform:translateY(1px); }
+  .card-top { display:flex; align-items:center; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
+  .card h2 { font-size:1.45rem; letter-spacing:-.01em; }
+  .card h2 .dot { color:var(--accent); }
+  .tag {
+    font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700;
+    color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:999px;
+  }
+  .card .line { color:var(--fg); font-weight:600; margin-bottom:8px; }
+  .card p { color:var(--dim); margin-bottom:14px; }
+  .card .go { color:var(--accent); font-weight:650; font-size:.95rem; }
+
+  h3 { font-size:.95rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:16px; }
+  p { color:var(--dim); margin-bottom:16px; }
+  p strong { color:var(--fg); font-weight:650; }
+  .lede { font-size:1.12rem; color:var(--fg); }
+
   ul.plain { list-style:none; }
-  ul.plain li { padding:9px 0; border-bottom:1px solid var(--line); color:var(--dim); }
+  ul.plain li { padding:11px 0; border-bottom:1px solid var(--line); color:var(--dim); }
   ul.plain li:last-child { border:0; }
   ul.plain b { color:var(--fg); font-weight:600; }
 
-  details {
-    background:var(--panel); border:1px solid var(--line);
-    border-radius:14px; padding:18px 22px; margin-top:8px;
-  }
-  details[open] { padding-bottom:8px; }
-  summary {
-    cursor:pointer; font-weight:650; list-style:none; color:var(--accent);
-    display:flex; justify-content:space-between; align-items:center;
-  }
-  summary::-webkit-details-marker { display:none; }
-  summary::after { content:"+"; font-size:1.3rem; color:var(--dim); font-weight:400; }
-  details[open] summary::after { content:"–"; }
-  .details-body { padding-top:20px; }
-
-  .ex { padding:14px 0; border-bottom:1px solid var(--line); }
-  .ex:last-child { border:0; }
-  .ex .said { color:var(--fg); }
-  .ex .did { color:var(--accent); font-size:.93rem; margin-top:4px; }
-
-  footer { padding:56px 0 72px; text-align:center; color:var(--dim); font-size:.9rem; }
+  footer { padding:52px 0 72px; text-align:center; color:var(--dim); font-size:.9rem; }
   footer a { color:var(--dim); }
-
-  .price { display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
-  .price .amt { font-size:2rem; font-weight:800; color:var(--fg); }
-  .price .per { color:var(--dim); }
 </style>
 </head>
 <body>
 
-<div class="wordmark">Life<span class="dot">.</span></div>
+<div class="wordmark">BarretOps<span class="dot">.</span></div>
 
-<!-- ===================== HERO ===================== -->
 <div class="wrap hero">
-  <span class="badge">Coming soon · Android</span>
-  <h1>Type like a maniac.<br>Leave organized.</h1>
-  <p class="sub">Type anything. Life works out what it is, where it belongs, and when it matters.</p>
-
-  <form class="signup" id="form" novalidate>
-    <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
-    <button type="submit" id="submit">Get early access</button>
-  </form>
-  <p class="formnote" id="note">No spam. One email when it's ready.</p>
-
-  <!-- live demo of the actual parser behaviour -->
-  <div class="demo">
-    <div class="demo-bar"><i></i><i></i><i></i></div>
-    <div class="exchange">
-      <div class="typed"><span id="typed"></span><span class="caret"></span></div>
-      <div class="result" id="result">
-        <span class="tick">✓</span>
-        <span>
-          <span class="what" id="what"></span><br>
-          <span class="when" id="when"></span>
-        </span>
-      </div>
-    </div>
-  </div>
+  <h1>Small, sharp apps<br>that do one thing right.</h1>
+  <p class="sub">Built for phones, by one person, in the open. No accounts. No cloud. No analytics.</p>
 </div>
 
 <div class="divider"></div>
 
-<!-- ===================== PROBLEM ===================== -->
+<!-- ===================== THE APPS ===================== -->
 <section class="wrap">
-  <h2>You already know where it goes. That's the problem.</h2>
-  <p class="lede">Every other app makes you decide first.</p>
-  <p>Is this a task or a note? Which project? Which tag, list, database, template? By the time you've answered, the thought is gone — or you've stopped bothering and it's living in your head with the other forty.</p>
-  <p><strong>Life inverts that.</strong> You think out loud. It does the translating.</p>
+  <h3>The apps</h3>
+  <div class="cards">
+
+    <a class="card" href="/life/">
+      <div class="card-top">
+        <h2>Life<span class="dot">.</span></h2>
+        <span class="tag">Android · coming soon</span>
+      </div>
+      <div class="line">Type like a maniac. Leave organized.</div>
+      <p>Type anything — a task, an appointment, a shopping list, a half-formed idea. Life works out what it is, where it belongs, and when it matters. Sorting happens on your phone, so it's instant and it works on one bar of signal.</p>
+      <span class="go">See how it works →</span>
+    </a>
+
+    <a class="card" href="/envelope/">
+      <div class="card-top">
+        <h2>EnvelopePrint</h2>
+        <span class="tag">Android · in testing</span>
+      </div>
+      <div class="line">Address an envelope from your phone. At true size.</div>
+      <p>Type the addresses, drag them where you want them, add your own postage image, and print to any Wi-Fi printer. The PDF is exactly 9.5 × 4.125 inches and is never scaled — which is the whole point.</p>
+      <span class="go">See how it works →</span>
+    </a>
+
+  </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ===================== HOW ===================== -->
+<!-- ===================== THE RULES ===================== -->
 <section class="wrap">
-  <h3>Your only job</h3>
-  <h2>Think.</h2>
-  <p>Life figures out the rest:</p>
+  <h3>How these get built</h3>
+  <h2 style="font-size:1.55rem; letter-spacing:-.01em; margin-bottom:14px;">The same four rules, every time.</h2>
   <ul class="plain">
-    <li><b>What it is</b> — task, reminder, appointment, idea, note, shopping</li>
-    <li><b>Where it belongs</b> — the right list, the right project</li>
-    <li><b>When it matters</b> — "tomorrow morning", "next Tuesday at 2pm", "before October"</li>
-    <li><b>What happens next</b> — appointments land on your real calendar</li>
+    <li><b>It works offline.</b> If an app needs a server to do its main job, it breaks in a parking garage. These don't.</li>
+    <li><b>No account.</b> You shouldn't have to hand over an email address to print an envelope.</li>
+    <li><b>Your data stays yours.</b> Nothing is uploaded to be read, scored, or trained on. There's no analytics SDK collecting what you type.</li>
+    <li><b>It says so when it can't.</b> An app that silently fails is worse than one that admits it. These tell you.</li>
   </ul>
-
-  <details>
-    <summary>See what you can throw at it</summary>
-    <div class="details-body">
-      <p>Anything. Thoughts, tasks, ideas, goals, reminders, appointments, shopping lists, journal entries, brainstorms, projects. No formatting required.</p>
-
-      <div class="ex">
-        <div class="said">"Call Mike tomorrow morning."</div>
-        <div class="did">→ Reminder set for 9am tomorrow</div>
-      </div>
-      <div class="ex">
-        <div class="said">"Need dog food, eggs, and paper towels."</div>
-        <div class="did">→ Shopping list updated — 3 items</div>
-      </div>
-      <div class="ex">
-        <div class="said">"Business idea: robot analyzer for manufacturers."</div>
-        <div class="did">→ Idea saved</div>
-      </div>
-      <div class="ex">
-        <div class="said">"Dentist appointment next Tuesday at 2pm."</div>
-        <div class="did">→ On your Google Calendar</div>
-      </div>
-      <div class="ex">
-        <div class="said">"Need to renew my license before October."</div>
-        <div class="did">→ Task created, due October 1</div>
-      </div>
-      <div class="ex">
-        <div class="said">"I have way too much going on."</div>
-        <div class="did">→ Saved — and Life helps you sort it out</div>
-      </div>
-
-      <p style="margin-top:20px">Get it wrong? One tap changes it, and Life remembers how <em>you</em> think.</p>
-    </div>
-  </details>
 </section>
 
 <div class="divider"></div>
 
-<!-- ===================== TRUST ===================== -->
+<!-- ===================== CONTACT ===================== -->
 <section class="wrap">
-  <h3>How it works</h3>
-  <h2>Fast, private, and it works on a bad signal.</h2>
-  <p><strong>Your thoughts stay on your phone.</strong> Sorting happens on-device — nothing is uploaded to be read, scored, or trained on.</p>
-  <p><strong>No waiting.</strong> There's no round trip to a server, so filing a thought is instant, in a parking lot with one bar or on a plane.</p>
-  <p><strong>Connect only what you want.</strong> Google Calendar is opt-in from a single screen. Skip it and everything still works.</p>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===================== PRICE ===================== -->
-<section class="wrap">
-  <h3>Price</h3>
-  <div class="price"><span class="amt">$4.99</span><span class="per">one time</span></div>
-  <p>No subscription. No ads. No account required.</p>
-  <p style="margin-bottom:28px">Early access members get it free.</p>
-
-  <form class="signup" id="form2" novalidate>
-    <input type="email" id="email2" placeholder="you@email.com" autocomplete="email" required>
-    <button type="submit" id="submit2">Join the list</button>
-  </form>
-  <p class="formnote" id="note2">&nbsp;</p>
+  <h3>Get in touch</h3>
+  <p class="lede">A real person reads these.</p>
+  <p>Bug report, feature idea, or something that just annoyed you — <a href="mailto:support@barretops.com" style="color:var(--accent)">support@barretops.com</a>. Include your phone model and what you were doing; that's usually all it takes to fix it.</p>
 </section>
 
 <footer class="wrap">
-  <p style="margin-bottom:10px">
-    <strong>Life<span style="color:var(--accent)">.</span></strong> — built by Barret
-  </p>
+  <p style="margin-bottom:10px"><strong>BarretOps<span style="color:var(--accent)">.</span></strong></p>
   <p style="font-size:.88rem">
-    <a href="/privacy.html" style="color:var(--dim)">Privacy Policy</a>
+    <a href="/life/">Life</a>
     &nbsp;·&nbsp;
-    <a href="/terms.html" style="color:var(--dim)">Terms of Service</a>
+    <a href="/envelope/">EnvelopePrint</a>
     &nbsp;·&nbsp;
-    <a href="mailto:support@barretops.com" style="color:var(--dim)">Contact</a>
+    <a href="/support.html">Support</a>
+    &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy</a>
+    &nbsp;·&nbsp;
+    <a href="/terms.html">Terms</a>
   </p>
 </footer>
 
-<script>
-// ---------- animated demo ----------
-// Shows the real classifications the parser produces, so the page promises
-// exactly what the app does.
-const SCRIPT = [
-  { text: "Call Mike tomorrow morning",            what: "Reminder set",           when: "Tomorrow, 9:00 AM" },
-  { text: "Need dog food, eggs, and paper towels", what: "Added to shopping list", when: "3 items" },
-  { text: "Dentist appointment next Tuesday 2pm",  what: "Event scheduled",        when: "On your Google Calendar" },
-  { text: "Business idea: robot analyzer",         what: "Idea saved",             when: "Filed under Ideas" },
-];
-
-const typedEl  = document.getElementById('typed');
-const resultEl = document.getElementById('result');
-const whatEl   = document.getElementById('what');
-const whenEl   = document.getElementById('when');
-
-const wait = ms => new Promise(r => setTimeout(r, ms));
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-async function runDemo() {
-  if (reduced) {                       // respect motion preferences
-    const s = SCRIPT[0];
-    typedEl.textContent = s.text;
-    whatEl.textContent = s.what; whenEl.textContent = s.when;
-    resultEl.classList.add('show');
-    return;
-  }
-  let i = 0;
-  while (true) {
-    const step = SCRIPT[i % SCRIPT.length];
-    resultEl.classList.remove('show');
-    typedEl.textContent = '';
-    await wait(400);
-
-    for (const ch of step.text) {
-      typedEl.textContent += ch;
-      await wait(38);
-    }
-    await wait(420);                   // the "thinking" beat
-    whatEl.textContent = step.what;
-    whenEl.textContent = step.when;
-    resultEl.classList.add('show');
-
-    await wait(2600);
-    i++;
-  }
-}
-runDemo();
-
-// ---------- waitlist ----------
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const CONTACT_EMAIL = 'support@barretops.com';
-
-function wire(formId, inputId, noteId, buttonId) {
-  const form   = document.getElementById(formId);
-  const input  = document.getElementById(inputId);
-  const note   = document.getElementById(noteId);
-  const button = document.getElementById(buttonId);
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = input.value.trim();
-
-    if (!EMAIL_RE.test(email)) {
-      note.textContent = "That doesn't look like an email address.";
-      note.className = 'formnote err';
-      input.focus();
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = 'Adding…';
-    note.textContent = '';
-    note.className = 'formnote';
-
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: formId }),
-      });
-      if (!res.ok) throw new Error('signup failed');
-
-      form.style.display = 'none';
-      note.textContent = "You're on the list. I'll email you once — when it's ready.";
-      note.className = 'formnote ok';
-    } catch (err) {
-      // On a static host there's no backend to receive this. Rather than
-      // pretend the signup worked — a person who thinks they're on the list
-      // and isn't is worse than one who never signed up — hand them a real
-      // way to reach us that cannot silently fail.
-      const subject = encodeURIComponent('Life early access');
-      const body = encodeURIComponent(`Add me to the list: ${email}`);
-      form.style.display = 'none';
-      note.innerHTML =
-        `Signups aren't wired up on this page yet. ` +
-        `<a href="mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}">` +
-        `Email me instead</a> and you're on the list.`;
-      note.className = 'formnote';
-    }
-  });
-}
-
-wire('form',  'email',  'note',  'submit');
-wire('form2', 'email2', 'note2', 'submit2');
-</script>
 </body>
 </html>
