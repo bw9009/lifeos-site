@@ -1,71 +1,56 @@
-# Getting barretops.com live
+# Deploying barretops.com — Cloudflare Pages
 
-Two things need this, and both are blockers:
+The site moved OFF GitHub Pages (it was static there and the waitlist
+could never work). It now targets **Cloudflare Pages**, where
+`functions/api/waitlist.js` runs as a real endpoint at `/api/waitlist`.
 
-- **Play Store** requires a publicly reachable privacy policy URL.
-- **Google OAuth verification** requires the app homepage *and* privacy
-  policy on a domain you control.
+## One-time setup (dashboard, ~10 minutes)
 
-GitHub Pages hosts it free with automatic HTTPS. Roughly ten minutes.
+1. **Create the Pages project.**
+   Cloudflare dashboard → Workers & Pages → Create → Pages →
+   Connect to Git → pick `bw9009/lifeos-site`, branch `master`.
+   Build settings: framework **None**, build command **(empty)**,
+   output directory **/** (root). Deploy.
 
-## 1. Turn on Pages
+2. **Create the KV namespace for signups.**
+   Workers & Pages → KV → Create namespace → name it `waitlist`.
 
-github.com/bw9009/lifeos-site → **Settings → Pages**
+3. **Bind it to the Pages project.**
+   The Pages project → Settings → Functions → KV namespace bindings →
+   Add: variable name `WAITLIST` → select the `waitlist` namespace.
+   Redeploy (Deployments → Retry) so the binding takes.
 
-- Source: **Deploy from a branch**
-- Branch: **master**, folder: **/ (root)**
-- Save
+4. **Move the domain.**
+   The Pages project → Custom domains → add `barretops.com` and
+   `www.barretops.com`. Because DNS is already on Cloudflare, it
+   rewrites the records itself — this is what actually takes the site
+   off GitHub's servers.
 
-The `CNAME` file in this repo already sets the custom domain to
-`barretops.com`.
+5. **Clean up GitHub Pages.**
+   github.com/bw9009/lifeos-site → Settings → Pages → disable.
+   The `CNAME` file is harmless to Pages either way; leave it or drop it.
 
-## 2. Point DNS at it (Cloudflare)
+## Reading the waitlist
 
-The domain is already on Cloudflare nameservers, so this is just records.
+Workers & Pages → KV → `waitlist` → the keys are `signup:<email>`, each
+value JSON with email, source form, timestamp, user agent.
 
-Cloudflare dashboard → barretops.com → **DNS → Records**. Add four A
-records for the apex, all with **Proxy status: DNS only (grey cloud)** —
-proxying breaks GitHub's certificate issuance:
+## The tester group
 
-| Type | Name | Content |
-|---|---|---|
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
+Play closed testing authorizes by Google Group membership. The site's
+Step 1 button and the post-signup nudge both point at
+`<group>+subscribe@googlegroups.com` — the visitor's own send joins the
+group AND authorizes their account. The address lives in ONE constant,
+`GROUP_SUBSCRIBE` in `life/index.html`, plus the Step 1 button href.
 
-And for www:
-
-| Type | Name | Content |
-|---|---|---|
-| CNAME | www | bw9009.github.io |
-
-## 3. Wait, then force HTTPS
-
-DNS usually propagates in minutes on Cloudflare. Once
-`http://barretops.com` loads, go back to **Settings → Pages** and tick
-**Enforce HTTPS** (the checkbox only appears after the certificate is
-issued — that can take up to an hour).
-
-## Verify
+## Verify after deploy
 
 ```
-https://barretops.com
-https://barretops.com/privacy.html      <- give this URL to Play Store
-https://barretops.com/terms.html
+https://barretops.com                    — loads from Pages, not GitHub
+https://barretops.com/privacy.html      — Play Store requirement
+curl -X POST https://barretops.com/api/waitlist \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"test@example.com","source":"curl"}'   — {"ok":true}
 ```
 
-## The waitlist form
-
-**It won't collect emails on GitHub Pages** — Pages is static and
-`server.py` doesn't run there. The form detects this and offers a mailto
-link instead, so nobody is told they've joined a list they haven't.
-
-To make it collect properly later, either:
-
-- run `server.py` somewhere real (a $5 VPS, or the Le Potato behind a
-  Cloudflare Tunnel), or
-- add a Cloudflare Worker that writes signups to KV, and point the form's
-  `fetch` at it.
-
-Not a launch blocker. The privacy policy being live is.
+`server.py` remains for local preview only: `python3 server.py --port 8000`.
