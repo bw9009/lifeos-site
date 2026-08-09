@@ -55,6 +55,11 @@
   .envelope .blk { position:absolute; line-height:1.3; }
   .envelope .sender    { left:5%;  top:9%;  font-size:2.6cqw; }
   .envelope .recipient { left:36%; top:47%; font-size:3.1cqw; }
+  /* Card envelopes are much deeper. The #10 placement sits too high and
+     too far left on something nearly square, so the blocks move with the
+     shape rather than pretending every envelope is a #10. */
+  .envelope.card .sender    { top:7%; font-size:3.0cqw; }
+  .envelope.card .recipient { left:30%; top:52%; font-size:3.5cqw; }
   .envelope .stamp {
     right:5.5%; top:8%; width:15%; aspect-ratio:1 / .78;
     border:1px dashed rgba(20,26,23,.45); border-radius:2px;
@@ -62,6 +67,26 @@
     font-size:2.1cqw; color:rgba(20,26,23,.55); text-align:center;
   }
   .caption { color:var(--dim); font-size:.86rem; margin-top:14px; text-align:center; }
+
+  /* ---------- size switcher ----------
+     The whole claim of this app is that the page comes out the size it
+     says. A single #10 drawing asks people to take that on faith; four
+     sizes that visibly change shape when you tap them demonstrate it. */
+  .sizes {
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    margin:18px 0 0;
+  }
+  .sizes button {
+    font:inherit; font-size:.82rem; font-weight:650; cursor:pointer;
+    color:var(--dim); background:transparent;
+    border:1px solid var(--line); border-radius:999px; padding:7px 14px;
+    transition:border-color .15s, color .15s;
+  }
+  .sizes button:hover { color:var(--fg); }
+  .sizes button[aria-pressed="true"] {
+    color:var(--accent); border-color:var(--accent);
+    background:rgba(52,199,110,.10);
+  }
 
   .divider { height:1px; background:var(--line); }
 
@@ -112,11 +137,11 @@
   <h1>Address an envelope<br>from your phone.</h1>
   <p class="sub">Type it, place it, print it. Exactly the size a #10 envelope actually is.</p>
 
-  <div class="envelope">
+  <div class="envelope" id="env">
     <div class="blk sender">
-      Barret W.<br>
+      John Smith<br>
       1420 Copper Ridge Rd<br>
-      Henderson, NV 89052
+      Las Vegas, NV 89117
     </div>
     <div class="blk stamp">postage</div>
     <div class="blk recipient">
@@ -126,7 +151,15 @@
       Austin, TX 78701
     </div>
   </div>
-  <p class="caption">Drawn at true proportions — 9.5 × 4.125 in, same as the print.</p>
+  <div class="sizes" id="sizes">
+    <button type="button" data-w="9.5"   data-h="4.125" data-label="#10"      aria-pressed="true">#10</button>
+    <button type="button" data-w="8.625" data-h="3.625" data-label="#9"       aria-pressed="false">#9</button>
+    <button type="button" data-w="6.5"   data-h="3.625" data-label="#6&frac34;" aria-pressed="false">#6&frac34;</button>
+    <button type="button" data-w="9"     data-h="6"     data-label="A9"       aria-pressed="false">A9</button>
+    <button type="button" data-w="7.5"   data-h="5.25"  data-label="A7 card"  aria-pressed="false">A7 card</button>
+    <button type="button" data-w="11.5"  data-h="6.125" data-label="#12"      aria-pressed="false">#12</button>
+  </div>
+  <p class="caption" id="caption">Drawn at true proportions — 9.5 × 4.125 in, same as the print.</p>
 </div>
 
 <div class="divider"></div>
@@ -191,6 +224,46 @@
     <a href="mailto:support@barretops.com">Contact</a>
   </p>
 </footer>
+
+
+<script>
+// The size switcher.
+//
+// The app's entire claim is that the printed page is the size it says,
+// so the page had better not fake its own proportions. Each button
+// carries the REAL dimensions in inches and the drawing is redrawn from
+// those - aspect-ratio does the work, exactly as the #10 always did.
+//
+// Card sizes (A9, A7) are deeper than business envelopes, so the
+// address blocks are nudged down and in; on a nearly square envelope
+// the #10 layout would sit oddly high and left.
+(function () {
+  var env = document.getElementById('env');
+  var caption = document.getElementById('caption');
+  var bar = document.getElementById('sizes');
+  if (!env || !bar || !caption) return;
+
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+
+    var w = parseFloat(b.dataset.w), h = parseFloat(b.dataset.h);
+    env.style.aspectRatio = w + ' / ' + h;
+
+    // Squarer than about 2:1 means a card envelope.
+    var card = (w / h) < 2;
+    env.classList.toggle('card', card);
+
+    caption.textContent =
+      'Drawn at true proportions \u2014 ' + w + ' \u00d7 ' + h +
+      ' in, same as the print.';
+
+    Array.prototype.forEach.call(bar.querySelectorAll('button'), function (x) {
+      x.setAttribute('aria-pressed', String(x === b));
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
