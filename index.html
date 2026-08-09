@@ -4,121 +4,185 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="/img/life-icon.png">
-<title>BarretOps — Small, sharp apps that do one thing right.</title>
-<meta name="description" content="BarretOps builds small Android apps that work offline, don't need an account, and don't collect your data. Life. EnvelopePrint.">
-
+<title>BarretOps — small, sharp apps that do one thing right.</title>
+<meta name="description" content="BarretOps builds small mobile apps that work offline, need no account, and collect no data. Life: type anything, leave organized.">
 <meta property="og:title" content="BarretOps — small, sharp apps that do one thing right.">
 <meta property="og:description" content="No accounts. No cloud. No analytics. Just apps that work.">
+<meta property="og:image" content="https://barretops.com/img/life-feature.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-
 <style>
-  :root {
-    --bg:#0b0f0d; --panel:#131a17; --line:#1f2a25;
-    --fg:#eef4f0; --dim:#8ba297; --accent:#34c76e; --accent-soft:rgba(52,199,110,.14);
+  :root{
+    --bg:#080b0a; --panel:#101614; --panel2:#151d19; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body {
-    background:var(--bg); color:var(--fg);
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--fg);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
-    line-height:1.6; -webkit-font-smoothing:antialiased;
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-  .wrap { max-width:720px; margin:0 auto; padding:0 24px; }
-  section { padding:64px 0; }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:760px}
+  section{padding:78px 0}
+  .eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:14px}
+  h2.big{font-size:clamp(1.7rem,4.4vw,2.5rem);line-height:1.15;letter-spacing:-.025em;font-weight:800;margin-bottom:16px}
+  p.lede{font-size:1.1rem;color:var(--dim);max-width:60ch}
+  .divider{height:1px;background:var(--line)}
 
-  .wordmark {
-    text-align:center; padding:40px 0 0;
-    font-size:1.5rem; font-weight:800; letter-spacing:-.02em;
-  }
-  .wordmark .dot { color:var(--accent); }
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks a.hide-sm{display:none}}
 
-  .hero { padding:40px 0 56px; text-align:center; }
-  h1 {
-    font-size:clamp(2rem,6.4vw,3.1rem); line-height:1.14; font-weight:800;
-    letter-spacing:-.02em; margin-bottom:18px;
+  .hero{position:relative;padding:76px 0 44px;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:-40% 0 auto 0;height:640px;pointer-events:none;
+    background:radial-gradient(52% 46% at 50% 34%,rgba(52,199,110,.16),transparent 70%);
   }
-  .sub { font-size:clamp(1.02rem,3.2vw,1.22rem); color:var(--dim); max-width:38ch; margin:0 auto; }
+  .herogrid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  @media(max-width:900px){.herogrid{grid-template-columns:1fr;gap:44px}}
+  h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.08;letter-spacing:-.035em;font-weight:800;margin-bottom:20px}
+  h1 .grad{background:linear-gradient(100deg,var(--accent),var(--accent2));
+           -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{font-size:1.13rem;color:var(--dim);max-width:46ch;margin-bottom:28px}
+  .ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.95rem;
+       padding:13px 22px;border-radius:999px;transition:transform .08s,border-color .15s,background .15s}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--accent);color:#04150b}
+  .btn.primary:hover{background:var(--accent2)}
+  .btn.ghost{border:1px solid var(--line);color:var(--fg)}
+  .btn.ghost:hover{border-color:var(--accent)}
+  .trustline{margin-top:22px;font-size:.84rem;color:var(--faint)}
+  .trustline b{color:var(--dim);font-weight:650}
 
-  .divider { height:1px; background:var(--line); }
+  .phone{
+    position:relative;width:292px;max-width:78vw;margin:0 auto;aspect-ratio:9/18.4;
+    border-radius:38px;border:1px solid var(--line);background:linear-gradient(180deg,#0e1412,#0a100e);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 8px #0c110f;
+    padding:16px 14px;display:flex;flex-direction:column;overflow:hidden;
+  }
+  .phone .notch{width:78px;height:5px;border-radius:99px;background:#1c2622;margin:2px auto 14px}
+  .phone .box{border:1px solid var(--line);background:#0b100e;border-radius:14px;
+    padding:11px 12px;font-size:.86rem;min-height:64px}
+  .phone .box .ph{color:var(--faint)}
+  .caret{display:inline-block;width:2px;height:1em;background:var(--accent);
+         vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .feed{margin-top:14px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+  .row{display:flex;align-items:flex-start;gap:10px;background:var(--panel2);
+    border:1px solid var(--line);border-radius:12px;padding:10px 11px;
+    opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s}
+  .row.in{opacity:1;transform:none}
+  .row .ic{width:24px;height:24px;flex:0 0 24px;border-radius:7px;background:var(--soft);
+           display:grid;place-items:center;font-size:.82rem}
+  .row .t{font-size:.83rem;font-weight:650;line-height:1.3}
+  .row .m{font-size:.72rem;color:var(--dim);margin-top:2px}
+  .chip{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:800;
+        color:var(--accent);background:var(--soft);padding:2px 7px;border-radius:99px;
+        margin-left:auto;white-space:nowrap}
+  @media(prefers-reduced-motion:reduce){
+    .caret{animation:none}.row{opacity:1;transform:none;transition:none}
+  }
 
-  /* ---------- app cards ---------- */
-  .cards { display:grid; gap:18px; }
-  .card {
-    display:block; text-decoration:none; color:inherit;
-    background:var(--panel); border:1px solid var(--line); border-radius:16px;
-    padding:26px 24px; transition:border-color .15s, transform .08s;
-  }
-  .card:hover { border-color:var(--accent); }
-  .card:active { transform:translateY(1px); }
-  .card-top { display:flex; align-items:center; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
-  .card h2 { font-size:1.45rem; letter-spacing:-.01em; }
-  .card h2 .dot { color:var(--accent); }
-  .tag {
-    font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700;
-    color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:999px;
-  }
-  .card .line { color:var(--fg); font-weight:600; margin-bottom:8px; }
-  .card p { color:var(--dim); margin-bottom:14px; }
-  .card .go { color:var(--accent); font-weight:650; font-size:.95rem; }
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 150% at 50% 0%,rgba(52,199,110,.07),transparent 62%)}
+  .stats .wrap{padding:46px 24px}
+  .statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
+  @media(max-width:620px){.statgrid{grid-template-columns:repeat(2,1fr);gap:28px 12px}}
+  .stat .n{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-.03em;
+           font-variant-numeric:tabular-nums;line-height:1.05}
+  .stat .k{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:7px;font-weight:800}
+  .stats .note{text-align:center;color:var(--faint);font-size:.82rem;margin-top:24px}
+  .stats .note b{color:var(--accent);font-weight:650}
+  .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);
+         margin-right:7px;vertical-align:middle;animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,199,110,.5)}
+                   50%{opacity:.55;box-shadow:0 0 0 6px rgba(52,199,110,0)}}
+  @media(prefers-reduced-motion:reduce){.pulse{animation:none}}
 
-  h3 { font-size:.95rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:16px; }
-  p { color:var(--dim); margin-bottom:16px; }
-  p strong { color:var(--fg); font-weight:650; }
-  .lede { font-size:1.12rem; color:var(--fg); }
+  .cards{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
+  .card{display:block;text-decoration:none;color:inherit;background:var(--panel);
+    border:1px solid var(--line);border-radius:18px;padding:26px 24px;
+    transition:border-color .15s,transform .08s}
+  .card:hover{border-color:var(--accent)}
+  .card:active{transform:translateY(1px)}
+  .card-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+  .card h3{font-size:1.4rem;letter-spacing:-.015em;font-weight:800}
+  .card h3 .dot{color:var(--accent)}
+  .tag{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;
+       color:var(--accent);background:var(--soft);padding:4px 10px;border-radius:999px}
+  .card .line{font-weight:650;margin-bottom:8px}
+  .card p{color:var(--dim);margin-bottom:14px;font-size:.96rem}
+  .card .go{color:var(--accent);font-weight:700;font-size:.93rem}
 
-  ul.plain { list-style:none; }
-  ul.plain li { padding:11px 0; border-bottom:1px solid var(--line); color:var(--dim); }
-  ul.plain li:last-child { border:0; }
-  ul.plain b { color:var(--fg); font-weight:600; }
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+         border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  @media(max-width:720px){.rules{grid-template-columns:1fr}}
+  .rule{background:var(--panel);padding:26px 24px}
+  .rule .num{font-size:.7rem;font-weight:800;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+  .rule b{display:block;font-size:1.05rem;margin-bottom:6px;font-weight:700}
+  .rule span{color:var(--dim);font-size:.94rem}
 
-  footer { padding:52px 0 72px; text-align:center; color:var(--dim); font-size:.9rem; }
-  footer a { color:var(--dim); }
+  .band{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:820px){.cols{grid-template-columns:1fr}}
+  .col h4{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+          font-weight:800;margin-bottom:10px}
+  .col p{color:var(--dim);font-size:.95rem}
+  .col b{color:var(--fg);font-weight:650}
 
-  /* ---------- live build stats ----------
-     Real numbers, published straight out of the repo. The point is not
-     the figures themselves - it is that they MOVE, and that a stranger
-     can see the thing is actually being worked on rather than pitched. */
-  .stats { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:
-    radial-gradient(120% 140% at 50% 0%, rgba(52,199,110,.07), transparent 60%); }
-  .stats .wrap { padding:44px 24px; }
-  .statgrid {
-    display:grid; grid-template-columns:repeat(4,1fr); gap:18px; text-align:center;
-  }
-  @media (max-width:560px){ .statgrid { grid-template-columns:repeat(2,1fr); gap:26px 12px; } }
-  .stat .n {
-    font-size:clamp(1.7rem,5.4vw,2.4rem); font-weight:800; letter-spacing:-.02em;
-    color:var(--fg); font-variant-numeric:tabular-nums; line-height:1.1;
-  }
-  .stat .k {
-    font-size:.72rem; letter-spacing:.11em; text-transform:uppercase;
-    color:var(--dim); margin-top:6px; font-weight:700;
-  }
-  .stats .note { text-align:center; color:var(--dim); font-size:.82rem; margin-top:22px; }
-  .stats .note b { color:var(--accent); font-weight:650; }
-  .pulse {
-    display:inline-block; width:7px; height:7px; border-radius:50%;
-    background:var(--accent); margin-right:7px; vertical-align:middle;
-    animation:pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(52,199,110,.5); }
-    50% { opacity:.55; box-shadow:0 0 0 6px rgba(52,199,110,0); }
-  }
-  /* Respect people who asked their OS to stop things moving. */
-  @media (prefers-reduced-motion:reduce){ .pulse { animation:none; } }
+  footer{padding:56px 0 76px;text-align:center;color:var(--faint);font-size:.9rem}
+  footer a{color:var(--dim);text-decoration:none}
+  footer a:hover{color:var(--fg)}
 </style>
 </head>
 <body>
 
-<div class="wordmark">BarretOps<span class="dot">.</span></div>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/envelope/" class="hide-sm">EnvelopePrint</a>
+      <a href="/company/">Company</a>
+      <a href="mailto:support@barretops.com" class="hide-sm">Contact</a>
+    </div>
+  </div>
+</nav>
 
 <div class="wrap hero">
-  <h1>Small, sharp apps<br>that do one thing right.</h1>
-  <p class="sub">Built for phones, by one person, in the open. No accounts. No cloud. No analytics.</p>
-</div>
+  <div class="herogrid">
+    <div>
+      <h1>Type like a maniac.<br><span class="grad">Leave organized.</span></h1>
+      <p class="sub">Every other app makes you sort the thought before you're allowed to write it down. Life takes the sentence and does the filing itself — on the phone, in the time it takes to lift your thumb.</p>
+      <div class="ctas">
+        <a class="btn primary" href="/life/">See how Life works</a>
+        <a class="btn ghost" href="/company/">About the company</a>
+      </div>
+      <p class="trustline">
+        <b>BWS BETTER RIDES LLC</b> · Nevada · Las Vegas<br>
+        Android in closed testing · iOS on TestFlight · shipping weekly
+      </p>
+    </div>
 
-<div class="divider"></div>
+    <div class="phone" id="demo">
+      <div class="notch"></div>
+      <div class="box"><span id="typed"></span><span class="caret"></span></div>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+</div>
 
 <div class="stats">
   <div class="wrap">
@@ -128,30 +192,30 @@
       <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing</div></div>
       <div class="stat"><div class="n" data-stat="days">—</div><div class="k">Days in</div></div>
     </div>
-    <p class="note"><span class="pulse"></span>Live from the repo — last updated <b data-stat="updated">just now</b>.</p>
+    <p class="note"><span class="pulse"></span>Live from the repository — last updated <b data-stat="updated">just now</b>.</p>
   </div>
 </div>
 
-<!-- ===================== THE APPS ===================== -->
 <section class="wrap">
-  <h3>The apps</h3>
+  <div class="eyebrow">The apps</div>
+  <h2 class="big">Two shipping. More behind them.</h2>
+  <p class="lede" style="margin-bottom:30px">Same engine, same rules, same one-person shop. Each app is a small, finished thing rather than a platform waiting on the next round.</p>
   <div class="cards">
 
     <a class="card" href="/life/">
       <div class="card-top">
-        <img src="/img/life-icon.png" alt="" width="42" height="42"
-             style="border-radius:10px">
-        <h2>Life<span class="dot">.</span></h2>
-        <span class="tag">Android · free · testing now</span>
+        <img src="/img/life-icon.png" alt="" width="42" height="42" style="border-radius:10px">
+        <h3>Life<span class="dot">.</span></h3>
+        <span class="tag">Android &amp; iOS · in testing</span>
       </div>
-      <div class="line">Type like a maniac. Leave organized.</div>
-      <p>Type anything — a task, an appointment, a shopping list, a half-formed idea. Life works out what it is, where it belongs, and when it matters. Sorting happens on your phone, so it's instant and it works on one bar of signal.</p>
+      <div class="line">One box. Everything goes in it.</div>
+      <p>A task, an appointment, a bill, a shopping list, a half-formed idea. Life works out what it is, where it belongs and when it matters — then puts it on your calendar, in your budget and in your reminders at once. Parsing happens on the phone, so it's instant and it works on one bar of signal.</p>
       <span class="go">See how it works →</span>
     </a>
 
     <a class="card" href="/envelope/">
       <div class="card-top">
-        <h2>EnvelopePrint</h2>
+        <h3>EnvelopePrint</h3>
         <span class="tag">Android · in testing</span>
       </div>
       <div class="line">Address an envelope from your phone. At true size.</div>
@@ -164,79 +228,174 @@
 
 <div class="divider"></div>
 
-<!-- ===================== THE RULES ===================== -->
 <section class="wrap">
-  <h3>How these get built</h3>
-  <h2 style="font-size:1.55rem; letter-spacing:-.01em; margin-bottom:14px;">The same four rules, every time.</h2>
-  <ul class="plain">
-    <li><b>It works offline.</b> If an app needs a server to do its main job, it breaks in a parking garage. These don't.</li>
-    <li><b>No account.</b> You shouldn't have to hand over an email address to print an envelope.</li>
-    <li><b>Your data stays yours.</b> Nothing is uploaded to be read, scored, or trained on. There's no analytics SDK collecting what you type.</li>
-    <li><b>It says so when it can't.</b> An app that silently fails is worse than one that admits it. These tell you.</li>
-  </ul>
+  <div class="eyebrow">How these get built</div>
+  <h2 class="big">The same four rules, every time.</h2>
+  <p class="lede" style="margin-bottom:30px">They're constraints, not slogans. Each one costs something, and each one is the reason a particular class of bug can't happen here.</p>
+  <div class="rules">
+    <div class="rule"><div class="num">01</div><b>It works offline.</b>
+      <span>If an app needs a server to do its main job, it breaks in a parking garage. These don't — the thinking happens on the device.</span></div>
+    <div class="rule"><div class="num">02</div><b>No account.</b>
+      <span>You shouldn't have to hand over an email address to print an envelope. Sign in only if you want your own calendar linked.</span></div>
+    <div class="rule"><div class="num">03</div><b>Your data stays yours.</b>
+      <span>Nothing is uploaded to be read, scored or trained on. There is no analytics SDK collecting what you type.</span></div>
+    <div class="rule"><div class="num">04</div><b>It says so when it can't.</b>
+      <span>An app that fails silently is worse than one that admits it. When something doesn't reach your calendar, you're told, in the words of the failure.</span></div>
+  </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ===================== CONTACT ===================== -->
-<section class="wrap">
-  <h3>Get in touch</h3>
-  <p class="lede">A real person reads these.</p>
-  <p>Bug report, feature idea, or something that just annoyed you — <a href="mailto:support@barretops.com" style="color:var(--accent)">support@barretops.com</a>. Include your phone model and what you were doing; that's usually all it takes to fix it.</p>
-</section>
+<div class="band">
+  <div class="wrap" style="padding-top:52px;padding-bottom:52px">
+    <div class="cols">
+      <div class="col">
+        <h4>The company</h4>
+        <p><b>BarretOps</b> is a trade name of <b>BWS BETTER RIDES LLC</b>, a Nevada limited liability company based in Las Vegas. Registered developer accounts on both Google Play and the Apple App Store.</p>
+      </div>
+      <div class="col">
+        <h4>Where it stands</h4>
+        <p>Life is in <b>closed testing with real users</b> on Google Play and on TestFlight for iPhone. Subscription pricing is set; production release follows the close of the testing window.</p>
+      </div>
+      <div class="col">
+        <h4>Talk to a person</h4>
+        <p>Support: <a href="mailto:support@barretops.com" style="color:var(--accent)">support@barretops.com</a><br>
+           Business: <a href="mailto:bwilde@barretops.com" style="color:var(--accent)">bwilde@barretops.com</a><br>
+           <a href="/company/" style="color:var(--accent)">Company overview →</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer class="wrap">
-  <p style="margin-bottom:10px"><strong>BarretOps<span style="color:var(--accent)">.</span></strong></p>
+  <p style="margin-bottom:12px"><strong style="color:var(--fg)">BarretOps<span style="color:var(--accent)">.</span></strong></p>
   <p style="font-size:.88rem">
-    <a href="/life/">Life</a>
-    &nbsp;·&nbsp;
-    <a href="/envelope/">EnvelopePrint</a>
-    &nbsp;·&nbsp;
-    <a href="/support.html">Support</a>
-    &nbsp;·&nbsp;
-    <a href="/privacy.html">Privacy</a>
-    &nbsp;·&nbsp;
+    <a href="/life/">Life</a> &nbsp;·&nbsp;
+    <a href="/envelope/">EnvelopePrint</a> &nbsp;·&nbsp;
+    <a href="/company/">Company</a> &nbsp;·&nbsp;
+    <a href="/support.html">Support</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp;
     <a href="/terms.html">Terms</a>
   </p>
-  <p style="font-size:.78rem; opacity:.7; margin-top:14px">
+  <p style="font-size:.78rem;opacity:.75;margin-top:16px">
     BarretOps is a trade name of BWS BETTER RIDES LLC, a Nevada limited liability company.
   </p>
 </footer>
 
 <script>
-// Live build stats.
-//
+// ---------- the hero demo ----------
+// A typed sentence turning into filed rows. It is the product's whole
+// claim in six seconds, and it is the one thing a screenshot cannot
+// show. Everything here is presentational: no network, no data.
+(function () {
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var typed = document.getElementById('typed');
+  var feed = document.getElementById('feed');
+  if (!typed || !feed) return;
+
+  var SCRIPTS = [
+    {
+      text: 'rent 1450 due the 1st every month',
+      rows: [
+        { ic:'\uD83C\uDFE0', t:'Rent', m:'$1,450 · due the 1st · monthly', chip:'Bill' },
+        { ic:'\uD83D\uDCC5', t:'On your calendar', m:'Sept 1 — and every month after', chip:'Synced' },
+        { ic:'\uD83D\uDCB0', t:'In your budget', m:'Counted against what is still to come', chip:'Budget' }
+      ]
+    },
+    {
+      text: 'dentist thursday 2pm remind me an hour before',
+      rows: [
+        { ic:'\uD83D\uDDD3', t:'Dentist', m:'Thursday, 2:00 PM', chip:'Event' },
+        { ic:'\uD83D\uDD14', t:'Alert set', m:'One hour before — 1:00 PM', chip:'Reminder' },
+        { ic:'\uD83D\uDCC5', t:'On your calendar', m:'Added to Google Calendar', chip:'Synced' }
+      ]
+    },
+    {
+      text: 'add task to renew the registration by friday',
+      rows: [
+        { ic:'\u2705', t:'Renew the registration', m:'Deadline Friday', chip:'Task' },
+        { ic:'\uD83D\uDCCB', t:'Filed in Google Tasks', m:'Ticking it here ticks it there', chip:'Synced' },
+        { ic:'\uD83D\uDD14', t:'Alert set', m:'On the deadline, from your phone', chip:'Reminder' }
+      ]
+    }
+  ];
+
+  function rowEl(r) {
+    var d = document.createElement('div');
+    d.className = 'row';
+    d.innerHTML =
+      '<div class="ic">' + r.ic + '</div>' +
+      '<div><div class="t"></div><div class="m"></div></div>' +
+      '<span class="chip"></span>';
+    d.querySelector('.t').textContent = r.t;
+    d.querySelector('.m').textContent = r.m;
+    d.querySelector('.chip').textContent = r.chip;
+    return d;
+  }
+
+  var i = 0, timers = [];
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+  function run() {
+    clearTimers();
+    var s = SCRIPTS[i % SCRIPTS.length];
+    i++;
+    feed.innerHTML = '';
+    typed.textContent = '';
+
+    // Reduced motion gets the finished state, not the performance.
+    if (reduced) {
+      typed.textContent = s.text;
+      s.rows.forEach(function (r) {
+        var el = rowEl(r); el.classList.add('in'); feed.appendChild(el);
+      });
+      after(6000, run);
+      return;
+    }
+
+    var n = 0;
+    (function type() {
+      typed.textContent = s.text.slice(0, ++n);
+      if (n < s.text.length) { after(38, type); return; }
+      s.rows.forEach(function (r, k) {
+        after(420 + k * 420, function () {
+          var el = rowEl(r);
+          feed.appendChild(el);
+          requestAnimationFrame(function () { el.classList.add('in'); });
+        });
+      });
+      after(420 + s.rows.length * 420 + 2600, run);
+    })();
+  }
+
+  // Don't perform to an empty room, and stop when scrolled away.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) run(); else clearTimers();
+    }, { threshold: 0.25 }).observe(document.getElementById('demo'));
+  } else { run(); }
+})();
+
+// ---------- live build stats ----------
 // The numbers come from stats.json, which tools/publish-stats.sh writes
 // out of the life repo. That repo is PRIVATE, so the browser cannot ask
-// GitHub directly - the API answers 404 to anyone without a token, and
-// the only way to hand the page a token is to publish one, which gives
-// every visitor read access to the source. Publishing the numbers is
-// the version of this that does not trade the repo for a counter.
+// GitHub directly — the API answers 404 without a token, and the only
+// way to hand the page a token is to publish one, which gives every
+// visitor read access to the source.
 //
 // "days" is computed HERE, from the first commit date, so it keeps
-// counting between publishes instead of going stale the moment the
-// script stops being run.
+// counting between publishes instead of going stale.
 (function () {
-  // Baked-in fallbacks. If the fetch fails - offline, cache miss, file
-  // not deployed yet - the page must never sit there showing dashes.
-  // A slightly stale number beats an empty one.
-  var FALLBACK = {
-    commits: 266, lines: 32745, tests: 992,
-    started: '2026-07-31', updated: null
-  };
-
+  var FALLBACK = { commits:302, lines:37366, tests:1124,
+                   started:'2026-07-31', updated:null };
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function fmt(n) { return n.toLocaleString('en-US'); }
+  function fmt(n){ return n.toLocaleString('en-US'); }
 
   function countTo(el, target) {
     if (reduced || target < 1) { el.textContent = fmt(target); return; }
     var start = performance.now(), dur = 900;
     (function step(now) {
       var t = Math.min(1, (now - start) / dur);
-      // easeOutCubic - fast, then settles. A linear count looks like a
-      // loading spinner; this looks like an odometer landing.
-      var e = 1 - Math.pow(1 - t, 3);
+      var e = 1 - Math.pow(1 - t, 3);   // easeOutCubic — odometer, not spinner
       el.textContent = fmt(Math.round(target * e));
       if (t < 1) requestAnimationFrame(step);
     })(start);
@@ -255,12 +414,8 @@
 
   function render(s) {
     var started = new Date(s.started + 'T00:00:00Z');
-    var days = Math.max(1,
-      Math.floor((Date.now() - started) / 86400000) + 1);
-
-    var values = {
-      commits: s.commits, lines: s.lines, tests: s.tests, days: days
-    };
+    var days = Math.max(1, Math.floor((Date.now() - started) / 86400000) + 1);
+    var values = { commits:s.commits, lines:s.lines, tests:s.tests, days:days };
 
     var seen = false;
     function show() {
@@ -270,23 +425,18 @@
         if (el) countTo(el, values[k]);
       });
     }
-
     var upd = document.querySelector('[data-stat="updated"]');
     if (upd) upd.textContent = ago(s.updated);
 
-    // Count up when the band is actually looked at, not while it is
-    // still below the fold finishing without an audience.
     var band = document.querySelector('.stats');
     if (band && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries, obs) {
         if (entries[0].isIntersecting) { show(); obs.disconnect(); }
       }, { threshold: 0.35 }).observe(band);
-    } else {
-      show();
-    }
+    } else { show(); }
   }
 
-  fetch('/stats.json', { cache: 'no-cache' })
+  fetch('/stats.json', { cache:'no-cache' })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(render)
     .catch(function () { render(FALLBACK); });

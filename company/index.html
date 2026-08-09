@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/life-icon.png">
+<title>Company — BarretOps</title>
+<meta name="description" content="BarretOps is a trade name of BWS BETTER RIDES LLC, a Nevada limited liability company in Las Vegas building small mobile software. What we build, where it stands, and how it makes money.">
+<meta property="og:title" content="Company — BarretOps">
+<meta property="og:description" content="What we build, where it stands, and how it makes money.">
+<style>
+  :root{
+    --bg:#080b0a; --panel:#101614; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:1080px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+
+  .head{padding:66px 0 46px;border-bottom:1px solid var(--line);
+    background:radial-gradient(60% 100% at 50% 0%,rgba(52,199,110,.12),transparent 70%)}
+  h1{font-size:clamp(2rem,5.4vw,3rem);line-height:1.1;letter-spacing:-.03em;font-weight:800;margin-bottom:16px}
+  .head p{color:var(--dim);font-size:1.1rem;max-width:58ch}
+  .eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:14px}
+  h2{font-size:1.5rem;letter-spacing:-.02em;font-weight:800;margin-bottom:14px}
+  p{color:var(--dim);margin-bottom:14px}
+  p strong,li strong{color:var(--fg);font-weight:650}
+
+  .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}
+  @media(max-width:640px){.facts{grid-template-columns:1fr}}
+  .fact{background:var(--panel);padding:18px 20px}
+  .fact .k{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:4px}
+  .fact .v{font-size:.98rem;font-weight:600}
+  .fact .v small{display:block;color:var(--dim);font-weight:400;font-size:.85rem;margin-top:2px}
+
+  ul{list-style:none;margin:6px 0 4px}
+  ul li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--dim)}
+  ul li:last-child{border-bottom:0}
+  ul li b{color:var(--fg);font-weight:650}
+
+  .steps{counter-reset:s}
+  .steps li{position:relative;padding-left:38px}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:12px;
+    width:24px;height:24px;border-radius:7px;background:var(--soft);color:var(--accent);
+    font-size:.75rem;font-weight:800;display:grid;place-items:center}
+
+  .statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;margin-top:6px}
+  @media(max-width:620px){.statgrid{grid-template-columns:repeat(2,1fr);gap:24px 12px}}
+  .stat .n{font-size:clamp(1.5rem,4.4vw,2.1rem);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .stat .k{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:6px;font-weight:800}
+
+  .note{font-size:.86rem;color:var(--faint)}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.95rem;
+    padding:13px 22px;border-radius:999px;background:var(--accent);color:#04150b}
+  .btn:hover{background:var(--accent2)}
+  footer{padding:48px 0 72px;text-align:center;color:var(--faint);font-size:.9rem}
+  footer a{color:var(--dim);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/envelope/">EnvelopePrint</a>
+      <a href="/company/">Company</a>
+    </div>
+  </div>
+</nav>
+
+<div class="head">
+  <div class="wrap">
+    <div class="eyebrow">Company</div>
+    <h1>A software company the size of one person, run like a serious one.</h1>
+    <p>BarretOps builds small mobile applications for everyday use. The work is shipped weekly and tested before it goes out — and this page says plainly where the business actually stands.</p>
+  </div>
+</div>
+
+<section class="wrap">
+  <h2>The facts</h2>
+  <div class="facts">
+    <div class="fact"><div class="k">Legal entity</div><div class="v">BWS BETTER RIDES LLC<small>Nevada limited liability company</small></div></div>
+    <div class="fact"><div class="k">Trade name</div><div class="v">BarretOps<small>Operating name for the software business</small></div></div>
+    <div class="fact"><div class="k">Based</div><div class="v">Las Vegas, Nevada<small>United States</small></div></div>
+    <div class="fact"><div class="k">Founder</div><div class="v">Barret Wilde<small>Nine years in unmanned aircraft operations, latterly as Chief Pilot</small></div></div>
+    <div class="fact"><div class="k">Distribution</div><div class="v">Google Play &amp; Apple App Store<small>Registered developer accounts on both</small></div></div>
+    <div class="fact"><div class="k">Stage</div><div class="v">Closed testing, pre-revenue<small>Real testers on Android and iPhone</small></div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What we build</h2>
+  <p><strong>Life</strong> is the main product. It removes the sorting step: you type a sentence — a bill, an appointment, a task, a shopping list — and the app works out what it is and files it into your calendar, your budget and your reminders at once. The parsing runs on the phone, so it is instant, works without signal, and nothing you type is uploaded to be read or scored.</p>
+  <p><strong>EnvelopePrint</strong> is the second, smaller app: it prints an addressed envelope at true size from a phone. It exists because the release pipeline was already built, and a second product costs a fraction of the first.</p>
+  <p>Both follow the same four rules — works offline, no account, your data stays yours, and it tells you when something didn't work. Those constraints are what make a one-person shop able to support the software it ships.</p>
+</section>
+
+<section class="wrap">
+  <h2>Where it stands today</h2>
+  <ul>
+    <li><b>Android:</b> in closed testing on Google Play with real testers, meeting Google's testing requirements ahead of production release.</li>
+    <li><b>iPhone:</b> built and delivered through TestFlight, from the same codebase.</li>
+    <li><b>Release cadence:</b> new builds go out weekly or faster, each tested before it ships.</li>
+    <li><b>Quality:</b> an automated test suite runs against every change; the current count is below, published straight from the repository.</li>
+    <li><b>Support:</b> a monitored support address, answered by the person who wrote the code.</li>
+  </ul>
+  <div class="statgrid">
+    <div class="stat"><div class="n" data-stat="commits">—</div><div class="k">Commits</div></div>
+    <div class="stat"><div class="n" data-stat="lines">—</div><div class="k">Lines of code</div></div>
+    <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing</div></div>
+    <div class="stat"><div class="n" data-stat="days">—</div><div class="k">Days in</div></div>
+  </div>
+  <p class="note" style="text-align:center;margin-top:18px">Published from the source repository, not typed in by hand.</p>
+</section>
+
+<section class="wrap">
+  <h2>How it makes money</h2>
+  <p>Life is a subscription: <strong>$4.99 a month or $29.99 a year</strong>, with a <strong>seven-day free trial</strong>, billed through the Apple and Google stores. There is no advertising, no data sold, and no free tier that has to be subsidised forever.</p>
+  <p>The cost structure is the point. Development is the founder's own time; there are no salaries, no offices and no servers to run, because the app does its work on the customer's phone. The number of subscribers needed to cover every ongoing cost of the business is therefore small, and each additional app publishes onto the same store accounts, the same pipeline and the same support desk at close to zero marginal cost.</p>
+  <p class="note">Prices shown are current pricing. Nothing on this page is a forecast, an offer, or a solicitation of investment.</p>
+</section>
+
+<section class="wrap">
+  <h2>What happens next</h2>
+  <ul class="steps">
+    <li><b>Close the testing window</b> and take Life to production on Google Play.</li>
+    <li><b>Submit to the App Store</b> from the same codebase, the same week.</li>
+    <li><b>Turn on billing</b> — subscriptions live on both stores, trial first.</li>
+    <li><b>Convert to organisation accounts</b> on both stores under the LLC.</li>
+    <li><b>Ship app three</b>, reusing the pipeline and support desk already paid for.</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2>Talk to a person</h2>
+  <p>Business, partnership and lending enquiries: <a href="mailto:bwilde@barretops.com" style="color:var(--accent)">bwilde@barretops.com</a><br>
+     Product and support: <a href="mailto:support@barretops.com" style="color:var(--accent)">support@barretops.com</a></p>
+  <p style="margin-top:22px"><a class="btn" href="/life/">See the product</a></p>
+</section>
+
+<footer class="wrap">
+  <p style="font-size:.88rem">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/life/">Life</a> &nbsp;·&nbsp;
+    <a href="/envelope/">EnvelopePrint</a> &nbsp;·&nbsp;
+    <a href="/support.html">Support</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp;
+    <a href="/terms.html">Terms</a>
+  </p>
+  <p style="font-size:.78rem;opacity:.75;margin-top:14px">
+    BarretOps is a trade name of BWS BETTER RIDES LLC, a Nevada limited liability company.
+  </p>
+</footer>
+
+<script>
+// Same live stats as the home page, same reasoning: the source repo is
+// private, so the browser reads stats.json rather than the GitHub API,
+// and "days" is computed here so it keeps counting between publishes.
+(function () {
+  var FALLBACK = { commits:302, lines:37366, tests:1124, started:'2026-07-31' };
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(n){ return n.toLocaleString('en-US'); }
+  function countTo(el, target) {
+    if (reduced || target < 1) { el.textContent = fmt(target); return; }
+    var start = performance.now(), dur = 900;
+    (function step(now){
+      var t = Math.min(1, (now - start) / dur);
+      var e = 1 - Math.pow(1 - t, 3);
+      el.textContent = fmt(Math.round(target * e));
+      if (t < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  function render(s) {
+    var started = new Date(s.started + 'T00:00:00Z');
+    var days = Math.max(1, Math.floor((Date.now() - started) / 86400000) + 1);
+    var values = { commits:s.commits, lines:s.lines, tests:s.tests, days:days };
+    Object.keys(values).forEach(function (k) {
+      var el = document.querySelector('[data-stat="' + k + '"]');
+      if (el) countTo(el, values[k]);
+    });
+  }
+  fetch('/stats.json', { cache:'no-cache' })
+    .then(function (r){ return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(render).catch(function(){ render(FALLBACK); });
+})();
+</script>
+
+</body>
+</html>
