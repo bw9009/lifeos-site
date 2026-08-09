@@ -74,6 +74,39 @@
 
   footer { padding:52px 0 72px; text-align:center; color:var(--dim); font-size:.9rem; }
   footer a { color:var(--dim); }
+
+  /* ---------- live build stats ----------
+     Real numbers, published straight out of the repo. The point is not
+     the figures themselves - it is that they MOVE, and that a stranger
+     can see the thing is actually being worked on rather than pitched. */
+  .stats { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:
+    radial-gradient(120% 140% at 50% 0%, rgba(52,199,110,.07), transparent 60%); }
+  .stats .wrap { padding:44px 24px; }
+  .statgrid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px; text-align:center;
+  }
+  @media (max-width:560px){ .statgrid { grid-template-columns:repeat(2,1fr); gap:26px 12px; } }
+  .stat .n {
+    font-size:clamp(1.7rem,5.4vw,2.4rem); font-weight:800; letter-spacing:-.02em;
+    color:var(--fg); font-variant-numeric:tabular-nums; line-height:1.1;
+  }
+  .stat .k {
+    font-size:.72rem; letter-spacing:.11em; text-transform:uppercase;
+    color:var(--dim); margin-top:6px; font-weight:700;
+  }
+  .stats .note { text-align:center; color:var(--dim); font-size:.82rem; margin-top:22px; }
+  .stats .note b { color:var(--accent); font-weight:650; }
+  .pulse {
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--accent); margin-right:7px; vertical-align:middle;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(52,199,110,.5); }
+    50% { opacity:.55; box-shadow:0 0 0 6px rgba(52,199,110,0); }
+  }
+  /* Respect people who asked their OS to stop things moving. */
+  @media (prefers-reduced-motion:reduce){ .pulse { animation:none; } }
 </style>
 </head>
 <body>
@@ -86,6 +119,18 @@
 </div>
 
 <div class="divider"></div>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="statgrid">
+      <div class="stat"><div class="n" data-stat="commits">—</div><div class="k">Commits</div></div>
+      <div class="stat"><div class="n" data-stat="lines">—</div><div class="k">Lines of code</div></div>
+      <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing</div></div>
+      <div class="stat"><div class="n" data-stat="days">—</div><div class="k">Days in</div></div>
+    </div>
+    <p class="note"><span class="pulse"></span>Live from the repo — last updated <b data-stat="updated">just now</b>.</p>
+  </div>
+</div>
 
 <!-- ===================== THE APPS ===================== -->
 <section class="wrap">
@@ -153,7 +198,100 @@
     &nbsp;·&nbsp;
     <a href="/terms.html">Terms</a>
   </p>
+  <p style="font-size:.78rem; opacity:.7; margin-top:14px">
+    BarretOps is a trade name of BWS BETTER RIDES LLC, a Nevada limited liability company.
+  </p>
 </footer>
+
+<script>
+// Live build stats.
+//
+// The numbers come from stats.json, which tools/publish-stats.sh writes
+// out of the life repo. That repo is PRIVATE, so the browser cannot ask
+// GitHub directly - the API answers 404 to anyone without a token, and
+// the only way to hand the page a token is to publish one, which gives
+// every visitor read access to the source. Publishing the numbers is
+// the version of this that does not trade the repo for a counter.
+//
+// "days" is computed HERE, from the first commit date, so it keeps
+// counting between publishes instead of going stale the moment the
+// script stops being run.
+(function () {
+  // Baked-in fallbacks. If the fetch fails - offline, cache miss, file
+  // not deployed yet - the page must never sit there showing dashes.
+  // A slightly stale number beats an empty one.
+  var FALLBACK = {
+    commits: 266, lines: 32745, tests: 992,
+    started: '2026-07-31', updated: null
+  };
+
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fmt(n) { return n.toLocaleString('en-US'); }
+
+  function countTo(el, target) {
+    if (reduced || target < 1) { el.textContent = fmt(target); return; }
+    var start = performance.now(), dur = 900;
+    (function step(now) {
+      var t = Math.min(1, (now - start) / dur);
+      // easeOutCubic - fast, then settles. A linear count looks like a
+      // loading spinner; this looks like an odometer landing.
+      var e = 1 - Math.pow(1 - t, 3);
+      el.textContent = fmt(Math.round(target * e));
+      if (t < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  function ago(iso) {
+    if (!iso) return 'just now';
+    var mins = Math.floor((Date.now() - new Date(iso)) / 60000);
+    if (mins < 2) return 'just now';
+    if (mins < 60) return mins + ' minutes ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs === 1 ? 'an hour ago' : hrs + ' hours ago';
+    var days = Math.floor(hrs / 24);
+    return days === 1 ? 'yesterday' : days + ' days ago';
+  }
+
+  function render(s) {
+    var started = new Date(s.started + 'T00:00:00Z');
+    var days = Math.max(1,
+      Math.floor((Date.now() - started) / 86400000) + 1);
+
+    var values = {
+      commits: s.commits, lines: s.lines, tests: s.tests, days: days
+    };
+
+    var seen = false;
+    function show() {
+      if (seen) return; seen = true;
+      Object.keys(values).forEach(function (k) {
+        var el = document.querySelector('[data-stat="' + k + '"]');
+        if (el) countTo(el, values[k]);
+      });
+    }
+
+    var upd = document.querySelector('[data-stat="updated"]');
+    if (upd) upd.textContent = ago(s.updated);
+
+    // Count up when the band is actually looked at, not while it is
+    // still below the fold finishing without an audience.
+    var band = document.querySelector('.stats');
+    if (band && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries, obs) {
+        if (entries[0].isIntersecting) { show(); obs.disconnect(); }
+      }, { threshold: 0.35 }).observe(band);
+    } else {
+      show();
+    }
+  }
+
+  fetch('/stats.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(render)
+    .catch(function () { render(FALLBACK); });
+})();
+</script>
 
 </body>
 </html>

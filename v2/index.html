@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BarretOps — Life</title>
+<meta name="description" content="Life is a planner that's one text box. Type a thought the way you'd text it and it files itself. Free, offline, no account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Public+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101312;          /* the app's own background */
+    --ink-2:#1b201e;
+    --paper:#e7eae4;
+    --paper-dim:#a9b1ab;
+    --moss:#5f9e74;         /* filed, resolved, done */
+    --amber:#d9a21b;        /* used ONLY where the app asks instead of guessing */
+    --rule:#2b322f;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:'Public Sans',system-ui,sans-serif; font-size:17px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:inherit}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-.02em; line-height:1.05; margin:0}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+  /* ---------- masthead ---------- */
+  header{padding:28px 0 0}
+  .mast{display:flex; align-items:center; justify-content:space-between; gap:16px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:500; letter-spacing:.02em}
+  .glyph{width:22px; height:22px; border-radius:5px; background:var(--paper); position:relative; flex:none}
+  .glyph::before,.glyph::after{content:''; position:absolute; background:var(--moss); border-radius:1px}
+  .glyph::before{left:4px; top:5px; width:5px; height:5px}
+  .glyph::after{left:4px; top:12px; width:5px; height:5px}
+  .mast nav{display:flex; gap:22px; font-size:14px; color:var(--paper-dim)}
+  .mast nav a{text-decoration:none}
+  .mast nav a:hover{color:var(--paper)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:74px 0 20px}
+  .eyebrow{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:22px}
+  h1{font-size:clamp(40px,7vw,76px); max-width:15ch}
+  h1 em{font-style:normal; color:var(--moss)}
+  .sub{margin:22px 0 0; max-width:52ch; color:var(--paper-dim); font-size:19px}
+
+  /* ---------- the demo (signature) ---------- */
+  .demo{margin:46px 0 0; border:1px solid var(--rule); border-radius:14px; background:var(--ink-2); overflow:hidden}
+  .demo-top{display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--rule)}
+  .demo-top span{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--paper-dim)}
+  .demo-body{padding:22px 18px 26px}
+  #box{
+    width:100%; background:transparent; border:0; outline:0; color:var(--paper); resize:none;
+    font-family:'JetBrains Mono',monospace; font-size:clamp(17px,2.4vw,22px); line-height:1.5;
+  }
+  #box::placeholder{color:#5d6864}
+  .caret{border-bottom:2px solid var(--moss); display:inline-block; width:10px; animation:blink 1.1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; min-height:30px}
+  .chip{font-size:12px; padding:5px 10px; border-radius:999px; border:1px solid var(--rule); color:var(--paper-dim)}
+  .chip b{color:var(--paper); font-weight:500}
+  .card{
+    margin-top:18px; border-left:3px solid var(--moss); background:#151a18;
+    padding:14px 16px; border-radius:0 10px 10px 0; opacity:0; transform:translateY(6px);
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .card.in{opacity:1; transform:none}
+  .card.ask{border-left-color:var(--amber)}
+  .card .kind{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--moss); margin-bottom:6px}
+  .card.ask .kind{color:var(--amber)}
+  .card .title{font-size:18px}
+  .card .meta{color:var(--paper-dim); font-size:14px; margin-top:4px}
+  .asks{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
+  .asks button{
+    font:inherit; font-size:13px; padding:6px 12px; border-radius:8px; cursor:pointer;
+    background:transparent; color:var(--paper); border:1px solid #4a4224;
+  }
+  .asks button:hover{border-color:var(--amber)}
+  .try{margin-top:20px; font-size:13px; color:var(--paper-dim); display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .try button{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:5px 10px; cursor:pointer;
+    background:transparent; color:var(--paper-dim); border:1px dashed var(--rule); border-radius:7px;
+  }
+  .try button:hover{color:var(--paper); border-color:var(--moss)}
+
+  /* ---------- rule of the app ---------- */
+  .rule-block{margin:96px 0; padding:34px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+  .rule-block h2{font-size:clamp(26px,3.6vw,38px); max-width:20ch}
+  .rule-block p{color:var(--paper-dim); max-width:56ch; margin:16px 0 0}
+
+  /* ---------- what it does ---------- */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; margin:34px 0 0}
+  .cell h3{font-size:19px; margin-bottom:8px}
+  .cell p{color:var(--paper-dim); font-size:15.5px; margin:0}
+  .sec-label{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--paper-dim)}
+
+  /* ---------- products ---------- */
+  .prod{display:flex; gap:20px; align-items:flex-start; padding:26px 0; border-bottom:1px solid var(--rule)}
+  .prod:first-of-type{border-top:1px solid var(--rule)}
+  .prod .t{flex:1}
+  .prod h3{font-size:22px}
+  .prod p{color:var(--paper-dim); margin:6px 0 0; font-size:15.5px}
+  .tag{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--moss); border:1px solid var(--rule); padding:4px 9px; border-radius:999px; white-space:nowrap}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:100px; padding:40px 0 60px; border-top:1px solid var(--rule); font-size:14px; color:var(--paper-dim)}
+  footer a{text-decoration:none; margin-right:18px}
+  footer a:hover{color:var(--paper)}
+  .legal{margin-top:18px; font-size:12.5px; opacity:.75; max-width:60ch}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important}
+    .card{opacity:1; transform:none}
+  }
+  :focus-visible{outline:2px solid var(--moss); outline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="mast">
+      <div class="brand"><span class="glyph" aria-hidden="true"></span> BarretOps</div>
+      <nav>
+        <a href="#life">Life</a>
+        <a href="#apps">Apps</a>
+        <a href="/support.html">Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="life">
+    <div class="eyebrow">Life — Android</div>
+    <h1>Type it like you'd text it. It <em>files itself.</em></h1>
+    <p class="sub">A planner that's one text box. No category picker, no date wheel, no five apps to choose between. Free, works offline, no account.</p>
+
+    <!-- SIGNATURE: the box is the product. Type in it. -->
+    <div class="demo">
+      <div class="demo-top"><span>Try it — this box works</span></div>
+      <div class="demo-body">
+        <textarea id="box" rows="2" placeholder="dentist tuesday 2pm" aria-label="Try typing a thought"></textarea>
+        <div class="chips" id="chips" aria-live="polite"></div>
+        <div class="card" id="card">
+          <div class="kind" id="kind">Event</div>
+          <div class="title" id="title"></div>
+          <div class="meta" id="meta"></div>
+          <div class="asks" id="asks"></div>
+        </div>
+        <div class="try">
+          <span>or try:</span>
+          <button data-t="walmart milk, eggs, dog food">walmart milk, eggs, dog food</button>
+          <button data-t="remind me to take meds every day at 8am">remind me to take meds every day at 8am</button>
+          <button data-t="lunch with dana thursday">lunch with dana thursday</button>
+          <button data-t="i wonder if i should repaint the kitchen">i wonder if i should repaint the kitchen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-block">
+    <h2>It never invents a time you didn't give it.</h2>
+    <p>If it can't tell when you meant, it asks one question with one-tap answers instead of guessing. A wrong time you were never told about is worse than no time at all. And when you say don't ask me that again, it doesn't.</p>
+  </section>
+
+  <section>
+    <div class="sec-label">What it files</div>
+    <div class="grid">
+      <div class="cell">
+        <h3>Events</h3>
+        <p>Times read the way you wrote them, and sync to Google Calendar if you connect it. Optional, and also free.</p>
+      </div>
+      <div class="cell">
+        <h3>Reminders</h3>
+        <p>Including the repeating kind, at real times, that go off when they say they will.</p>
+      </div>
+      <div class="cell">
+        <h3>Lists</h3>
+        <p>The first word names the list. Commas split the items. Quotes force a name when you want one.</p>
+      </div>
+      <div class="cell">
+        <h3>Notes</h3>
+        <p>Because not everything is a task, and an app that insists otherwise is exhausting.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="apps" style="margin-top:96px">
+    <div class="sec-label">Apps</div>
+    <div style="margin-top:22px">
+      <div class="prod">
+        <div class="t">
+          <h3>Life</h3>
+          <p>One text box that turns typed thoughts into events, reminders, lists, and notes. Android. Free, no ads, no account, entries stay on your phone.</p>
+        </div>
+        <span class="tag">In testing</span>
+      </div>
+      <div class="prod">
+        <div class="t">
+          <h3>EnvelopePrint</h3>
+          <p>Prints addresses onto envelopes without a fight with your word processor.</p>
+        </div>
+        <span class="tag">In testing</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="ask" style="margin-top:96px">
+    <div class="sec-label">Questions</div>
+    <h2 style="font-size:clamp(24px,3.2vw,34px); margin-top:14px; max-width:22ch">Ask about the app.</h2>
+    <p style="color:var(--paper-dim); max-width:52ch; margin:14px 0 0">No model, no server, nothing sent anywhere — same as the app itself. It only knows what Life actually does.</p>
+
+    <div class="demo" style="margin-top:26px">
+      <div class="demo-body">
+        <input id="q" type="text" autocomplete="off"
+          placeholder="does it work offline?"
+          aria-label="Ask a question about Life"
+          style="width:100%;background:transparent;border:0;outline:0;color:var(--paper);
+                 font-family:'JetBrains Mono',monospace;font-size:clamp(16px,2vw,19px)">
+        <div id="answer" style="margin-top:16px"></div>
+        <div class="try" id="qsuggest"><span>or:</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/support.html">Support</a>
+    <a href="mailto:support@barretops.com">support@barretops.com</a>
+    <div class="legal">BarretOps is a trade name of BWS BETTER RIDES LLC, a Nevada limited liability company.</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var box=document.getElementById('box'), chips=document.getElementById('chips'),
+      card=document.getElementById('card'), kind=document.getElementById('kind'),
+      title=document.getElementById('title'), meta=document.getElementById('meta'),
+      asks=document.getElementById('asks');
+
+  // The answer to the app's one question, once the visitor has tapped it.
+  // Cleared whenever the typed text changes, because a new sentence is a new question.
+  var picked=null;
+
+  var DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  var MEALS={breakfast:'8:00 AM',lunch:'12:00 PM',dinner:'6:30 PM'};
+
+  // A deliberately small echo of the real parser. It demonstrates the shape of
+  // the idea; the app does the hard part. Nothing here talks to a server.
+  function parse(t){
+    var s=t.trim(), low=s.toLowerCase();
+    if(!s) return null;
+    var out={kind:'Note',title:s,meta:'Filed as a note',chips:[],ask:null};
+
+    var day=null, time=null, repeat=null, vague=null;
+
+    DAYS.forEach(function(d){ if(low.indexOf(d)>-1) day=d[0].toUpperCase()+d.slice(1); });
+    if(/\btomorrow\b/.test(low)) day='Tomorrow';
+    if(/\btoday\b/.test(low)) day='Today';
+
+    var m=low.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/);
+    if(m) time=(+m[1])+(m[2]?':'+m[2]:':00')+' '+m[3].toUpperCase();
+    if(/\bnoon\b/.test(low)) time='12:00 PM';
+    if(/\bmidnight\b/.test(low)) time='12:00 AM';
+    if(/\bmidday\b/.test(low)) vague='midday';
+    if(/half past\b/.test(low)) vague='half past';
+
+    Object.keys(MEALS).forEach(function(k){ if(low.indexOf(k)>-1 && !time) vague=k; });
+
+    if(/\bevery day\b|\bdaily\b/.test(low)) repeat='Every day';
+    if(/\bevery other\b/.test(low)) repeat='Every other week';
+    if(/\bweekdays\b/.test(low)) repeat='Weekdays';
+
+    // list: first word names it, commas split
+    if(/,/.test(s) && !time){
+      var parts=s.split(/\s+/), name=parts[0];
+      var rest=s.slice(name.length).trim();
+      out.kind='List'; out.title=name.charAt(0).toUpperCase()+name.slice(1);
+      out.meta=rest.split(',').map(function(x){return x.trim()}).filter(Boolean).join('  ·  ');
+      out.chips=[['list name',name],['items',String(rest.split(',').length)]];
+      return out;
+    }
+
+    if(/^remind me\b/.test(low) || repeat){
+      out.kind='Reminder';
+      out.title=s.replace(/^remind me (to )?/i,'').replace(/\bevery day at .*/i,'').trim()||s;
+      out.meta=[repeat,time].filter(Boolean).join(' · ')||'No time yet';
+      out.chips=[repeat?['repeats',repeat]:null,time?['at',time]:null].filter(Boolean);
+      if(!time && !vague) out.ask={q:'What time?',opts:['8:00 AM','12:00 PM','6:00 PM']};
+      if(vague) out.ask={q:'"'+vague+'" — which time did you mean?',opts:[MEALS[vague]||'12:00 PM','Pick a time']};
+      return out;
+    }
+
+    if(day||time||vague){
+      out.kind='Event';
+      out.title=s.replace(/\b(on|at)\b/gi,' ').replace(/\s+/g,' ').trim();
+      out.meta=[day||'No day yet',time||null].filter(Boolean).join(' · ');
+      out.chips=[day?['day',day]:null,time?['time',time]:null].filter(Boolean);
+      if(vague) out.ask={q:'"'+vague+'" — which time did you mean?',opts:[MEALS[vague]||'12:30 PM','Pick a time']};
+      else if(!time) out.ask={q:'What time?',opts:['9:00 AM','1:00 PM','All day']};
+      return out;
+    }
+
+    out.chips=[['kind','note']];
+    return out;
+  }
+
+  function render(){
+    var r=parse(box.value);
+    if(!r){ card.classList.remove('in'); chips.innerHTML=''; picked=null; return; }
+
+    // A picked time answers the question, exactly as one tap does in the app.
+    if(picked && r.ask){ r.meta=r.meta.replace(/No time yet|No day yet/,'').replace(/^\s*·\s*/,'').trim();
+      r.meta=[r.meta,picked].filter(Boolean).join(' · ');
+      r.chips=r.chips.concat([['time',picked]]); r.ask=null; r.answered=true; }
+
+    chips.innerHTML=r.chips.map(function(c){
+      return '<span class="chip">'+c[0]+' <b>'+c[1]+'</b></span>';
+    }).join('');
+    kind.textContent=r.kind; title.textContent=r.title; meta.textContent=r.meta;
+    card.classList.toggle('ask', !!r.ask);
+    asks.innerHTML = r.ask
+      ? '<span style="font-size:13px;color:var(--paper-dim);width:100%">'+r.ask.q+'</span>'
+        + r.ask.opts.map(function(o){return '<button type="button" data-pick="'+o+'">'+o+'</button>'}).join('')
+        + '<button type="button" data-pick="__never">Don\'t ask me this again</button>'
+      : (r.answered ? '<span style="font-size:13px;color:var(--moss)">Filed.</span>' : '');
+    card.classList.add('in');
+  }
+
+  // The asking moment only means something if answering it works.
+  asks.addEventListener('click', function(e){
+    var b=e.target.closest('button[data-pick]'); if(!b) return;
+    var v=b.getAttribute('data-pick');
+
+    if(v==='__never'){
+      asks.innerHTML='<span style="font-size:13px;color:var(--paper-dim)">Won\'t ask again. It files without a time instead of guessing one.</span>';
+      card.classList.remove('ask');
+      return;
+    }
+    if(v==='Pick a time'){
+      asks.innerHTML='<label style="font-size:13px;color:var(--paper-dim);width:100%">Pick a time</label>';
+      var inp=document.createElement('input');
+      inp.type='time'; inp.className='mono';
+      inp.style.cssText='font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;'+
+        'background:transparent;color:var(--paper);border:1px solid #4a4224';
+      inp.addEventListener('change', function(){
+        if(!inp.value) return;
+        var p=inp.value.split(':'), h=+p[0], ap=h>=12?'PM':'AM';
+        picked=((h%12)||12)+':'+p[1]+' '+ap; render();
+      });
+      asks.appendChild(inp); inp.focus();
+      return;
+    }
+    picked=v; render();
+  });
+
+  box.addEventListener('input', function(){ picked=null; render(); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.try button'), function(b){
+    b.addEventListener('click', function(){
+      var t=b.getAttribute('data-t'); box.value=''; box.focus();
+      var i=0; (function type(){
+        if(i<=t.length){ box.value=t.slice(0,i++); render(); setTimeout(type, 22); }
+      })();
+    });
+  });
+
+  // Type the placeholder line once on load, so the box demonstrates itself.
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var seed='dentist tuesday 2pm', j=0;
+    setTimeout(function go(){
+      if(j<=seed.length){ box.value=seed.slice(0,j++); render(); setTimeout(go, 55); }
+    }, 700);
+  }
+})();
+</script>
+
+<script>
+/* ------------------------------------------------------------------
+   Site helper. No model, no network call, no key, no bill.
+
+   Scoring is deliberately dumb and transparent: each entry lists the
+   words that mean it, a question is tokenised, and the best-scoring
+   entry wins if it clears a floor. Below the floor it says it does not
+   know and hands over the support address, because a support page that
+   invents an answer is worse than one that admits the gap.
+
+   EVERY answer here must be true of the shipped build. When app
+   behaviour changes, this list changes with it.
+------------------------------------------------------------------- */
+(function(){
+  var KB=[
+    {k:'offline internet network connection data wifi airplane',
+     q:'Does it work offline?',
+     a:'Yes. Everything except Google Calendar sync works with no connection at all. Entries live on your phone, so there is nothing to load.'},
+    {k:'account signup sign up login register email password',
+     q:'Do I need an account?',
+     a:'No. There is no account, no sign-up and no password. You open it and use it.'},
+    {k:'price cost free pay money purchase subscription',
+     q:'What does it cost?',
+     a:'Free, with no ads. A paid Pro tier is planned later; what is in the app now stays free.'},
+    {k:'pro vault money locked padlock premium upgrade',
+     q:'What is Pro?',
+     a:'Vault and Money are planned Pro features. They show a padlock because they are not built yet, not because something is broken.'},
+    {k:'calendar google sync connect events',
+     q:'How does calendar sync work?',
+     a:'Optional and free. Connect Google Calendar under Connections, and events you file sync to it. Skip it and everything else still works.'},
+    {k:'repeat repeating recurring every daily weekly reminder remind',
+     q:'Can reminders repeat?',
+     a:'Yes. Type it the way you would say it \u2014 remind me to take meds every day at 8am \u2014 and it repeats at real times.'},
+    {k:'list shopping groceries items commas name',
+     q:'How do lists work?',
+     a:'The first word names the list and commas split the items. Type walmart milk, eggs, dog food and you get a list called Walmart with three things on it.'},
+    {k:'time wrong guess vague ask question midday noon',
+     q:'What if it cannot tell what time I meant?',
+     a:'It asks one question with one-tap answers. It never invents a time you did not give it, and if you say do not ask again, it files without a time instead of guessing.'},
+    {k:'privacy data collect server tracking analytics ads',
+     q:'What happens to my data?',
+     a:'It stays on your phone. There is no server, no analytics and no ads. The privacy policy on this site has the detail.'},
+    {k:'ios iphone apple ipad',
+     q:'Is there an iPhone version?',
+     a:'Not yet. iOS is in progress. Android is the only version right now.'},
+    {k:'android version phone supported device',
+     q:'What do I need to run it?',
+     a:'An Android phone. It is in closed testing right now, so it is not on the public Play Store yet.'},
+    {k:'tester testing beta join closed try install',
+     q:'How do I try it?',
+     a:'It is in closed testing. Email support@barretops.com and you will get the join link.'},
+    {k:'note idea task not everything',
+     q:'What if it is not a task?',
+     a:'It stays a note. Type i wonder if i should repaint the kitchen and it does not turn into a chore with a due date.'},
+    {k:'delete remove entry edit change hide',
+     q:'Can I edit or delete things?',
+     a:'Yes \u2014 open an entry to edit it, and a single item can be hidden or deleted.'},
+    {k:'bug broken problem crash report help support contact',
+     q:'Something is broken. Who do I tell?',
+     a:'support@barretops.com. Say what you typed, exactly, and what you expected instead \u2014 that is usually enough to find it.'}
+  ];
+
+  var STOP={the:1,a:1,an:1,is:1,are:1,do:1,does:1,i:1,it:1,to:1,of:1,my:1,me:1,you:1,
+            can:1,how:1,what:1,for:1,in:1,on:1,and:1,with:1,this:1,that:1,if:1,
+            there:1,any:1,have:1,need:1,get:1,use:1,work:1,works:1};
+
+  function tokens(s){
+    return (s.toLowerCase().match(/[a-z]+/g)||[]).filter(function(w){
+      return w.length>1 && !STOP[w];
+    });
+  }
+
+  function stem(w){ return w.replace(/(ing|ies|ed|es|s)$/,''); }
+
+  function best(query){
+    var qt=tokens(query).map(stem);
+    if(!qt.length) return null;
+    var top=null, topScore=0;
+    KB.forEach(function(e){
+      var kt=tokens(e.k+' '+e.q).map(stem), score=0;
+      qt.forEach(function(w){
+        kt.forEach(function(k){
+          if(k===w) score+=2;
+          else if(k.length>3 && w.length>3 && (k.indexOf(w)===0||w.indexOf(k)===0)) score+=1;
+        });
+      });
+      if(score>topScore){ topScore=score; top=e; }
+    });
+    return topScore>=2 ? top : null;
+  }
+
+  var q=document.getElementById('q'), out=document.getElementById('answer'),
+      sug=document.getElementById('qsuggest');
+
+  function show(){
+    var v=q.value.trim();
+    if(!v){ out.innerHTML=''; return; }
+    var hit=best(v);
+    if(hit){
+      out.innerHTML='<div class="card in"><div class="kind">'+hit.q+'</div>'+
+                    '<div class="meta" style="font-size:15.5px;color:var(--paper)">'+hit.a+'</div></div>';
+    } else {
+      out.innerHTML='<div class="card in ask"><div class="kind">No answer for that</div>'+
+        '<div class="meta" style="font-size:15.5px;color:var(--paper)">Rather than guess: email '+
+        '<a href="mailto:support@barretops.com">support@barretops.com</a> and you will get a real answer.</div></div>';
+    }
+  }
+
+  q.addEventListener('input', show);
+
+  ['Does it work offline?','Do I need an account?','What does it cost?','What is Pro?']
+    .forEach(function(t){
+      var b=document.createElement('button');
+      b.type='button'; b.textContent=t;
+      b.addEventListener('click', function(){ q.value=t; show(); q.focus(); });
+      sug.appendChild(b);
+    });
+})();
+</script>
+</body>
+</html>
