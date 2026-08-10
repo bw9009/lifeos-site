@@ -31,17 +31,18 @@
 <div class="wrap">
   <div class="brand"><a href="/">Life<span class="dot">.</span></a></div>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: 1 August 2026</p>
+  <p class="updated">Last updated: 10 August 2026</p>
 
   <div class="callout">
     <p><strong>The short version:</strong> what you type into Life stays on your
     phone. It is not uploaded, not read by us, not sold, and not used to train
-    anything. If you connect Google Calendar, Life writes events you ask it to
-    create — nothing more.</p>
+    anything. If you connect Google, Life syncs the events and tasks you ask it
+    to create — nothing more — and sees your Google account email to do that
+    correctly. No analytics, no ads, no tracking.</p>
   </div>
 
   <h2>Who this is about</h2>
-  <p>Life ("the app") is an Android application developed by Barret
+  <p>Life ("the app") is an Android and iOS application developed by Barret
   ("we", "us"). This policy explains what the app does with information. If you
   have questions, contact us at the address at the bottom of this page.</p>
 
@@ -56,22 +57,35 @@
   <p>We cannot read what you write in Life. We have no server that stores it and
   no ability to retrieve it.</p>
 
-  <h2>Google Calendar</h2>
-  <p>Connecting Google Calendar is <strong>optional</strong>. The app works fully
-  without it; if you skip it, appointments are simply saved on your device.</p>
-  <p>If you choose to connect, Life requests one permission scope:</p>
+  <h2>Google Calendar and Tasks</h2>
+  <p>Connecting Google is <strong>optional</strong>. The app works fully
+  without it; if you skip it, appointments and tasks are simply saved on your
+  device.</p>
+  <p>If you choose to connect, Life requests these permission scopes in a
+  single sign-in:</p>
   <ul>
-    <li><code>https://www.googleapis.com/auth/calendar.events</code> — to create
-    calendar events</li>
+    <li><code>https://www.googleapis.com/auth/calendar.events</code> — to
+    create and update calendar events you ask it to create</li>
+    <li><code>https://www.googleapis.com/auth/calendar.readonly</code> — to
+    show you which of your calendars to file events into</li>
+    <li><code>https://www.googleapis.com/auth/tasks</code> — to create,
+    rename, check off, and delete tasks you ask it to create in Google
+    Tasks</li>
   </ul>
-  <p>We use this <strong>only</strong> to create events you explicitly asked for
-  by typing an appointment into the app. Life does not read your existing
-  calendar, does not scan your schedule, does not delete or modify events it did
-  not create, and does not send your calendar data anywhere.</p>
-  <p>Authentication is handled by Google. Access tokens are stored on your device
-  by Google's own sign-in library. <strong>We never see your Google password</strong>,
-  and we do not store your Google credentials on any server of ours — we have no
-  server.</p>
+  <p>We use these <strong>only</strong> for events and tasks you explicitly
+  asked for by typing them into the app. Life does not read your existing
+  calendar or task history beyond what it needs to file new items correctly,
+  does not scan your schedule, does not delete or modify items it did not
+  create, and does not send your calendar or task data anywhere except to
+  Google's own servers as part of the sync you asked for.</p>
+  <p>Life also sees the <strong>email address</strong> tied to the Google
+  account you sign in with. This is used only to authenticate you and to
+  build correct links back to your own calendar — it is not sent anywhere
+  else, not sold, and not used for advertising.</p>
+  <p>Authentication is handled by Google. Access tokens are stored on your
+  device by Google's own sign-in library. <strong>We never see your Google
+  password</strong>, and we do not store your Google credentials on any
+  server of ours — we have no server.</p>
 
   <h2>Limited Use disclosure</h2>
   <p>Life's use and transfer of information received from Google APIs adheres to
@@ -90,18 +104,22 @@
   </ul>
 
   <h2>Disconnecting</h2>
-  <p>You can disconnect Google Calendar at any time from
+  <p>You can disconnect Google at any time from
   <strong>Settings → Connections → Disconnect</strong> in the app. You can also
   revoke access at
   <a href="https://myaccount.google.com/permissions" rel="noopener">your Google
-  account permissions page</a>. Disconnecting stops any further calendar access
-  immediately; events already created remain on your calendar and are yours to
-  edit or delete.</p>
+  account permissions page</a>. Disconnecting stops any further calendar and
+  task access immediately; events and tasks already created remain and are
+  yours to edit or delete.</p>
 
   <h2>What we collect</h2>
-  <p><strong>Nothing.</strong> Life has no analytics, no crash reporting, no
-  advertising identifiers, no tracking pixels, and no user accounts. We do not
-  know how many times you open the app or what you write in it.</p>
+  <p>The app itself has <strong>no analytics, no crash reporting, no
+  advertising identifiers, and no tracking pixels</strong>. We do not know how
+  many times you open the app or what you write in it.</p>
+  <p>The only information that leaves your device is what's described above:
+  if you connect Google, your account email and the calendar events or tasks
+  you explicitly create are sent to Google's own servers as part of that
+  sync — never to us, and never for advertising or tracking.</p>
   <p>If this ever changes, this policy will be updated <em>before</em> the change
   ships, and material changes will be made clear in the app.</p>
 
