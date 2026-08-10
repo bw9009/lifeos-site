@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/life-icon.png">
+<title>Try Life's parser — type anything, watch it get sorted</title>
+<meta name="description" content="A live demo of Life's parser. Type a task, an appointment, a shopping list, or a half-formed idea — watch it figure out what it is and when it matters. No signup.">
+<meta property="og:title" content="Type anything. Watch it get sorted.">
+<meta property="og:description" content="A live demo of the parser inside Life. No signup, just type.">
+<meta property="og:image" content="https://barretops.com/img/life-feature.png">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://barretops.com/try/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#080b0a; --panel:#101614; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--fg);min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;align-items:center;
+    padding:26px 18px 60px;
+  }
+  .brand{font-size:.95rem;color:var(--dim);text-decoration:none;font-weight:650;margin-bottom:26px}
+  .brand b{color:var(--fg)} .brand .dot{color:var(--accent)}
+  h1{font-size:clamp(1.6rem,5.5vw,2.4rem);letter-spacing:-.02em;line-height:1.12;text-align:center;font-weight:800}
+  .sub{color:var(--dim);text-align:center;margin:10px 0 26px;max-width:44ch}
+  .box{width:100%;max-width:640px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .bar{display:flex;gap:6px;margin-bottom:14px}
+  .bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+  input#t{
+    width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;
+    color:var(--fg);font-size:1.05rem;padding:14px 16px;outline:none;
+  }
+  input#t:focus{border-color:var(--accent)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{
+    background:transparent;border:1px solid var(--line);color:var(--dim);
+    border-radius:999px;padding:6px 13px;font-size:.82rem;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--accent);color:var(--fg)}
+  .card{
+    margin-top:16px;background:var(--soft);border:1px solid var(--accent);
+    border-radius:12px;padding:14px 16px;display:none;animation:pop .18s ease-out;
+  }
+  .card.show{display:flex;gap:12px;align-items:flex-start}
+  @keyframes pop{from{transform:translateY(4px);opacity:0}to{transform:none;opacity:1}}
+  .tick{color:var(--accent);font-size:1.2rem;line-height:1.3}
+  .what{font-weight:750}
+  .when{color:var(--accent2);font-size:.93rem}
+  .why{color:var(--faint);font-size:.8rem;margin-top:4px}
+  .note{color:var(--faint);font-size:.8rem;text-align:center;margin-top:14px;max-width:52ch}
+  .actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;justify-content:center}
+  .btn{
+    display:inline-block;border-radius:10px;font-weight:700;text-decoration:none;
+    font-size:.95rem;padding:13px 22px;cursor:pointer;border:0;
+  }
+  .btn.primary{background:var(--accent);color:#04140b}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  .shared{color:var(--accent2);font-size:.85rem;margin-top:8px;min-height:1.2em}
+</style>
+</head>
+<body>
+
+<a class="brand" href="/life/"><b>Life</b><span class="dot">.</span> &nbsp;by BarretOps</a>
+
+<h1>Type anything.<br>Watch it get sorted.</h1>
+<p class="sub">This is the parser inside Life. No signup — just type a thought the way you'd actually say it.</p>
+
+<div class="box">
+  <div class="bar"><i></i><i></i><i></i></div>
+  <input id="t" type="text" autocomplete="off" autocapitalize="off"
+         placeholder='Try: "pay rent with a deadline of friday"' aria-label="Type a thought">
+  <div class="chips" id="chips"></div>
+  <div class="card" id="card">
+    <span class="tick">✓</span>
+    <span>
+      <span class="what" id="what"></span><br>
+      <span class="when" id="when"></span>
+      <div class="why" id="why"></div>
+    </span>
+  </div>
+</div>
+
+<p class="note">A taste of the real thing — the full parser (repeats, alerts, budgets, quoted names, typo-tolerant dates) lives in the app. Everything runs on your device; nothing you type here is sent anywhere.</p>
+
+<div class="actions">
+  <button class="btn ghost" id="share">Share this</button>
+  <a class="btn primary" href="/life/">Get the app — Android &amp; iPhone</a>
+</div>
+<div class="shared" id="sharednote"></div>
+
+<script>
+// ---------------------------------------------------------------------------
+// A faithful miniature of Life's parser. Same rules, smaller vocabulary:
+//  - the word "deadline" makes it a TASK, and a bare day lands at NOON
+//  - "remind me" wins over everything
+//  - commas + shopping nouns = a list; $amounts = money
+//  - part-of-day words carry their own hours (morning 9, evening 7, dinner 6)
+// ---------------------------------------------------------------------------
+const DAYS = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+
+function nextDay(name, from){
+  const target = DAYS.indexOf(name);
+  const d = new Date(from);
+  let add = (target - d.getDay() + 7) % 7;
+  if (add === 0) add = 7;
+  d.setDate(d.getDate() + add);
+  return d;
+}
+function fmtDay(d){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const that = new Date(d); that.setHours(0,0,0,0);
+  const diff = Math.round((that - today) / 86400000);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  return d.toLocaleDateString(undefined,{weekday:'long', month:'short', day:'numeric'});
+}
+function fmtTime(h, m=0){
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}${m ? ':' + String(m).padStart(2,'0') : ':00'} ${ampm}`;
+}
+
+function parse(raw){
+  const text = raw.trim();
+  if (!text) return null;
+  const lower = ' ' + text.toLowerCase() + ' ';
+  const out = { kindLabel:'', when:'', why:'' };
+
+  // ---- date ----
+  let date = null, datePhrase = null;
+  const now = new Date();
+  if (/\btoday\b/.test(lower)) { date = new Date(now); datePhrase='today'; }
+  else if (/\btom+or+ow\b|\btmrw?\b/.test(lower)) { date = new Date(now); date.setDate(date.getDate()+1); datePhrase='tomorrow'; }
+  else {
+    for (const d of DAYS) if (new RegExp('\\b'+d+'\\b').test(lower)) { date = nextDay(d, now); datePhrase=d; break; }
+    const md = lower.match(/\b(\d{1,2})\/(\d{1,2})\b/);
+    if (!date && md) {
+      date = new Date(now.getFullYear(), +md[1]-1, +md[2]);
+      if (date < now) date.setFullYear(date.getFullYear()+1);
+      datePhrase = md[0].trim();
+    }
+    const nth = lower.match(/\bthe (\d{1,2})(st|nd|rd|th)\b/);
+    if (!date && nth) {
+      date = new Date(now.getFullYear(), now.getMonth(), +nth[1]);
+      if (date < now) date.setMonth(date.getMonth()+1);
+      datePhrase = nth[0].trim();
+    }
+  }
+
+  // ---- time ----
+  let hour = null, minute = 0, hourStated = false;
+  const clock = lower.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/);
+  if (clock) {
+    hour = +clock[1] % 12 + (clock[3]==='pm' ? 12 : 0);
+    minute = clock[2] ? +clock[2] : 0;
+    hourStated = true;
+  } else if (/\bnoon\b/.test(lower)) { hour = 12; hourStated = true; }
+  let partOfDay = null;
+  if (hour === null){
+    if (/\bmorning\b/.test(lower)) { hour = 9;  partOfDay='morning'; }
+    else if (/\bafternoon\b/.test(lower)) { hour = 14; partOfDay='afternoon'; }
+    else if (/\b(evening|tonight)\b/.test(lower)) { hour = 19; partOfDay='evening'; if(!date){date=new Date(now);datePhrase='today';} }
+    else if (/\b(dinner|supper)\b/.test(lower)) { hour = 18; partOfDay='dinner time'; }
+    else if (/\b(lunch)\b/.test(lower)) { hour = 12; partOfDay='lunchtime'; }
+  }
+
+  // ---- money ----
+  const amt = text.match(/\$\s?(\d+(?:\.\d{2})?)/);
+
+  // ---- kind, in the app's priority order ----
+  const isDeadline = /\bdeadline\b/.test(lower);
+  const isRemind   = /\bremind me\b/.test(lower);
+  const isIdea     = /\bidea\b[:\s]/.test(lower);
+  const listy      = text.split(/,| and /).length > 2 &&
+                     /\b(eggs|milk|bread|food|towels|groceries|butter|cheese|soap|batteries|paper)\b/.test(lower);
+  const eventy     = /\b(appointment|meeting|dentist|doctor|interview|dinner with|lunch with|coffee with)\b/.test(lower);
+  const taskLead   = /^\s*(add|new|create)\s+(a\s+)?task\b/.test(text.toLowerCase());
+
+  if (isRemind) {
+    out.kindLabel = 'Reminder set';
+    if (hour === null && date) { hour = 9; }
+    out.why = '"remind me" names the kind — it wins over every other cue.';
+  } else if (isDeadline || taskLead) {
+    out.kindLabel = 'Task created';
+    if (date && hour === null) {
+      hour = 12;
+      out.why = isDeadline
+        ? 'A deadline with no time stated lands at NOON — not an invented 9am.'
+        : 'You said "task", so the date is a deadline. No time stated → noon.';
+    } else if (isDeadline) {
+      out.why = 'The word "deadline" alone settles it: only a task has one.';
+    }
+  } else if (amt) {
+    out.kindLabel = /\b(rent|bill|due|owe)\b/.test(lower) ? 'Bill filed' : 'Expense logged';
+    out.when = '$' + amt[1] + (date ? ' · due ' + fmtDay(date) : '');
+    out.why = 'A dollar amount makes it money — filed into your budget, not your notes.';
+    show(out); return out;
+  } else if (listy) {
+    const items = text.split(/,| and /).map(s=>s.trim()).filter(Boolean);
+    out.kindLabel = 'Shopping list updated';
+    out.when = items.length + ' items';
+    out.why = 'Commas plus grocery words read as a list, not a sentence.';
+    show(out); return out;
+  } else if (isIdea) {
+    out.kindLabel = 'Idea saved';
+    out.when = 'Filed under Ideas';
+    out.why = 'Leading "idea:" files it where half-formed things live.';
+    show(out); return out;
+  } else if (eventy || (date && hourStated)) {
+    out.kindLabel = 'Event scheduled';
+    if (hour === null) hour = 9;
+    out.why = eventy ? 'Meeting words make it an appointment — it lands on your calendar.'
+                     : 'A date plus a stated time reads as an appointment.';
+  } else if (date || hour !== null) {
+    out.kindLabel = 'Reminder set';
+    if (hour === null) hour = 9;
+    out.why = 'A time reference with no other signal is still probably actionable.';
+  } else {
+    out.kindLabel = 'Note saved';
+    out.when = 'No date found — it keeps your words exactly as typed';
+    out.why = 'Nothing to schedule. It waits as a note until you say otherwise.';
+    show(out); return out;
+  }
+
+  if (date) {
+    out.when = fmtDay(date) + (hour !== null ? ', ' + fmtTime(hour, minute) : '');
+    if (partOfDay && !hourStated) out.why ||= `"${partOfDay}" carries its own hour — the app never overrides a choice you made.`;
+  } else if (hour !== null) {
+    out.when = 'Today, ' + fmtTime(hour, minute);
+  }
+  show(out);
+  return out;
+}
+
+const card = document.getElementById('card');
+function show(o){
+  document.getElementById('what').textContent = o.kindLabel;
+  document.getElementById('when').textContent = o.when;
+  document.getElementById('why').textContent  = o.why;
+  card.classList.add('show');
+}
+
+const input = document.getElementById('t');
+let timer = null;
+input.addEventListener('input', () => {
+  clearTimeout(timer);
+  if (!input.value.trim()) { card.classList.remove('show'); return; }
+  timer = setTimeout(() => parse(input.value), 250);
+});
+
+// suggestion chips — each shows off a different rule
+const SUGGESTIONS = [
+  'pay rent with a deadline of friday',
+  'remind me to call mum tomorrow evening',
+  'dentist appointment tuesday at 2pm',
+  'need dog food, eggs, and paper towels',
+  '$45 gas',
+  'idea: robot analyzer for manufacturers',
+];
+const chips = document.getElementById('chips');
+for (const s of SUGGESTIONS) {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.type = 'button'; b.textContent = s;
+  b.addEventListener('click', () => { input.value = s; parse(s); input.focus(); });
+  chips.appendChild(b);
+}
+
+// share
+document.getElementById('share').addEventListener('click', async () => {
+  const note = document.getElementById('sharednote');
+  const data = { title: 'Type anything. Watch it get sorted.',
+                 text: 'A live demo of the parser inside Life:',
+                 url: 'https://barretops.com/try/' };
+  try {
+    if (navigator.share) { await navigator.share(data); }
+    else { await navigator.clipboard.writeText(data.url); note.textContent = 'Link copied.'; }
+  } catch {}
+});
+</script>
+</body>
+</html>
