@@ -143,7 +143,7 @@
   "@type": "SoftwareApplication",
   "name": "Life",
   "applicationCategory": "ProductivityApplication",
-  "operatingSystem": "Android, iOS",
+  "operatingSystem": "iOS, Android",
   "description": "Type anything and Life works out what it is, where it belongs, and when it matters - tasks, appointments, reminders, shopping lists, and ideas, sorted on your phone with no account required.",
   "url": "https://barretops.com/life/",
   "image": "https://barretops.com/img/life-feature.png",
@@ -163,6 +163,8 @@
 </script>
 </head>
 <body>
+<a href="https://testflight.apple.com/join/TJ2VHNau" style="display:block;background:#34c76e;color:#04140b;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Join the iPhone public beta tester group &rarr;</a>
+
 
 <div style="text-align:center; padding:26px 0 0; font-size:.95rem;">
   <a href="/" style="color:var(--dim); text-decoration:none; font-weight:650;">BarretOps<span style="color:var(--accent)">.</span></a>
@@ -176,17 +178,46 @@
 
 <!-- ===================== HERO ===================== -->
 <div class="wrap hero">
-  <span class="badge">Android in testing · iPhone public beta</span>
+  <span class="badge">iPhone public beta · Android in testing</span>
   <h1>Type like a maniac.<br>Leave organized.</h1>
   <p class="sub">Type anything. Life works out what it is, where it belongs, and when it matters.</p>
   <p class="formnote" style="margin:-14px 0 22px"><a href="/try/" style="color:var(--accent)">Try the parser in your browser →</a></p>
 
-  <!-- Android: closed testing means Google only lets IN people who are in
-       the tester group first, so the join email has to happen before the
-       install button works — two steps, in order.
-       iPhone: TestFlight's public link is self-serve, one step, no group
-       to join first - genuinely simpler than Android's flow here. -->
+  <!-- iPhone first: TestFlight's public link is self-serve, one tap, no group
+       to join first. Android's closed testing is the two-step one - Google only
+       lets IN people already in the tester group, so the join email has to
+       happen before the install button works. Order reflects that. -->
   <div style="margin:0 0 18px">
+    <p class="formnote" style="margin:0 0 8px; text-transform:uppercase; letter-spacing:.08em; font-size:.72rem; color:var(--dim)">
+      iPhone
+    </p>
+    <p style="margin:0 0 10px">
+      <a href="https://testflight.apple.com/join/TJ2VHNau"
+         style="display:inline-block; background:var(--accent); color:#04140b;
+                padding:15px 26px; border-radius:10px; font-weight:700;
+                text-decoration:none; font-size:1rem;">
+        Join the iPhone public beta tester group
+      </a>
+    </p>
+    <p class="formnote" style="margin:0 0 14px">
+      <b>What TestFlight is, and why you need it.</b> TestFlight is Apple's own
+      app &mdash; published by Apple, free, on the App Store. It's the only way
+      Apple allows anyone to install an app that hasn't finished its App Store
+      release yet, so every iPhone beta on earth goes through it. Life is in
+      that stage right now.
+    </p>
+    <p class="formnote" style="margin:0 0 14px">
+      Apple reviews every build before it reaches you, the same review the App
+      Store runs. Nothing is sideloaded, nothing bypasses Apple's protections,
+      and you're not granting anything unusual. If you've ever beta-tested an
+      iPhone app, this is the identical process.
+    </p>
+    <p class="formnote" style="margin:0 0 30px">
+      Tap the button on your iPhone. If you don't have TestFlight, the App Store
+      offers it first; then Life installs with one more tap. No account with us,
+      no group to join, no invite code. Delete either one whenever you want.
+    </p>
+
     <p class="formnote" style="margin:0 0 8px; text-transform:uppercase; letter-spacing:.08em; font-size:.72rem; color:var(--dim)">
       Android
     </p>
@@ -195,7 +226,7 @@
          style="display:inline-block; background:var(--accent); color:#04140b;
                 padding:15px 26px; border-radius:10px; font-weight:700;
                 text-decoration:none; font-size:1rem;">
-        Step 1 — Join the tester group
+        Step 1 &mdash; Join the tester group
       </a>
     </p>
     <p class="formnote" style="margin:0 0 16px">
@@ -210,27 +241,11 @@
                 border:1px solid var(--accent);
                 padding:14px 25px; border-radius:10px; font-weight:700;
                 text-decoration:none; font-size:1rem;">
-        Step 2 — Become a tester and install
+        Step 2 &mdash; Become a tester and install
       </a>
     </p>
     <p class="formnote" style="margin:0 0 30px">
       On Google Play. Takes a minute, and it's the real app.
-    </p>
-
-    <p class="formnote" style="margin:0 0 8px; text-transform:uppercase; letter-spacing:.08em; font-size:.72rem; color:var(--dim)">
-      iPhone
-    </p>
-    <p style="margin:0 0 10px">
-      <a href="https://testflight.apple.com/join/TJ2VHNau"
-         style="display:inline-block; background:var(--accent); color:#04140b;
-                padding:15px 26px; border-radius:10px; font-weight:700;
-                text-decoration:none; font-size:1rem;">
-        Join on TestFlight — install it now
-      </a>
-    </p>
-    <p class="formnote" style="margin:0 0 30px">
-      One tap. TestFlight installs if you don't already have it, then
-      Life goes straight on — no separate group to join first.
     </p>
   </div>
 
@@ -238,7 +253,7 @@
     <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
     <button type="submit" id="submit">Get early access</button>
   </form>
-  <p class="formnote" id="note">3 months free for signing up early. No spam, one email when it's ready.</p>
+  <p class="formnote" id="note">No spam, one email when it leaves testing.</p>
 
   <!-- live demo of the actual parser behaviour -->
   <div class="demo">
@@ -334,11 +349,6 @@
   <div class="price"><span class="amt">$4.99</span><span style="font-size:1rem;color:var(--dim)">&nbsp;/ month</span></div>
   <p>Or $29.99 a year. Seven-day free trial first, billed through Google Play and the App Store. No ads. No account required.</p>
   <p style="margin-bottom:28px">Capture, calendar, reminders, lists, and the home screen widget — all of it included. While testing is open, testers use the full app free.</p>
-
-  <p style="background:var(--soft, rgba(52,199,110,.08)); border:1px solid var(--accent); border-radius:10px; padding:14px 16px; margin-bottom:20px">
-    <b>Sign up below and get 3 months free</b> once Life leaves testing —
-    a thank-you for showing up early, not a trial gimmick.
-  </p>
 
   <form class="signup" id="form2" novalidate>
     <input type="email" id="email2" placeholder="you@email.com" autocomplete="email" required>
