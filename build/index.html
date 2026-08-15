@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/life-icon.png">
+<title>Get an app built — tell me what you'd want it to do</title>
+<meta name="description" content="Custom apps for small businesses, built and actually shipped to the App Store and Google Play. Tell me what the manual thing is and I'll tell you what's possible.">
+<meta property="og:title" content="Get an app built for your business">
+<meta property="og:description" content="Built, submitted, and shipped to both stores — not handed to you as a folder of code.">
+<meta property="og:image" content="https://barretops.com/img/life-feature.png">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://barretops.com/build/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#080b0a; --panel:#101614; --panel2:#151d19; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+    --err:#ff6b5e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:680px}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks a.hide-sm{display:none}}
+
+  header.top{padding:56px 0 34px}
+  h1{font-size:clamp(1.9rem,5.2vw,2.8rem);line-height:1.12;letter-spacing:-.025em;font-weight:800;margin-bottom:14px}
+  h1 .dot{color:var(--accent)}
+  .lede{color:var(--dim);font-size:1.06rem;margin-bottom:8px;max-width:60ch}
+  .time{display:inline-block;margin-top:14px;font-size:.8rem;color:var(--dim);
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+
+  fieldset{border:0;padding:0;margin:0 0 34px}
+  legend{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:800;padding:0;margin-bottom:16px}
+  .f{margin-bottom:20px}
+  label.q{display:block;font-weight:700;margin-bottom:6px}
+  .help{display:block;color:var(--dim);font-size:.86rem;margin:-2px 0 8px;font-weight:400}
+  .req{color:var(--accent);font-weight:800}
+  input[type=text],input[type=email],input[type=tel],textarea{
+    width:100%;background:var(--panel);color:var(--fg);
+    border:1px solid var(--line);border-radius:10px;
+    padding:12px 13px;font:inherit;font-size:16px;
+    transition:border-color .15s,box-shadow .15s}
+  textarea{min-height:110px;resize:vertical}
+  input:focus,textarea:focus{outline:0;border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(52,199,110,.18)}
+  input[aria-invalid=true],textarea[aria-invalid=true]{border-color:var(--err)}
+  .opts{display:grid;gap:9px}
+  .opts.two{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .opt{display:flex;gap:11px;align-items:flex-start;background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;padding:12px 13px;
+    cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--faint)}
+  .opt input{margin:2px 0 0;accent-color:var(--accent);flex:none;width:17px;height:17px}
+  .opt span{flex:1}
+  .opt small{display:block;color:var(--dim);font-size:.84rem;margin-top:2px;line-height:1.45}
+  .opt:has(input:checked){border-color:var(--accent);background:var(--soft)}
+  .err{color:var(--err);font-size:.85rem;margin-top:6px;display:none}
+  .err.on{display:block}
+  .note{background:var(--panel2);border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0;padding:14px 16px;margin:0 0 30px;
+    color:var(--dim);font-size:.92rem}
+  .note b{color:var(--fg)}
+  button{width:100%;background:var(--accent);color:#04140b;border:0;border-radius:12px;
+    padding:16px;font:inherit;font-weight:800;font-size:1.02rem;cursor:pointer;
+    transition:filter .15s}
+  button:hover{filter:brightness(1.07)}
+  button:disabled{opacity:.55;cursor:default}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .status{margin-top:14px;font-size:.9rem;text-align:center;min-height:20px;color:var(--dim)}
+  .status.bad{color:var(--err)}
+  .foot{margin-top:24px;text-align:center;color:var(--faint);font-size:.85rem;padding-bottom:60px}
+  #done{display:none;text-align:center;padding:80px 20px 100px}
+  #done p{color:var(--dim);max-width:44ch;margin:0 auto 12px}
+  footer.site{border-top:1px solid var(--line);padding:34px 0;color:var(--faint);font-size:.86rem}
+  footer.site a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<a href="https://testflight.apple.com/join/TJ2VHNau" style="display:block;background:#34c76e;color:#04140b;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Join the iPhone public beta tester group &rarr;</a>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/beta/">Beta</a>
+      <a href="/build/">Get an app</a>
+      <a href="/company/" class="hide-sm">Company</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap narrow">
+
+  <div id="formview">
+    <header class="top">
+      <h1>Tell me what you'd want it to do<span class="dot">.</span></h1>
+      <p class="lede">I build custom apps for businesses and actually get them shipped to the App Store and Google Play — not just handed to you as a folder of code and good luck.</p>
+      <p class="lede">This form is how I figure out whether I'm the right fit. Straight answers beat polished ones.</p>
+      <span class="time">About 3 minutes</span>
+    </header>
+
+    <form id="intake" novalidate>
+      <div class="hp" aria-hidden="true">
+        <label>Leave this empty<input type="text" name="_website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <fieldset>
+        <legend>Who you are</legend>
+        <div class="f">
+          <label class="q" for="name">Your name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+          <div class="err" data-for="name">Need a name to call you.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="business">Business name <span class="req">*</span></label>
+          <input type="text" id="business" name="business" autocomplete="organization" required>
+          <div class="err" data-for="business">What's the business called?</div>
+        </div>
+        <div class="f">
+          <label class="q" for="industry">What does the business do? <span class="req">*</span></label>
+          <span class="help">Plain language. "Mobile detailing," "wedding photography," "HVAC repair."</span>
+          <input type="text" id="industry" name="industry" required>
+          <div class="err" data-for="industry">One line is fine.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+          <div class="err" data-for="email">Need a working email to reply to.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="phone">Phone <span class="help" style="display:inline">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+        <div class="f">
+          <label class="q" for="city">City <span class="req">*</span></label>
+          <span class="help">I'm in Las Vegas. Remote is fine, but local means I can show up in person.</span>
+          <input type="text" id="city" name="city" required>
+          <div class="err" data-for="city">Where are you based?</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>The problem</legend>
+        <div class="f">
+          <label class="q" for="problem">What's the manual thing eating your week right now? <span class="req">*</span></label>
+          <span class="help">The spreadsheet, the group text, the whiteboard, the pile of paper forms. This is the most important answer on the form — be specific and be honest about how bad it is.</span>
+          <textarea id="problem" name="problem" required></textarea>
+          <div class="err" data-for="problem">This one I really do need.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="does">If the app worked perfectly, what would it do? <span class="req">*</span></label>
+          <span class="help">Top three things. Don't worry about whether it's possible — that's my job.</span>
+          <textarea id="does" name="does" required placeholder="1.&#10;2.&#10;3."></textarea>
+          <div class="err" data-for="does">Give me at least one.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="today">How do you handle it today?</label>
+          <span class="help">Including "we don't, it just falls through the cracks." That's a real answer.</span>
+          <textarea id="today" name="today"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Shape of it</legend>
+        <div class="f">
+          <label class="q">Who actually opens the app? <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="users" value="Just me" required><span>Just me<small>A tool for the owner</small></span></label>
+            <label class="opt"><input type="radio" name="users" value="Me and my staff"><span>Me and my staff<small>Internal team tool</small></span></label>
+            <label class="opt"><input type="radio" name="users" value="My customers"><span>My customers<small>Public-facing</small></span></label>
+            <label class="opt"><input type="radio" name="users" value="Both staff and customers"><span>Both<small>A staff side and a customer side</small></span></label>
+            <label class="opt"><input type="radio" name="users" value="Not sure yet"><span>Not sure yet</span></label>
+          </div>
+          <div class="err" data-for="users">Pick the closest one.</div>
+        </div>
+        <div class="f">
+          <label class="q">Which phones? <span class="req">*</span></label>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="platform" value="Both iPhone and Android" required><span>Both<small>Recommended</small></span></label>
+            <label class="opt"><input type="radio" name="platform" value="iPhone only"><span>iPhone only</span></label>
+            <label class="opt"><input type="radio" name="platform" value="Android only"><span>Android only</span></label>
+            <label class="opt"><input type="radio" name="platform" value="Not sure"><span>Not sure</span></label>
+          </div>
+          <div class="err" data-for="platform">Pick one.</div>
+        </div>
+        <div class="f">
+          <label class="q">Public or private? <span class="req">*</span></label>
+          <span class="help">Private distribution to your own staff works differently than a public store listing — and costs differently. Worth deciding early.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="distribution" value="Public store listing" required><span>Public<small>Anyone can find and download it</small></span></label>
+            <label class="opt"><input type="radio" name="distribution" value="Private to my company"><span>Private to my company<small>Only my people get it</small></span></label>
+            <label class="opt"><input type="radio" name="distribution" value="Not sure — advise me"><span>Not sure — advise me</span></label>
+          </div>
+          <div class="err" data-for="distribution">Pick one.</div>
+        </div>
+        <div class="f">
+          <label class="q" for="tools">What software do you already use?</label>
+          <span class="help">Square, QuickBooks, Google Calendar, Jobber, a POS, whatever. Matters a lot if the app needs to talk to it.</span>
+          <input type="text" id="tools" name="tools">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Money and time</legend>
+        <div class="note">
+          <b>Why I ask this up front:</b> so neither of us spends an hour on a call to find out we were never in the same ballpark. There's no wrong answer here — a smaller budget just means a smaller first version, and that's often the smart way to start.
+        </div>
+        <div class="f">
+          <label class="q">Budget for the first version <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="budget" value="Under $5k" required><span>Under $5,000<small>Straight talk: it's hard to ship something real at this number once store submission is counted. Pick it if it's your ceiling and I'll tell you honestly what's possible — but stretch if you can.</small></span></label>
+            <label class="opt"><input type="radio" name="budget" value="$5k-$15k"><span>$5,000 – $15,000<small>Where a tightly scoped first version lands</small></span></label>
+            <label class="opt"><input type="radio" name="budget" value="$15k-$40k"><span>$15,000 – $40,000<small>Multiple user types, real integrations</small></span></label>
+            <label class="opt"><input type="radio" name="budget" value="$40k+"><span>$40,000+</span></label>
+            <label class="opt"><input type="radio" name="budget" value="No idea — tell me what it should cost"><span>No idea<small>Tell me what this should cost</small></span></label>
+          </div>
+          <div class="err" data-for="budget">Pick a range, even a rough one.</div>
+        </div>
+        <div class="f">
+          <label class="q">When do you need it? <span class="req">*</span></label>
+          <span class="help">Store review adds one to two weeks on top of whatever we build, every time.</span>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="timeline" value="ASAP — under 1 month" required><span>ASAP<small>Under a month</small></span></label>
+            <label class="opt"><input type="radio" name="timeline" value="1-3 months"><span>1 – 3 months</span></label>
+            <label class="opt"><input type="radio" name="timeline" value="3-6 months"><span>3 – 6 months</span></label>
+            <label class="opt"><input type="radio" name="timeline" value="No hard deadline"><span>No hard deadline</span></label>
+          </div>
+          <div class="err" data-for="timeline">Pick one.</div>
+        </div>
+        <div class="f">
+          <label class="q">After launch, who maintains it? <span class="req">*</span></label>
+          <span class="help">Apps aren't finished when they ship — phones update, stores change rules. This is the cost most people forget.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="support" value="Wants ongoing support retainer" required><span>I'd want you on retainer<small>Ongoing updates and support</small></span></label>
+            <label class="opt"><input type="radio" name="support" value="Hand off, call as needed"><span>Hand it off<small>I'll call you when something breaks</small></span></label>
+            <label class="opt"><input type="radio" name="support" value="Haven't thought about it"><span>Haven't thought about it</span></label>
+          </div>
+          <div class="err" data-for="support">Pick one.</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Anything else</legend>
+        <div class="f">
+          <label class="q" for="notes">What else should I know?</label>
+          <span class="help">Apps you like the feel of, something you tried before that didn't work out, a hard constraint.</span>
+          <textarea id="notes" name="notes"></textarea>
+        </div>
+        <div class="f">
+          <label class="q" for="heard">How'd you find me?</label>
+          <input type="text" id="heard" name="heard" placeholder="LinkedIn, referral, search…">
+        </div>
+      </fieldset>
+
+      <button type="submit" id="send">Send it over</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <p class="foot">I read every one of these myself and reply within two business days.</p>
+    </form>
+  </div>
+
+  <div id="done">
+    <h1>Got it<span class="dot">.</span></h1>
+    <p>Thanks — that's genuinely useful detail. I'll read it properly and get back to you within two business days.</p>
+    <p>If it turns out I'm not the right fit for what you need, I'll tell you that straight rather than sell you something.</p>
+  </div>
+
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p><b>BarretOps</b> — a trade name of BWS Better Rides LLC · Las Vegas, Nevada</p>
+    <p style="margin-top:8px"><a href="/">Home</a> · <a href="/life/">Life</a> · <a href="/beta/">Beta</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="mailto:support@barretops.com">support@barretops.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var ENDPOINT = '/api/app-request';
+  var FALLBACK_EMAIL = 'support@barretops.com';
+  var form = document.getElementById('intake');
+  var status = document.getElementById('status');
+  var btn = document.getElementById('send');
+  var REQUIRED = ['name','business','industry','email','city','problem','does',
+                  'users','platform','distribution','budget','timeline','support'];
+
+  function fieldErr(name, on){
+    var box = document.querySelector('.err[data-for="'+name+'"]');
+    if(box) box.classList.toggle('on', on);
+    var el = form.elements[name];
+    if(el && el.setAttribute && !el.length) el.setAttribute('aria-invalid', on ? 'true':'false');
+  }
+  function valueOf(n){
+    var el = form.elements[n];
+    if(!el) return '';
+    if(el.length && el[0] && el[0].type === 'radio'){
+      for(var i=0;i<el.length;i++) if(el[i].checked) return el[i].value;
+      return '';
+    }
+    return (el.value||'').trim();
+  }
+  function validate(){
+    var bad = null;
+    REQUIRED.forEach(function(n){
+      var val = valueOf(n);
+      if(n === 'email' && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) val = '';
+      fieldErr(n, !val);
+      if(!val && !bad) bad = n;
+    });
+    return bad;
+  }
+  function collect(){
+    var d = {}; new FormData(form).forEach(function(v,k){ d[k] = v; }); return d;
+  }
+  function asText(d){
+    return Object.keys(d).filter(function(k){return k !== '_website';})
+      .map(function(k){ return k + ': ' + d[k]; }).join('\n\n');
+  }
+  function succeeded(){
+    document.getElementById('formview').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(form.elements['_website'] && form.elements['_website'].value){ succeeded(); return; }
+
+    var bad = validate();
+    if(bad){
+      status.className = 'status bad';
+      status.textContent = 'A few required answers are still missing.';
+      var el = form.elements[bad], node = (el.length ? el[0] : el);
+      node.scrollIntoView({behavior:'smooth', block:'center'});
+      try{ node.focus({preventScroll:true}); }catch(_){}
+      return;
+    }
+
+    var data = collect();
+    btn.disabled = true;
+    status.className = 'status';
+    status.textContent = 'Sending…';
+
+    // Same fail-loud contract as the waitlist form: any non-200 means
+    // "not wired up", and we fall back to a mailto that can't silently
+    // swallow a lead.
+    function mailtoFallback(){
+      window.location.href = 'mailto:' + FALLBACK_EMAIL +
+        '?subject=' + encodeURIComponent('App request — ' + (data.business || data.name)) +
+        '&body=' + encodeURIComponent(asText(data));
+      setTimeout(succeeded, 900);
+    }
+
+    fetch(ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(data)
+    }).then(function(r){ if(r.ok) succeeded(); else mailtoFallback(); })
+      .catch(mailtoFallback);
+  });
+
+  form.addEventListener('input', function(e){ if(e.target.name) fieldErr(e.target.name,false); });
+  form.addEventListener('change', function(e){ if(e.target.name) fieldErr(e.target.name,false); });
+})();
+</script>
+</body>
+</html>

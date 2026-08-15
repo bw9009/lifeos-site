@@ -54,3 +54,20 @@ curl -X POST https://barretops.com/api/waitlist \
 ```
 
 `server.py` remains for local preview only: `python3 server.py --port 8000`.
+
+## The custom-app intake form (/build/)
+
+`functions/api/app-request.js` backs it, same shape as the waitlist:
+
+1. Workers & Pages -> KV -> Create namespace -> `apprequests`
+2. Pages project -> Settings -> Functions -> KV namespace bindings ->
+   variable name `APPREQUESTS` -> select it -> redeploy.
+
+Until that binding exists the endpoint returns 500 and the form falls
+back to a mailto, so a lead is never silently lost - it just arrives as
+an email instead of a KV row.
+
+Submissions are `req:<iso-timestamp>:<email>`, one key per submission
+(NOT one per email - the same business asking twice about two different
+apps is two leads). If `RESEND_API_KEY` is set, each one also emails
+support@barretops.com with reply-to set to the sender.
