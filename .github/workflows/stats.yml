@@ -1,0 +1,113 @@
+name: Publish build stats
+
+# Replaces the Ubuntu cron (life/tools/publish-and-push-stats.sh). That
+# box sits on an isolated 10.0.0.0/24 segment with no route out, so its
+# hourly commits piled up locally and the site's numbers froze while the
+# machine looked healthy. Running here means the job cannot be cut off
+# by the home network at all.
+#
+# NEEDS SECRET: REPO_PAT - a fine-grained PAT with Contents:read on
+# bw9009/life and bw9009/envelope-print, and Contents:write on
+# bw9009/lifeos-site. The default GITHUB_TOKEN cannot see other repos,
+# and `life` is private.
+#
+# Schedule note: GitHub's cron is best-effort and hourly runs are often
+# a few minutes late, occasionally skipped under load. That is fine for
+# a counter; do not read a missing run as a broken job.
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stats
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_PAT }}
+          fetch-depth: 0
+
+      # fetch-depth: 0 everywhere on purpose - the stats are commit
+      # COUNTS and first-commit dates. A shallow clone would publish a
+      # confidently wrong number rather than fail.
+      - name: Checkout life
+        uses: actions/checkout@v4
+        with:
+          repository: bw9009/life
+          token: ${{ secrets.REPO_PAT }}
+          fetch-depth: 0
+          path: _repos/life
+
+      - name: Checkout envelope-print
+        uses: actions/checkout@v4
+        with:
+          repository: bw9009/envelope-print
+          token: ${{ secrets.REPO_PAT }}
+          fetch-depth: 0
+          path: _repos/envelope-print
+
+      - name: Checkout lifeos-site (as a counted repo)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_PAT }}
+          fetch-depth: 0
+          path: _repos/lifeos-site
+
+      - name: Decide whether the test suite needs re-running
+        id: decide
+        run: |
+          life_sha="$(git -C _repos/life rev-parse HEAD)"
+          prev="$(grep -oE '"lifeSha": *"[^"]*"' stats.json 2>/dev/null \
+                  | sed -E 's/.*"lifeSha": *"([^"]*)".*/\1/')"
+          echo "life_sha=$life_sha" >> "$GITHUB_OUTPUT"
+          if [ "$life_sha" = "$prev" ]; then
+            echo "run_tests=0" >> "$GITHUB_OUTPUT"
+            echo "life unchanged ($life_sha) - carrying previous test counts"
+          else
+            echo "run_tests=1" >> "$GITHUB_OUTPUT"
+            echo "life moved: $prev -> $life_sha - re-running tests"
+          fi
+
+      - name: Set up Flutter
+        if: steps.decide.outputs.run_tests == '1'
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Build stats.json
+        env:
+          RUN_TESTS: ${{ steps.decide.outputs.run_tests }}
+          LIFE_SHA: ${{ steps.decide.outputs.life_sha }}
+        run: |
+          chmod +x tools/ci-stats.sh
+          ./tools/ci-stats.sh
+
+      - name: Commit if the numbers moved
+        run: |
+          git config user.name  "stats bot"
+          git config user.email "actions@users.noreply.github.com"
+          # "updated" changes every run by definition, so committing on
+          # any diff would push an empty-news commit every hour. Only
+          # commit when a real figure moved.
+          if git diff --quiet -- stats.json; then
+            echo "no change"; exit 0
+          fi
+          if [ -z "$(git diff -U0 -- stats.json | grep -E '^\+' | grep -vE '^\+\+\+|"updated"')" ]; then
+            echo "only the timestamp changed - not committing"
+            git checkout -- stats.json
+            exit 0
+          fi
+          git add stats.json
+          git commit -m "Auto-update build stats ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+          git push
