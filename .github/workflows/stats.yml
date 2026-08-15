@@ -31,6 +31,23 @@ jobs:
   stats:
     runs-on: ubuntu-latest
     steps:
+      # actions/checkout reports a missing secret as "Input required and
+      # not supplied: token", which says nothing about WHICH input or
+      # why. Fail here instead, with the actual cause and the fix.
+      - name: Check REPO_PAT exists
+        env:
+          REPO_PAT: ${{ secrets.REPO_PAT }}
+        run: |
+          if [ -z "$REPO_PAT" ]; then
+            echo "::error::REPO_PAT is empty. The secret must live on THIS repo"
+            echo "::error::(bw9009/lifeos-site) under Settings > Secrets and variables"
+            echo "::error::> Actions > Repository secrets - not Dependabot, not"
+            echo "::error::Codespaces, not an Environment secret - and be named"
+            echo "::error::exactly REPO_PAT."
+            exit 1
+          fi
+          echo "REPO_PAT present (${#REPO_PAT} chars)"
+
       - name: Checkout site
         uses: actions/checkout@v4
         with:
