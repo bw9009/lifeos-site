@@ -127,4 +127,20 @@ jobs:
           fi
           git add stats.json
           git commit -m "Auto-update build stats ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
-          git push
+          # The job takes minutes (Flutter install + full suite), so master
+          # can move under it - any human push during that window makes
+          # this a non-fast-forward and the run dies at the last step with
+          # the work already done. Rebase and retry instead. stats.json is
+          # the only file this job touches and it is regenerated, not
+          # merged, so replaying the commit on top is always correct.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "pushed on attempt $attempt"; exit 0
+            fi
+            echo "push rejected - rebasing on origin/master and retrying"
+            git pull --rebase=true --strategy-option=theirs origin master || {
+              echo "::error::rebase failed; leaving master alone"; exit 1
+            }
+          done
+          echo "::error::could not push after 3 attempts"
+          exit 1
