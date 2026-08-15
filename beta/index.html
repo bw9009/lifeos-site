@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/life-icon.png">
+<title>Join the Life beta — iPhone and Android</title>
+<meta name="description" content="Get Life on your phone before it's public. One tap on iPhone. Two steps on Android — both spelled out here.">
+<meta property="og:title" content="Join the Life beta">
+<meta property="og:description" content="iPhone: one tap. Android: two steps, and here's exactly what they are.">
+<meta property="og:image" content="https://barretops.com/img/life-feature.png">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://barretops.com/beta/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#080b0a; --panel:#101614; --panel2:#151d19; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:720px}
+  section{padding:60px 0}
+  .eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:14px}
+  h1{font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.12;letter-spacing:-.025em;font-weight:800;margin-bottom:14px}
+  h2.big{font-size:clamp(1.4rem,3.6vw,1.9rem);line-height:1.18;letter-spacing:-.02em;font-weight:800;margin-bottom:10px}
+  p.lede{font-size:1.08rem;color:var(--dim);max-width:60ch}
+  .divider{height:1px;background:var(--line)}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks a.hide-sm{display:none}}
+
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.95rem;
+       padding:13px 20px;border-radius:11px;border:1px solid transparent}
+  .btn.primary{background:var(--accent);color:#04140b}
+  .btn.primary:hover{filter:brightness(1.07)}
+  .btn.ghost{border-color:var(--line);color:var(--fg)}
+  .btn.ghost:hover{border-color:var(--accent)}
+  .btn.block{display:block;text-align:center}
+
+  .platform{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:26px 24px;margin-bottom:22px}
+  .platform.android{border-color:rgba(52,199,110,.3)}
+  .ptop{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .glyph{font-size:1.6rem;line-height:1}
+  .tag{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;
+       color:var(--accent);background:var(--soft);border-radius:999px;padding:4px 10px}
+  .steps{counter-reset:s;margin:20px 0 0;list-style:none}
+  .steps li{
+    counter-increment:s;position:relative;padding:0 0 20px 46px;
+    border-left:2px solid var(--line);margin-left:14px}
+  .steps li:last-child{border-left-color:transparent;padding-bottom:0}
+  .steps li::before{
+    content:counter(s);position:absolute;left:-15px;top:-2px;
+    width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04140b;
+    display:grid;place-items:center;font-weight:800;font-size:.85rem}
+  .steps b{display:block;font-weight:750;margin-bottom:2px}
+  .steps p{color:var(--dim);font-size:.94rem}
+  .steps a.inline{color:var(--accent2);font-weight:650}
+  .why{
+    background:var(--panel2);border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0;padding:13px 16px;margin-top:18px;
+    color:var(--dim);font-size:.9rem}
+  .why b{color:var(--fg)}
+  .faq{border-top:1px solid var(--line);padding:18px 0}
+  .faq b{display:block;margin-bottom:4px;font-weight:750}
+  .faq p{color:var(--dim);font-size:.95rem}
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--faint);font-size:.86rem}
+  footer a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<a href="https://testflight.apple.com/join/TJ2VHNau" style="display:block;background:#34c76e;color:#04140b;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Join the iPhone public beta tester group &rarr;</a>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/beta/">Beta</a>
+      <a href="/envelope/" class="hide-sm">EnvelopePrint</a>
+      <a href="/company/">Company</a>
+      <a href="mailto:support@barretops.com" class="hide-sm">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">Free while in testing</div>
+    <h1>Get Life on your phone<br>before it's public.</h1>
+    <p class="lede">Real builds, shipping most days. You'll get updates as they land, and a way to tell me when something's wrong — which is the whole point of a beta.</p>
+  </div>
+</section>
+
+<div class="wrap narrow">
+
+  <div class="platform">
+    <div class="ptop">
+      <span class="glyph">&#63743;</span>
+      <h2 class="big" style="margin:0">iPhone &amp; iPad</h2>
+      <span class="tag">One tap</span>
+    </div>
+    <p class="lede" style="font-size:1rem">Apple's TestFlight handles this. Tap the link on the device you want it on, install TestFlight if you don't have it, then tap Install.</p>
+    <p style="margin-top:18px"><a class="btn primary block" href="https://testflight.apple.com/join/TJ2VHNau">Join the iPhone beta &rarr;</a></p>
+    <div class="why"><b>Capped at 1,000 testers.</b> That's Apple's limit for a public TestFlight link, not mine. When it fills, it fills.</div>
+  </div>
+
+  <div class="platform android">
+    <div class="ptop">
+      <span class="glyph">&#129302;</span>
+      <h2 class="big" style="margin:0">Android</h2>
+      <span class="tag">Two steps</span>
+    </div>
+    <p class="lede" style="font-size:1rem">I'll be straight with you: Google makes this more annoying than Apple does. It's two steps instead of one, and if you skip the first the second just shows an error. Do them in order and it takes about a minute.</p>
+
+    <ol class="steps">
+      <li>
+        <b>Join the tester group first</b>
+        <p>Google requires your account to be on the tester list <em>before</em> the Play Store will show you the app. Use the same Google account that's signed in on your phone.<br>
+        <a class="inline" href="GOOGLE_GROUP_URL">Join the tester group &rarr;</a></p>
+      </li>
+      <li>
+        <b>Then open the Play Store link</b>
+        <p>Once you're in the group, this link opens Life in the Play Store with the testing version available.<br>
+        <a class="inline" href="PLAY_OPTIN_URL">Open Life on Google Play &rarr;</a></p>
+      </li>
+      <li>
+        <b>Install it</b>
+        <p>If it says the app isn't available, give it a few minutes and reload — Google takes a little while to notice you joined the group. That wait is normal and it's not you doing it wrong.</p>
+      </li>
+    </ol>
+
+    <div class="why"><b>Why the extra step?</b> Life is in closed testing on Google Play, which means Google only serves it to accounts on an approved list. The group membership <em>is</em> the list. Once the app goes to production this disappears entirely.</div>
+  </div>
+
+</div>
+
+<section>
+  <div class="wrap narrow">
+    <h2 class="big">Questions people actually ask</h2>
+
+    <div class="faq">
+      <b>Does it cost anything?</b>
+      <p>No. It's free for the whole testing period. Subscription pricing is set for the production release, but nothing gets charged to a tester.</p>
+    </div>
+    <div class="faq">
+      <b>What do you do with my data?</b>
+      <p>Nothing — there's nothing to do. Life has no accounts and no server of mine. What you type stays on your phone unless you connect your own Google Calendar or Tasks, and that goes to Google, not to me.</p>
+    </div>
+    <div class="faq">
+      <b>Will it break?</b>
+      <p>Sometimes. That's what beta means, and it's why the in-app "something off here" button exists — it writes the report for you, two taps to send. Those reports are the single most useful thing a tester can do.</p>
+    </div>
+    <div class="faq">
+      <b>Do I lose my stuff when the real version ships?</b>
+      <p>No. Your data lives on your device and carries over.</p>
+    </div>
+    <div class="faq">
+      <b>The Android link says the app isn't available.</b>
+      <p>Almost always means step one hasn't propagated yet, or you're signed into a different Google account on your phone than the one you joined the group with. Check the account first, then wait a few minutes.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="wrap">
+    <p><b>BarretOps</b> — a trade name of BWS Better Rides LLC · Las Vegas, Nevada</p>
+    <p style="margin-top:8px"><a href="/">Home</a> · <a href="/life/">Life</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="mailto:support@barretops.com">support@barretops.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
