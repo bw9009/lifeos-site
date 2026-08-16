@@ -129,7 +129,7 @@
   <div class="statgrid">
     <div class="stat"><div class="n" data-stat="commits">—</div><div class="k">Commits</div></div>
     <div class="stat"><div class="n" data-stat="lines">—</div><div class="k">Lines of code</div></div>
-    <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing</div></div>
+    <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing<span data-stat="failing"></span></div></div>
     <div class="stat"><div class="n" data-stat="days">—</div><div class="k">Days in</div></div>
   </div>
   <p class="note" style="text-align:center;margin-top:18px">Published from the source repository, not typed in by hand.</p>
@@ -179,7 +179,11 @@
 // private, so the browser reads stats.json rather than the GitHub API,
 // and "days" is computed here so it keeps counting between publishes.
 (function () {
-  var FALLBACK = { commits:302, lines:37366, tests:1124, started:'2026-07-31' };
+  // Real on 2026-08-16, and only shown if stats.json cannot be reached
+  // at all. testsStale is true so a fallback can never present itself
+  // as a fresh measurement.
+  var FALLBACK = { commits:651, lines:53465, tests:1329, testsFailing:22,
+                   testsStale:true, started:'2026-07-31' };
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function fmt(n){ return n.toLocaleString('en-US'); }
   function countTo(el, target) {
@@ -200,6 +204,19 @@
       var el = document.querySelector('[data-stat="' + k + '"]');
       if (el) countTo(el, values[k]);
     });
+    // The failing count belongs next to the passing one. This page
+    // tells a lender the quality story; showing only green would be
+    // the one number on it that flatters.
+    var fail = document.querySelector('[data-stat="failing"]');
+    if (fail) {
+      if (s.testsStale) {
+        fail.textContent = ' · not measured this run';
+      } else if (s.testsFailing > 0) {
+        fail.textContent = ' · ' + fmt(s.testsFailing) + ' failing';
+      } else {
+        fail.textContent = '';
+      }
+    }
   }
   fetch('/stats.json', { cache:'no-cache' })
     .then(function (r){ return r.ok ? r.json() : Promise.reject(r.status); })

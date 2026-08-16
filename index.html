@@ -195,7 +195,10 @@
     <div class="statgrid">
       <div class="stat"><div class="n" data-stat="commits">—</div><div class="k">Commits</div></div>
       <div class="stat"><div class="n" data-stat="lines">—</div><div class="k">Lines of code</div></div>
-      <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing</div></div>
+      <!-- The failing count sits with the passing one on purpose. A
+           page that shows only green implies perfection nobody has,
+           and the number is published either way in stats.json. -->
+      <div class="stat"><div class="n" data-stat="tests">—</div><div class="k">Tests passing<span data-stat="failing"></span></div></div>
       <div class="stat"><div class="n" data-stat="days">—</div><div class="k">Days in</div></div>
     </div>
     <p class="note"><span class="pulse"></span>Live from the repository — last updated <b data-stat="updated">just now</b>.</p>
@@ -391,8 +394,13 @@
 // "days" is computed HERE, from the first commit date, so it keeps
 // counting between publishes instead of going stale.
 (function () {
-  var FALLBACK = { commits:302, lines:37366, tests:1124,
-                   started:'2026-07-31', updated:null };
+  // Only used when stats.json cannot be fetched at all. Kept honest
+  // because a confident wrong number is worse than an obvious gap:
+  // these were real on 2026-08-16 and go stale by definition, so
+  // "updated" stays null and the note reads "just now" rather than
+  // claiming a fresh measurement.
+  var FALLBACK = { commits:651, lines:53465, tests:1329, testsFailing:22,
+                   testsStale:true, started:'2026-07-31', updated:null };
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function fmt(n){ return n.toLocaleString('en-US'); }
 
@@ -433,6 +441,21 @@
     }
     var upd = document.querySelector('[data-stat="updated"]');
     if (upd) upd.textContent = ago(s.updated);
+
+    // Say the uncomfortable number out loud. testsStale means the suite
+    // could not be measured this run and the figure was carried
+    // forward - publishing that as fact would be the same inflation
+    // this band exists to avoid.
+    var fail = document.querySelector('[data-stat="failing"]');
+    if (fail) {
+      if (s.testsStale) {
+        fail.textContent = ' · not measured this run';
+      } else if (s.testsFailing > 0) {
+        fail.textContent = ' · ' + fmt(s.testsFailing) + ' failing';
+      } else {
+        fail.textContent = '';
+      }
+    }
 
     var band = document.querySelector('.stats');
     if (band && 'IntersectionObserver' in window) {
