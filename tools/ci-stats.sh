@@ -86,10 +86,17 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
       (cd "$d" && "$FLUTTER" pub get >/dev/null 2>&1) || true
       # Progress uses carriage returns and the LAST lines are warning
       # text, so take the last real progress line: "MM:SS +1054 -184:"
-      out=$(cd "$d" && "$FLUTTER" test 2>>"$SITE/test-stderr.log" \
-            | tr '\r' '\n' \
+      # Keep the raw stdout as well as stderr. Locally this parse works
+      # even when piped - 1331 progress lines matched through `cat` - so
+      # whatever differs is in the CI environment, and the only way to
+      # see it is to keep what the command actually said.
+      raw="$SITE/test-stdout-$name.log"
+      (cd "$d" && "$FLUTTER" test >"$raw" 2>>"$SITE/test-stderr.log") || true
+      out=$(tr '\r' '\n' < "$raw" \
             | grep -aE '^[0-9]+:[0-9]+ +\+[0-9]+' \
             | tail -1 || true)
+      echo "-- $name: $(wc -l < "$raw" | tr -d ' ') lines of test output," \
+           "parsed: '${out:-NOTHING}'" >&2
       p=$(printf '%s' "$out" | grep -oE '\+[0-9]+' | tail -1 | tr -d '+')
       f=$(printf '%s' "$out" | grep -oE ' -[0-9]+' | tail -1 | tr -d ' -')
       [ -n "$p" ] && pass=$((pass + p))
@@ -100,7 +107,14 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
     # Could not measure. Carry the old numbers AND say so.
     pass=$prev_pass; fail=$prev_fail; stale=true
     echo "WARNING: test run produced nothing, reusing last known counts" >&2
-    cat "$SITE/test-stderr.log" >&2
+    echo "---- stderr ----" >&2
+    cat "$SITE/test-stderr.log" >&2 2>/dev/null || echo "(no stderr file)" >&2
+    for name in $REPOS; do
+      raw="$SITE/test-stdout-$name.log"
+      [ -f "$raw" ] || continue
+      echo "---- first 25 lines of $name stdout ----" >&2
+      head -25 "$raw" >&2
+    done
   fi
 else
   # Code did not change: the previous figures still describe it.

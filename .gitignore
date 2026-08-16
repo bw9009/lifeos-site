@@ -1,3 +1,6 @@
-waitlist.jsonl
-__pycache__/
 *.pyc
+__pycache__/
+_repos/
+test-stderr.log
+test-stdout-*.log
+waitlist.jsonl
