@@ -86,7 +86,7 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
       (cd "$d" && "$FLUTTER" pub get >/dev/null 2>&1) || true
       # Progress uses carriage returns and the LAST lines are warning
       # text, so take the last real progress line: "MM:SS +1054 -184:"
-      out=$(cd "$d" && "$FLUTTER" test 2>/dev/null \
+      out=$(cd "$d" && "$FLUTTER" test 2>>"$SITE/test-stderr.log" \
             | tr '\r' '\n' \
             | grep -aE '^[0-9]+:[0-9]+ +\+[0-9]+' \
             | tail -1 || true)
@@ -100,6 +100,7 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
     # Could not measure. Carry the old numbers AND say so.
     pass=$prev_pass; fail=$prev_fail; stale=true
     echo "WARNING: test run produced nothing, reusing last known counts" >&2
+    cat "$SITE/test-stderr.log" >&2
   fi
 else
   # Code did not change: the previous figures still describe it.
