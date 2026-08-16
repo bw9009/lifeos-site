@@ -18,6 +18,13 @@ name: Publish build stats
 on:
   schedule:
     - cron: '0 * * * *'
+  # Sent by bw9009/life on every push to master. Polling once an hour
+  # meant the numbers could sit stale that long, and the test suite -
+  # the expensive half - only re-ran when the hourly check happened to
+  # notice. This makes the update follow the work. The cron stays as a
+  # safety net: a missed event costs freshness, not correctness.
+  repository_dispatch:
+    types: [life-updated]
   workflow_dispatch:
     inputs:
       force_tests:
