@@ -18,7 +18,7 @@ tool without an API key or an account to log into.
 - Live typing demo showing the **actual** classifications the app produces
 - Expandable "See what you can throw at it" section
 - Privacy/offline positioning
-- $4.99 one-time, early-access members free
+- $4.99 a month or $29.99 a year, 30-day free trial, early-access members free
 - Two signup forms (top and bottom), both wired
 
 ## Before it goes live
