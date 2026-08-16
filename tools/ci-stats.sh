@@ -86,19 +86,46 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
       (cd "$d" && "$FLUTTER" pub get >/dev/null 2>&1) || true
       # Progress uses carriage returns and the LAST lines are warning
       # text, so take the last real progress line: "MM:SS +1054 -184:"
-      # Keep the raw stdout as well as stderr. Locally this parse works
-      # even when piped - 1331 progress lines matched through `cat` - so
-      # whatever differs is in the CI environment, and the only way to
-      # see it is to keep what the command actually said.
+      # --machine, because the human output is not a contract.
+      #
+      # The evidence for this: a forced CI run spent 5m13s in the test
+      # step, wrote NOTHING to stderr, and still parsed nothing. So the
+      # suite ran fine and only the scraping failed - the progress lines
+      # ("MM:SS +1054 -184:") are a terminal convenience that CI does not
+      # get, even though they appear locally when piped.
+      #
+      # --machine emits one JSON event per line, which is a documented
+      # format rather than something that changes with the renderer.
       raw="$SITE/test-stdout-$name.log"
-      (cd "$d" && "$FLUTTER" test >"$raw" 2>>"$SITE/test-stderr.log") || true
-      out=$(tr '\r' '\n' < "$raw" \
-            | grep -aE '^[0-9]+:[0-9]+ +\+[0-9]+' \
-            | tail -1 || true)
-      echo "-- $name: $(wc -l < "$raw" | tr -d ' ') lines of test output," \
-           "parsed: '${out:-NOTHING}'" >&2
-      p=$(printf '%s' "$out" | grep -oE '\+[0-9]+' | tail -1 | tr -d '+')
-      f=$(printf '%s' "$out" | grep -oE ' -[0-9]+' | tail -1 | tr -d ' -')
+      (cd "$d" && "$FLUTTER" test --machine >"$raw" 2>>"$SITE/test-stderr.log") \
+        || true
+
+      counts=$(python3 - "$raw" <<'PY'
+import json, sys
+passed = failed = 0
+with open(sys.argv[1], errors='replace') as fh:
+    for line in fh:
+        line = line.strip()
+        if not line.startswith('{'):
+            continue
+        try:
+            e = json.loads(line)
+        except ValueError:
+            continue
+        if e.get('type') != 'testDone' or e.get('hidden'):
+            continue
+        if e.get('result') == 'success':
+            passed += 1
+        else:
+            failed += 1
+print(passed, failed)
+PY
+)
+      p=$(printf '%s' "$counts" | awk '{print $1}')
+      f=$(printf '%s' "$counts" | awk '{print $2}')
+      echo "-- $name: $(wc -l < "$raw" | tr -d ' ') lines of machine output," \
+           "passed=${p:-?} failed=${f:-?}" >&2
+      [ "${p:-0}" -eq 0 ] && p=""
       [ -n "$p" ] && pass=$((pass + p))
       [ -n "$f" ] && fail=$((fail + f))
     done
