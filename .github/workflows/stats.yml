@@ -19,6 +19,11 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      force_tests:
+        description: 'Run the suite even if life has not changed'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -87,6 +92,14 @@ jobs:
           prev="$(grep -oE '"lifeSha": *"[^"]*"' stats.json 2>/dev/null \
                   | sed -E 's/.*"lifeSha": *"([^"]*)".*/\1/')"
           echo "life_sha=$life_sha" >> "$GITHUB_OUTPUT"
+          # Diagnosing the test step needs the test step to actually
+          # run, and it is skipped precisely when nothing has changed -
+          # which is the state you are always in while debugging it.
+          if [ "${{ inputs.force_tests }}" = "true" ]; then
+            echo "run_tests=1" >> "$GITHUB_OUTPUT"
+            echo "forced by workflow_dispatch"
+            exit 0
+          fi
           if [ "$life_sha" = "$prev" ]; then
             echo "run_tests=0" >> "$GITHUB_OUTPUT"
             echo "life unchanged ($life_sha) - carrying previous test counts"
