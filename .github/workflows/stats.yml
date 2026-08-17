@@ -158,7 +158,12 @@ jobs:
               echo "pushed on attempt $attempt"; exit 0
             fi
             echo "push rejected - rebasing on origin/master and retrying"
-            git pull --rebase=true --strategy-option=theirs origin master || {
+            # --autostash as a belt to ci-stats.sh's braces: the logs it
+            # writes now live in RUNNER_TEMP, but ANY stray untracked or
+            # modified file in the tree makes a plain rebase refuse, and
+            # then this loop discards work it has already done.
+            git pull --rebase=true --autostash \
+                     --strategy-option=theirs origin master || {
               echo "::error::rebase failed; leaving master alone"; exit 1
             }
           done

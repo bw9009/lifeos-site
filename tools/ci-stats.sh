@@ -27,6 +27,15 @@
 set -u
 
 SITE="${SITE:-$PWD}"
+
+# TEST LOGS GO OUTSIDE THE REPO. They used to be written into $SITE,
+# which left the working tree dirty - and the push-retry in stats.yml
+# rebases, which git refuses to do with unstaged changes. So the retry
+# that exists precisely for a push race could never survive one:
+#   "cannot pull with rebase: You have unstaged changes"
+#   "rebase failed; leaving master alone"
+# The job did all its work and then threw it away, every time.
+LOG_DIR="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 REPOS_DIR="${REPOS_DIR:-$SITE/_repos}"
 OUT="$SITE/stats.json"
 REPOS="life lifeos-site envelope-print"
@@ -96,8 +105,8 @@ if [ "${RUN_TESTS:-0}" = "1" ]; then
       #
       # --machine emits one JSON event per line, which is a documented
       # format rather than something that changes with the renderer.
-      raw="$SITE/test-stdout-$name.log"
-      (cd "$d" && "$FLUTTER" test --machine >"$raw" 2>>"$SITE/test-stderr.log") \
+      raw="$LOG_DIR/test-stdout-$name.log"
+      (cd "$d" && "$FLUTTER" test --machine >"$raw" 2>>"$LOG_DIR/test-stderr.log") \
         || true
 
       counts=$(python3 - "$raw" <<'PY'
@@ -135,9 +144,9 @@ PY
     pass=$prev_pass; fail=$prev_fail; stale=true
     echo "WARNING: test run produced nothing, reusing last known counts" >&2
     echo "---- stderr ----" >&2
-    cat "$SITE/test-stderr.log" >&2 2>/dev/null || echo "(no stderr file)" >&2
+    cat "$LOG_DIR/test-stderr.log" >&2 2>/dev/null || echo "(no stderr file)" >&2
     for name in $REPOS; do
-      raw="$SITE/test-stdout-$name.log"
+      raw="$LOG_DIR/test-stdout-$name.log"
       [ -f "$raw" ] || continue
       echo "---- first 25 lines of $name stdout ----" >&2
       head -25 "$raw" >&2
