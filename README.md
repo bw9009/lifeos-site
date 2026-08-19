@@ -47,6 +47,43 @@ first, not after.
 
 ---
 
+## DECISIONS
+
+### `.nojekyll` is deliberate — do not delete it
+
+This site is plain static HTML: no `_layouts`, no `_includes`, no front
+matter, no Liquid tags anywhere. Checked before adding the file, not
+assumed. Jekyll was therefore reading every file and changing none of
+them, while adding failure modes the site gets no benefit from.
+
+It cost a real outage. On 2026-08-19, `NOW.md` and `CLAUDE.md` were
+symlinked in here from the `life` repo — fine locally, where both repos
+sit side by side, but GitHub Pages checks out THIS REPO ALONE, so the
+targets did not exist on the runner. Jekyll does not skip a dangling
+symlink, it dies on it:
+
+```
+Error: No such file or directory @ rb_check_realpath_internal
+  - /github/workspace/CLAUDE.md
+```
+
+Every deploy failed from 01:40Z until it was found four hours later. The
+site stayed up serving the last good build, so nothing looked broken —
+which is why it went unnoticed. `.nojekyll` makes Pages copy the files
+as-is and removes this whole class of failure.
+
+Consequence to know: with Jekyll off, nothing is generated. `README.md`
+is not rendered into a page, and files starting with `_` are served
+rather than hidden. Neither matters today. If this site ever wants
+templating, that is a real decision to re-open — not a file to quietly
+remove.
+
+### The shared `NOW.md` / `CLAUDE.md` are NOT symlinked here
+
+Both names are gitignored, for the reason above. Every other repo in
+`~/Projects` symlinks them to the copies in `life`; this one cannot,
+because a service builds it. Read `~/Projects/NOW.md` directly instead.
+
 # NOTES
 
 Newest first. Write as you go, not once at the end.
