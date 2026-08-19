@@ -4,3 +4,11 @@ _repos/
 test-stderr.log
 test-stdout-*.log
 waitlist.jsonl
+
+# The shared NOW.md / CLAUDE.md live in the life repo and are NOT
+# symlinked here. GitHub Pages checks out only this repo, so a symlink
+# to ../life is dangling on the runner and Jekyll dies resolving it:
+#   Error: No such file or directory @ rb_check_realpath_internal
+# Broke every Pages deploy 2026-08-19 01:40Z until removed.
+CLAUDE.md
+NOW.md
