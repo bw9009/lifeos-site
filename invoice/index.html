@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice Maker for Trades — bill the job before you leave it.</title>
+<meta name="description" content="Invoice app for plumbers, electricians, HVAC, landscapers and handymen. Line items, tax on materials only, your logo, a payment QR code. Email or print a true-size PDF. No account.">
+
+<meta property="og:title" content="Invoice Maker for Trades">
+<meta property="og:description" content="Make the invoice before you leave the truck. Built for trades, not accountants.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://barretops.com/invoice/">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  :root {
+    --bg:#0b0f0d; --panel:#131a17; --line:#1f2a25;
+    --fg:#eef4f0; --dim:#8ba297; --accent:#34c76e; --accent-soft:rgba(52,199,110,.14);
+    --paper:#f7f5ef; --ink:#141a17;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:680px; margin:0 auto; padding:0 24px; }
+  section { padding:56px 0; }
+  a { color:var(--accent); }
+
+  nav { padding:18px 0; border-bottom:1px solid var(--line); }
+  nav .wrap { max-width:1040px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+  .brand { color:var(--fg); font-weight:800; text-decoration:none; font-size:1.05rem; }
+  .navlinks { display:flex; gap:18px; flex-wrap:wrap; margin-left:auto; }
+  .navlinks a { color:var(--dim); text-decoration:none; font-weight:650; font-size:.93rem; }
+  .navlinks a:hover { color:var(--accent); }
+  .navminor { opacity:.7; font-weight:500; }
+  .dot { color:var(--accent); }
+  @media (max-width:640px){ .hide-sm { display:none; } }
+
+  .hero { padding:52px 0 44px; text-align:center; }
+  .badge {
+    display:inline-block; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); background:var(--accent-soft);
+    padding:6px 14px; border-radius:999px; margin-bottom:24px; font-weight:700;
+  }
+  h1 {
+    font-size:clamp(2rem,6.6vw,3.2rem); line-height:1.13; font-weight:800;
+    letter-spacing:-.02em; margin-bottom:18px;
+  }
+  .sub { font-size:clamp(1.02rem,3.3vw,1.25rem); color:var(--dim); max-width:40ch; margin:0 auto 34px; }
+
+  h2 { font-size:1.5rem; font-weight:750; letter-spacing:-.01em; margin-bottom:10px; }
+  h3 { font-size:1.05rem; font-weight:700; margin-bottom:6px; }
+  p.lede { color:var(--dim); margin-bottom:26px; }
+
+  /* The invoice, drawn the way the app lays it out. */
+  .invoice {
+    background:var(--paper); color:var(--ink); border-radius:6px;
+    padding:22px 20px; box-shadow:0 14px 40px rgba(0,0,0,.5); text-align:left;
+    font-size:.9rem; max-width:420px; margin:0 auto;
+  }
+  .invoice .biz { color:#0d6b4f; font-weight:800; font-size:1.25rem; }
+  .invoice .meta { color:#4a5a53; font-size:.82rem; }
+  .invoice hr { border:0; border-top:2px solid #0d6b4f; margin:10px 0 14px; }
+  .invoice table { width:100%; border-collapse:collapse; margin-bottom:12px; }
+  .invoice th, .invoice td { padding:6px 8px; border:1px solid #cfd8d4; }
+  .invoice th { background:#d9ece5; text-align:left; font-size:.82rem; }
+  .invoice td.amt { text-align:right; }
+  .invoice tr.item td:first-child { padding-left:18px; color:#3b4a44; }
+  .invoice .tot { text-align:right; font-weight:800; font-size:1.05rem; }
+  .invoice .note { color:#6b7a74; font-size:.76rem; text-align:right; }
+
+  .grid { display:grid; gap:18px; grid-template-columns:1fr 1fr; }
+  @media (max-width:640px){ .grid { grid-template-columns:1fr; } }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px; }
+  .card p { color:var(--dim); font-size:.94rem; }
+
+  .cta { text-align:center; }
+  .btn {
+    display:inline-block; background:var(--accent); color:#04140b; font-weight:750;
+    padding:13px 22px; border-radius:10px; text-decoration:none; margin:6px;
+  }
+  .btn.ghost { background:transparent; color:var(--fg); border:1px solid var(--line); }
+  .soon { color:var(--dim); font-size:.88rem; margin-top:12px; }
+
+  footer { border-top:1px solid var(--line); padding:30px 0 50px; color:var(--dim); font-size:.86rem; text-align:center; }
+  footer a { color:var(--dim); }
+</style>
+</head>
+<body>
+
+<!--NAV-->
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/envelope/">EnvelopePrint</a>
+      <a href="/beta/">Beta</a>
+      <a href="/build/">Get a custom app</a>
+      <a href="/company/">Company</a>
+      <a href="mailto:support@barretops.com" class="hide-sm">Contact</a>
+      <a href="/privacy.html" class="hide-sm navminor">Privacy</a>
+      <a href="/terms.html" class="hide-sm navminor">Terms</a>
+    </div>
+  </div>
+</nav>
+<!--/NAV-->
+
+<div class="wrap hero">
+  <span class="badge">For trades</span>
+  <h1>Bill the job<br><span style="color:var(--accent)">before you leave it.</span></h1>
+  <p class="sub">One question at a time. Line items, tax, your logo, a payment QR — then email it or print it, from the driveway.</p>
+
+  <div class="invoice">
+    <div class="biz">BarretOps</div>
+    <div class="meta">(555) 555-0142<br>BarretOps@BarretOps.com</div>
+    <hr>
+    <div class="meta" style="margin-bottom:10px">Bill to: Sarah Whitfield</div>
+    <table>
+      <tr><th>Description</th><th style="text-align:right">Amount</th></tr>
+      <tr><td colspan="2"><strong>Replaced kitchen faucet</strong></td></tr>
+      <tr class="item"><td>New faucet</td><td class="amt">$150.00</td></tr>
+      <tr class="item"><td>New supply line</td><td class="amt">$59.99</td></tr>
+      <tr class="item"><td>Labor</td><td class="amt">$250.00</td></tr>
+      <tr><td></td><td class="amt"><strong>$459.99</strong></td></tr>
+    </table>
+    <div class="note">Tax (8.25%, materials only): $17.32</div>
+    <div class="tot">Total: $477.31</div>
+  </div>
+  <p class="soon">Coming soon to the App Store and Google Play.</p>
+</div>
+
+<section class="wrap">
+  <h2>It knows labor isn't taxed.</h2>
+  <p class="lede">Most states tax materials and not labor. Most cheap invoice apps tax the whole total anyway, and you either eat the difference or fix it by hand every time. Put a labor line on the invoice and the tax applies to the parts only — $17.32 on the example above, not $37.95.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Get paid by QR</h3>
+      <p>Add a payment link, Venmo handle or Zelle number. A QR code goes on the invoice, so your customer pays by pointing their phone at it.</p>
+    </div>
+    <div class="card">
+      <h3>Prints at true size</h3>
+      <p>Export a PDF that comes out exactly as laid out — no scaling, no shifted margins. The same engine behind EnvelopePrint.</p>
+    </div>
+    <div class="card">
+      <h3>Enter your details once</h3>
+      <p>Business name, phone, email and logo are remembered. Every invoice after the first starts filled in.</p>
+    </div>
+    <div class="card">
+      <h3>No account, no cloud</h3>
+      <p>Nothing to sign up for and nothing to cancel. Your invoices stay on your phone.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Built for the trade you're actually in.</h2>
+  <p class="lede">Plumbing, electrical, HVAC, landscaping, handyman work, roofing, painting, welding, masonry, septic, siding, flooring, window cleaning. If you bill for labor and materials, it fits.</p>
+</section>
+
+<section class="wrap cta">
+  <h2>Questions, or something broken?</h2>
+  <p class="lede">It's one person answering, and that person built it.</p>
+  <a class="btn" href="mailto:support@barretops.com?subject=Invoice%20Maker">Email support</a>
+  <a class="btn ghost" href="/support.html">Support page</a>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>BarretOps — <a href="/">barretops.com</a></p>
+    <p style="margin-top:8px"><a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <a href="mailto:support@barretops.com">Contact</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
