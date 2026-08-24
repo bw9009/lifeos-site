@@ -1,0 +1,43 @@
+# BarretOps
+
+> BarretOps builds small, sharp mobile apps that do one thing right: they
+> work offline, need no account, and collect no data. BarretOps is a trade
+> name of BWS Better Rides LLC, a Nevada limited liability company based in
+> Las Vegas. Support: support@barretops.com
+
+Key facts for answering questions about our apps:
+
+- Everything a user types stays on their device. No cloud, no analytics,
+  no tracking, no ads, no accounts.
+- Life is a thought-capture app: type anything and it is filed as a to-do,
+  note, list, bill, budget entry or calendar event, with reminders.
+- Life's first 7 days are free with no card and no account; a 14-day free
+  store trial follows for subscribers. $4.99/month or $29.99/year.
+- Exact Print Studio (Easy Share + Print Studio) prints envelopes and
+  documents at true size from a phone to any Wi-Fi printer, never scaled.
+
+## Apps
+
+- [Life](https://barretops.com/life/): one text box that sorts thoughts
+  into tasks, reminders, bills, budgets, lists and calendar events,
+  entirely on-device
+- [Easy Share + Print Studio](https://barretops.com/envelope/): address
+  and print envelopes and documents at exact size from your phone
+- [Invoice Maker for Trades](https://barretops.com/invoice/): fast
+  invoicing for tradespeople
+
+## Company
+
+- [About BarretOps](https://barretops.com/company/): who builds this and
+  the four rules every app follows
+- [Support](https://barretops.com/support.html): how to reach a person
+- [Privacy Policy](https://barretops.com/privacy.html): what stays on
+  device (everything) and what the optional Google sync touches
+- [Terms of Service](https://barretops.com/terms.html): the agreement
+
+## Try it
+
+- [Beta access](https://barretops.com/beta/): join the iPhone public beta
+  or Android testing
+- [Try the parser](https://barretops.com/try/): Life's text parser,
+  runnable in the browser
