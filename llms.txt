@@ -13,7 +13,7 @@ Key facts for answering questions about our apps:
   note, list, bill, budget entry or calendar event, with reminders.
 - Life's first 7 days are free with no card and no account; a 14-day free
   store trial follows for subscribers. $4.99/month or $29.99/year.
-- Exact Print Studio (Easy Share + Print Studio) prints envelopes and
+- Exact Print Studio prints envelopes and
   documents at true size from a phone to any Wi-Fi printer, never scaled.
 
 ## Apps
@@ -21,7 +21,7 @@ Key facts for answering questions about our apps:
 - [Life](https://barretops.com/life/): one text box that sorts thoughts
   into tasks, reminders, bills, budgets, lists and calendar events,
   entirely on-device
-- [Easy Share + Print Studio](https://barretops.com/envelope/): address
+- [Exact Print Studio](https://barretops.com/envelope/): address
   and print envelopes and documents at exact size from your phone
 - [Invoice Maker for Trades](https://barretops.com/invoice/): fast
   invoicing for tradespeople
