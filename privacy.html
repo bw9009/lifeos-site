@@ -53,7 +53,7 @@
 <div class="wrap">
   <div class="brand"><a href="/">Life<span class="dot">.</span></a></div>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: 10 August 2026</p>
+  <p class="updated">Last updated: 29 August 2026</p>
 
   <div class="callout">
     <p><strong>The short version:</strong> what you type into Life stays on your
@@ -88,8 +88,10 @@
   <ul>
     <li><code>https://www.googleapis.com/auth/calendar.events</code> — to
     create and update calendar events you ask it to create</li>
-    <li><code>https://www.googleapis.com/auth/calendar.readonly</code> — to
-    show you which of your calendars to file events into</li>
+    <li><code>https://www.googleapis.com/auth/calendar.calendarlist.readonly</code>
+    — to read the <em>list</em> of your calendars (their names and IDs only),
+    so you can choose which calendar to file events into. This scope cannot
+    read the events on those calendars.</li>
     <li><code>https://www.googleapis.com/auth/tasks</code> — to create,
     rename, check off, and delete tasks you ask it to create in Google
     Tasks</li>
@@ -108,6 +110,36 @@
   device by Google's own sign-in library. <strong>We never see your Google
   password</strong>, and we do not store your Google credentials on any
   server of ours — we have no server.</p>
+
+  <h2>Google user data: what we access, how we use it, who we share it
+  with, and how we protect it</h2>
+  <p><strong>What Google user data Life accesses:</strong> the email address
+  of the Google account you sign in with; the names and IDs of the calendars
+  on your account (to offer you a choice of where to file events); the
+  calendar events Life itself creates or updates at your request; and the
+  Google Tasks Life itself creates, renames, completes, or deletes at your
+  request.</p>
+  <p><strong>How Life uses that data:</strong> solely to provide the
+  user-facing sync feature you connected — creating and maintaining the
+  events and tasks you typed into the app, on the calendar you chose, under
+  the account you signed in with. It is not used for advertising, analytics,
+  profiling, or to train any AI or machine-learning model.</p>
+  <p><strong>Who we share, transfer, or disclose it to:</strong>
+  <strong>no one.</strong> Google user data is exchanged only between the
+  app on your device and Google's own APIs. We have no server, so no copy
+  ever reaches us, and we do not share, transfer, sell, or disclose Google
+  user data to any third party. The only exceptions would be those required
+  by applicable law.</p>
+  <p><strong>How we protect it (data protection mechanisms):</strong> all
+  communication with Google's APIs uses encrypted HTTPS/TLS connections.
+  OAuth access tokens are issued and stored on your device by Google's own
+  Sign-In library, in the operating system's protected app storage
+  (Keychain-backed on iOS; app-private, sandboxed storage on Android) — we
+  never see or store your Google password, and no Google user data or
+  credentials are stored on any server of ours, because we operate none.
+  Any Google-derived data cached inside the app (such as an event ID Life
+  created) lives in the app's private, OS-sandboxed storage on your device
+  and is removed when you disconnect Google or delete the app.</p>
 
   <h2>Limited Use disclosure</h2>
   <p>Life's use and transfer of information received from Google APIs adheres to
