@@ -9,6 +9,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Public+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* THE NAV'S OWN CLOTHES. The sitewide nav (3add7a2) added the
+     MARKUP to this page without the rules that dress it - every page
+     carries its own style block here, and four of them got a nav in
+     default blue-underline. Barret, on the live site: "header looks
+     jacked up on life page". Copied verbatim from index.html; if the
+     nav changes again, it changes on every page or on none.
+     (.navminor has no rule on index.html either - it renders as a
+     plain navlink on purpose there, so same here.) */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks a.hide-sm{display:none}}
+
   :root{
     --ink:#101312;          /* the app's own background */
     --ink-2:#1b201e;
