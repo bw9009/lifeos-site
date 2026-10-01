@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/img/life-icon.png">
+<title>Diecast Display Accessories — BarretOps</title>
+<meta name="description" content="Scale wheel chocks and display accessories for 1:18 and 1:24 diecast cars. Designed, printed and checked with calipers in Las Vegas by BarretOps.">
+<meta property="og:title" content="Diecast Display Accessories — BarretOps">
+<meta property="og:description" content="Scale wheel chocks and display accessories for 1:18 and 1:24 diecast, made in Las Vegas.">
+<meta property="og:image" content="https://barretops.com/img/diecast/chocks-on-charger.jpg">
+<link rel="canonical" href="https://barretops.com/diecast/">
+<style>
+  :root{
+    --bg:#080b0a; --panel:#101614; --line:#1e2a25;
+    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
+    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{display:block;max-width:100%;height:auto}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:1080px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
+  .brand .dot{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--dim)}
+  .navlinks a{text-decoration:none}
+  .navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks a.hide-sm{display:none}}
+
+  .head{padding:66px 0 46px;border-bottom:1px solid var(--line);
+    background:radial-gradient(60% 100% at 50% 0%,rgba(52,199,110,.12),transparent 70%)}
+  .headgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+  @media(max-width:760px){.headgrid{grid-template-columns:1fr}}
+  h1{font-size:clamp(2rem,5.4vw,3rem);line-height:1.1;letter-spacing:-.03em;font-weight:800;margin-bottom:16px}
+  .head p{color:var(--dim);font-size:1.1rem;max-width:52ch}
+  .hero{border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+  .eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:14px}
+  h2{font-size:1.5rem;letter-spacing:-.02em;font-weight:800;margin-bottom:14px}
+  p{color:var(--dim);margin-bottom:14px}
+  p strong{color:var(--fg);font-weight:650}
+
+  .products{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:8px}
+  @media(max-width:700px){.products{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+  .card .ph{aspect-ratio:16/10;overflow:hidden;background:#fff}
+  .card .ph img{width:100%;height:100%;object-fit:cover}
+  .card .body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+  .card h3{font-size:1.15rem;letter-spacing:-.01em;font-weight:750;margin-bottom:4px}
+  .card .meta{font-size:.82rem;color:var(--accent);font-weight:700;letter-spacing:.04em;margin-bottom:10px}
+  .card p{font-size:.95rem;flex:1}
+  .card .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+  .price{font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
+  .price small{display:block;font-size:.72rem;color:var(--faint);font-weight:600;letter-spacing:.02em}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.92rem;
+    padding:11px 20px;border-radius:999px;background:var(--accent);color:#04150b;white-space:nowrap}
+  .btn:hover{background:var(--accent2)}
+  .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent2)}
+
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  @media(max-width:700px){.strip{grid-template-columns:1fr}}
+  .strip figure{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .strip img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#fff}
+  .strip figcaption{font-size:.82rem;color:var(--dim);padding:10px 14px}
+
+  ul.points{list-style:none;margin:6px 0 4px}
+  ul.points li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--dim)}
+  ul.points li:last-child{border-bottom:0}
+  ul.points li b{color:var(--fg);font-weight:650}
+
+  footer{padding:48px 0 72px;text-align:center;color:var(--faint);font-size:.9rem}
+  footer a{color:var(--dim);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!--NAV-->
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
+    <div class="navlinks">
+      <a href="/life/">Life</a>
+      <a href="/envelope/">Print Studio</a>
+      <a href="/invoice/">Invoice Maker</a>
+      <a href="/diecast/">Diecast</a>
+      <a href="/beta/">Beta</a>
+      <a href="/build/">Get a custom app</a>
+      <a href="/company/">Company</a>
+      <a href="mailto:support@barretops.com" class="hide-sm">Contact</a>
+      <a href="/privacy.html" class="hide-sm navminor">Privacy</a>
+      <a href="/terms.html" class="hide-sm navminor">Terms</a>
+    </div>
+  </div>
+</nav>
+<!--/NAV-->
+
+<div class="head">
+  <div class="wrap headgrid">
+    <div>
+      <div class="eyebrow">Diecast display accessories</div>
+      <h1>Scale details that make a shelf look like a garage.</h1>
+      <p>Wheel chocks and display pieces for <strong>1:18</strong> and <strong>1:24</strong> diecast cars. Designed and printed in Las Vegas, and every batch is checked with calipers before it ships.</p>
+    </div>
+    <div class="hero"><img src="/img/diecast/chocks-on-charger.jpg" alt="Black 1:24 scale wheel chock in front of the tire of a 1:24 diecast muscle car" width="1166" height="1400"></div>
+  </div>
+</div>
+
+<section class="wrap">
+  <h2>Products</h2>
+  <div class="products">
+
+    <div class="card">
+      <div class="ph"><img src="/img/diecast/chocks-set-20.jpg" alt="Twenty black 1:24 scale wheel chocks fanned out on a white background" loading="lazy"></div>
+      <div class="body">
+        <h3>1:24 Scale Wheel Chocks, Set of 20</h3>
+        <div class="meta">16 × 12 × 7.5 mm · Black PETG</div>
+        <p>Enough to chock five cars front and back. The curved face cups the tire like a real chock, so cars sit square on shelves and in dioramas. Fits Lionel/Action NASCAR, Maisto, Jada, Welly, Motormax and most 1:24 diecast.</p>
+        <div class="row">
+          <div class="price">$9.99<small>Free US shipping</small></div>
+          <a class="btn" href="https://www.ebay.com/itm/398429714844" rel="noopener">Buy on eBay</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph"><img src="/img/diecast/chocks-four.jpg" alt="Four black scale wheel chocks on a white background" loading="lazy"></div>
+      <div class="body">
+        <h3>1:18 Scale Wheel Chocks, Set of 20</h3>
+        <div class="meta">21 × 16 × 10 mm · Black PETG</div>
+        <p>Sized for 1:18 diecast. Fits Maisto, Bburago, AUTOart, GMP/ACME, Highway 61 and most 1:18 models. Same curved-face design, same caliper check on every batch.</p>
+        <div class="row">
+          <div class="price">$14.99<small>Free US shipping</small></div>
+          <a class="btn" href="https://www.ebay.com/itm/398437502509" rel="noopener">Buy on eBay</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph"><img src="/img/diecast/chock-vs-quarter.jpg" alt="Scale wheel chock next to a US quarter for size" loading="lazy"></div>
+      <div class="body">
+        <h3>Custom Colors &amp; Collector Box</h3>
+        <div class="meta">Made to order</div>
+        <p>Chock sets in safety yellow or other colors, and a clear collector's box: chocks nested in a fitted tray under a "Thank You" lid. Email with the scale, color and quantity you want.</p>
+        <div class="row">
+          <div class="price">Quote<small>Usually same day</small></div>
+          <a class="btn ghost" href="mailto:support@barretops.com?subject=Diecast%20custom%20order">Email to order</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph"><img src="/img/diecast/chocks-on-charger.jpg" alt="Diecast car on display with a scale wheel chock" loading="lazy" style="object-position:50% 70%"></div>
+      <div class="body">
+        <h3>1:24 Display Stand with Custom Nameplate</h3>
+        <div class="meta">Made to order</div>
+        <p>Tilted display stand for 1:24 diecast with a two-color nameplate printed in, not stuck on: your car, driver or number. Stackable, with sockets for locking wheel chocks.</p>
+        <div class="row">
+          <div class="price">Quote<small>Ships in 3–5 days</small></div>
+          <a class="btn ghost" href="mailto:support@barretops.com?subject=Diecast%20display%20stand">Email to order</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>How they're made</h2>
+  <ul class="points">
+    <li><b>Designed in-house.</b> Each scale is drawn from real tire sizes, not resized from a single model.</li>
+    <li><b>Printed in tough PETG,</b> which holds up better than standard PLA and won't crack when a car rolls into it.</li>
+    <li><b>Measured before shipping.</b> Every batch gets a caliper check against the listed dimensions.</li>
+    <li><b>Ships in one business day</b> from Las Vegas, Nevada.</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2>Questions or custom work</h2>
+  <p>Need a different scale, a longer wheelbase stand, or a bulk order for a club or a shop? Email <a href="mailto:support@barretops.com" style="color:var(--accent2)">support@barretops.com</a>, and you'll get an answer from the person who makes them.</p>
+</section>
+
+<footer class="wrap">
+  <p style="font-size:.88rem">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/diecast/">Diecast</a> &nbsp;·&nbsp;
+    <a href="/support.html">Support</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp;
+    <a href="/terms.html">Terms</a>
+  </p>
+  <p style="font-size:.78rem;opacity:.75;margin-top:14px">
+    BarretOps is a trade name of <i>BWS Better Rides LLC</i>, a Nevada limited liability company.
+  </p>
+</footer>
+
+</body>
+</html>
