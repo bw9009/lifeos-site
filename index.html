@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="/img/life-icon.png">
-<title>BarretOps — small, sharp apps that do one thing right.</title>
-<meta name="description" content="BarretOps builds small mobile apps that work offline, need no account, and collect no data. Life: type anything, leave organized.">
-<meta property="og:title" content="BarretOps — small, sharp apps that do one thing right.">
-<meta property="og:description" content="No accounts. No cloud. No analytics. Just apps that work.">
-<meta property="og:image" content="https://barretops.com/img/life-feature.png">
+<title>BarretOps — custom CAD design and 3D printing. You can dream it, we can make it.</title>
+<meta name="description" content="Custom CAD design and 3D printing from Las Vegas: scale models, replacement parts, RC and drone accessories, display stands. Modeled from your photos, printed, test-fit and shipped. 10% off for military and veterans.">
+<meta property="og:title" content="BarretOps — You can dream it, we can make it.">
+<meta property="og:description" content="Custom CAD design and 3D printing: scale models, replacement parts, RC accessories, display stands.">
+<meta property="og:image" content="https://barretops.com/img/diecast/chocks-on-charger.jpg">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://barretops.com/">
 <meta name="twitter:card" content="summary_large_image">
@@ -149,10 +149,8 @@
 </style>
 </head>
 <body>
-<!-- Was a TestFlight recruitment bar. Both apps shipped; asking
-     visitors to join a beta is asking them to wait for something they
-     can already buy. -->
-<a href="https://apps.apple.com/us/developer/barret-wilde/id6798571978" style="display:block;background:#34c76e;color:#04140b;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Life and Invoice Maker are on the App Store &rarr;</a>
+<!-- 2026-10-10: the business is ~80% custom CAD/3D printing, ~20% apps (Barret). Banner + hero lead with the print shop now. -->
+<a href="mailto:barret@barretops.com?subject=Military%20%2F%20veteran%20quote" style="display:block;background:#b22234;color:#fff;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">&#9733; 10% off for military &amp; veterans &mdash; get a quote &rarr;</a>
 
 
 <!--NAV-->
@@ -160,14 +158,12 @@
   <div class="wrap">
     <a class="brand" href="/">BarretOps<span class="dot">.</span></a>
     <div class="navlinks">
-      <a href="/life/">Life</a>
-      <a href="/envelope/">Print Studio</a>
-      <a href="/invoice/">Invoice Maker</a>
+      <a href="/#make">Custom work</a>
       <a href="/diecast/">Diecast</a>
-      <a href="/beta/">Beta</a>
-      <a href="/build/">Get a custom app</a>
-      <a href="/company/">Company</a>
-      <a href="mailto:support@barretops.com" class="hide-sm">Contact</a>
+      <a href="/#apps">Apps</a>
+      <a href="/build/" class="hide-sm">Get a custom app</a>
+      <a href="/company/" class="hide-sm">Company</a>
+      <a href="mailto:barret@barretops.com?subject=Quote">Get a quote</a>
       <a href="/privacy.html" class="hide-sm navminor">Privacy</a>
       <a href="/terms.html" class="hide-sm navminor">Terms</a>
     </div>
@@ -178,24 +174,77 @@
 <div class="wrap hero">
   <div class="herogrid">
     <div>
-      <h1>Type like a maniac.<br><span class="grad">Leave organized.</span></h1>
-      <p class="sub">Every other app makes you sort the thought before you're allowed to write it down. Life takes the sentence and does the filing itself — on the phone, in the time it takes to lift your thumb.</p>
+      <div class="eyebrow">Custom CAD design &amp; 3D printing</div>
+      <h1>You can dream it,<br><span class="grad">we can make it.</span></h1>
+      <p class="sub">Scale models, replacement parts, RC and drone accessories, display stands. Send photos and a few measurements; we model it in CAD, show you a render, print it, test-fit it and ship it with step-by-step assembly cards.</p>
       <div class="ctas">
-        <a class="btn primary" href="/life/">See how Life works</a>
-        <a class="btn ghost" href="/company/">About the company</a>
+        <a class="btn primary" href="mailto:barret@barretops.com?subject=Quote&amp;body=What%20do%20you%20need%20made%3F%20Attach%20photos%20and%20any%20measurements.">Get a quote</a>
+        <a class="btn ghost" href="/diecast/">See the diecast line</a>
       </div>
       <p class="trustline">
         <b style="font-size:1.25em;letter-spacing:.01em">BarretOps</b><br>
-        <span style="font-weight:400;font-size:.92em;font-style:italic">a trade name of BWS Better Rides LLC</span> · Nevada · Las Vegas<br>
-        Shipping on the App Store and Google Play · updated daily
+        <span style="font-weight:400;font-size:.92em;font-style:italic">a trade name of BWS Better Rides LLC</span> &middot; Nevada &middot; Las Vegas<br>
+        Made in the USA &middot; 10% off for military &amp; veterans
       </p>
     </div>
+    <div><img src="/img/diecast/chocks-on-charger.jpg" alt="3D-printed scale wheel chocks on a diecast car" style="width:100%;border-radius:20px;border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(0,0,0,.9)"></div>
+  </div>
+</div>
 
-    <div class="phone" id="demo">
-      <div class="notch"></div>
-      <div class="box"><span id="typed"></span><span class="caret"></span></div>
-      <div class="feed" id="feed"></div>
-    </div>
+<section class="wrap" id="make">
+  <div class="eyebrow">What we make</div>
+  <h2 class="big">If it fits on a print bed, it can be made.</h2>
+  <p class="lede" style="margin-bottom:30px">Every part is modeled in code from your photos and measurements, so a change is a number, not a redraw. Small features get thickened just enough to survive printing; overall size stays true.</p>
+  <div class="cards">
+    <a class="card" href="mailto:barret@barretops.com?subject=Scale%20model%20quote">
+      <div class="card-top"><h3>Scale models<span class="dot">.</span></h3><span class="tag">ships &middot; aircraft &middot; RC</span></div>
+      <div class="line">True to scale, built to survive printing.</div>
+      <p>Naval gun mounts, deck fittings and full hulls in sections, from plans or photos. Moving parts can be driven by servos for working RC builds. Each kit ships with printed assembly cards.</p>
+      <span class="go">Ask about a model &rarr;</span>
+    </a>
+    <a class="card" href="mailto:barret@barretops.com?subject=Replacement%20part%20quote">
+      <div class="card-top"><h3>Replacement parts<span class="dot">.</span></h3><span class="tag">the piece they stopped making</span></div>
+      <div class="line">Broken clip, missing knob, cracked bracket.</div>
+      <p>Send a photo next to a ruler, or the broken piece itself. We measure it, model it, and print it in the right material: PETG for strength and heat, TPU for flex.</p>
+      <span class="go">Get a part made &rarr;</span>
+    </a>
+    <a class="card" href="mailto:barret@barretops.com?subject=RC%20%2F%20drone%20quote">
+      <div class="card-top"><h3>RC &amp; drone accessories<span class="dot">.</span></h3><span class="tag">mounts &middot; guards &middot; holders</span></div>
+      <div class="line">Fitted to your exact airframe.</div>
+      <p>Camera and battery mounts, guards, landing gear and display cradles, modeled around your aircraft or car rather than a generic size.</p>
+      <span class="go">Start a build &rarr;</span>
+    </a>
+    <a class="card" href="/diecast/">
+      <div class="card-top"><h3>Display stands &amp; diecast<span class="dot">.</span></h3><span class="tag">ready to order</span></div>
+      <div class="line">Wheel chocks, stands and display pieces.</div>
+      <p>1:24 and 1:18 wheel chocks and display stands for your collection, plus custom stands sized to the model you have.</p>
+      <span class="go">Shop diecast &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="wrap">
+  <div class="eyebrow">How it works</div>
+  <h2 class="big">Four steps. You approve before anything prints.</h2>
+  <div class="rules" style="margin-top:26px">
+    <div class="rule"><div class="num">01</div><b>Send photos and measurements.</b>
+      <span>Email barret@barretops.com with what you need, a few photos and any dimensions you have. A ruler in the photo is plenty.</span></div>
+    <div class="rule"><div class="num">02</div><b>We model it and send a render.</b>
+      <span>You see exactly what will print, at true size, with a quote. Changes are cheap at this step.</span></div>
+    <div class="rule"><div class="num">03</div><b>Printed, finished and test-fit.</b>
+      <span>Printed in PLA, PETG or TPU depending on the job, checked against your measurements before it leaves.</span></div>
+    <div class="rule"><div class="num">04</div><b>Shipped with assembly cards.</b>
+      <span>Kits arrive with numbered step cards and a parts list, so the build goes together the first time.</span></div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap" style="padding-top:44px;padding-bottom:44px;text-align:center">
+    <div class="eyebrow" style="color:#e05565">&#9733; Thank you for your service &#9733;</div>
+    <h2 class="big" style="margin-bottom:8px">10% off for military &amp; veterans.</h2>
+    <p class="lede" style="margin:0 auto">Active duty, reserve, guard and veterans. Mention it when you ask for a quote.</p>
   </div>
 </div>
 
@@ -214,8 +263,8 @@
   </div>
 </div>
 
-<section class="wrap">
-  <div class="eyebrow">The apps</div>
+<section class="wrap" id="apps">
+  <div class="eyebrow">Also from BarretOps: the apps</div>
   <h2 class="big">Two shipping. One in review.</h2>
   <p class="lede" style="margin-bottom:30px">Same engine, same rules, same one-person shop. Each app is a small, finished thing rather than a platform waiting on the next round.</p>
   <div class="cards">
@@ -260,7 +309,7 @@
 <div class="divider"></div>
 
 <section class="wrap">
-  <div class="eyebrow">How these get built</div>
+  <div class="eyebrow">How the apps get built</div>
   <h2 class="big">The same four rules, every time.</h2>
   <p class="lede" style="margin-bottom:30px">They're constraints, not slogans. Each one costs something, and each one is the reason a particular class of bug can't happen here.</p>
   <div class="rules">
@@ -299,6 +348,8 @@
 <footer class="wrap">
   <p style="margin-bottom:12px"><strong style="color:var(--fg)">BarretOps<span style="color:var(--accent)">.</span></strong></p>
   <p style="font-size:.88rem">
+    <a href="/#make">Custom work</a> &nbsp;·&nbsp;
+    <a href="/diecast/">Diecast</a> &nbsp;·&nbsp;
     <a href="/life/">Life</a> &nbsp;·&nbsp;
     <a href="/envelope/">Exact Print Studio</a> &nbsp;·&nbsp;
     <a href="/company/">Company</a> &nbsp;·&nbsp;
