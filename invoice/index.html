@@ -22,7 +22,7 @@
      (.navminor has no rule on index.html either - it renders as a
      plain navlink on purpose there, so same here.) */
   nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
-      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+      background:rgba(10,20,48,.72);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
   .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
   .brand .dot{color:var(--accent)}
@@ -32,9 +32,9 @@
   @media(max-width:640px){.navlinks a.hide-sm{display:none}}
 
   :root {
-    --bg:#0b0f0d; --panel:#131a17; --line:#1f2a25;
-    --fg:#eef4f0; --dim:#8ba297; --accent:#34c76e; --accent-soft:rgba(52,199,110,.14);
-    --paper:#f7f5ef; --ink:#141a17;
+    --bg:#0b1633; --panel:#142450; --line:#26386e;
+    --fg:#f4f6fb; --dim:#a9b4d0; --accent:#e0303f; --accent-soft:rgba(224,48,63,.14);
+    --paper:#f7f5ef; --ink:#142450;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -79,9 +79,9 @@
     padding:22px 20px; box-shadow:0 14px 40px rgba(0,0,0,.5); text-align:left;
     font-size:.9rem; max-width:420px; margin:0 auto;
   }
-  .invoice .biz { color:#0d6b4f; font-weight:800; font-size:1.25rem; }
+  .invoice .biz { color:#8c1c2a; font-weight:800; font-size:1.25rem; }
   .invoice .meta { color:#4a5a53; font-size:.82rem; }
-  .invoice hr { border:0; border-top:2px solid #0d6b4f; margin:10px 0 14px; }
+  .invoice hr { border:0; border-top:2px solid #8c1c2a; margin:10px 0 14px; }
   .invoice table { width:100%; border-collapse:collapse; margin-bottom:12px; }
   .invoice th, .invoice td { padding:6px 8px; border:1px solid #cfd8d4; }
   .invoice th { background:#d9ece5; text-align:left; font-size:.82rem; }
@@ -97,7 +97,7 @@
 
   .cta { text-align:center; }
   .btn {
-    display:inline-block; background:var(--accent); color:#04140b; font-weight:750;
+    display:inline-block; background:var(--accent); color:#ffffff; font-weight:750;
     padding:13px 22px; border-radius:10px; text-decoration:none; margin:6px;
   }
   .btn.ghost { background:transparent; color:var(--fg); border:1px solid var(--line); }

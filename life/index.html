@@ -25,7 +25,7 @@
      (.navminor has no rule on index.html either - it renders as a
      plain navlink on purpose there, so same here.) */
   nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
-      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+      background:rgba(10,20,48,.72);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
   .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
   .brand .dot{color:var(--accent)}
@@ -35,8 +35,8 @@
   @media(max-width:640px){.navlinks a.hide-sm{display:none}}
 
   :root {
-    --bg:#0b0f0d; --panel:#131a17; --line:#1f2a25;
-    --fg:#eef4f0; --dim:#8ba297; --accent:#34c76e; --accent-soft:rgba(52,199,110,.14);
+    --bg:#0b1633; --panel:#142450; --line:#26386e;
+    --fg:#f4f6fb; --dim:#a9b4d0; --accent:#e0303f; --accent-soft:rgba(224,48,63,.14);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -79,7 +79,7 @@
   }
   input[type=email]:focus { outline:none; border-color:var(--accent); }
   button {
-    flex:0 0 auto; background:var(--accent); color:#04140b; border:0; border-radius:10px;
+    flex:0 0 auto; background:var(--accent); color:#ffffff; border:0; border-radius:10px;
     padding:15px 26px; font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit;
     transition:transform .08s, opacity .15s;
   }
@@ -99,7 +99,7 @@
   .demo-bar i { width:10px; height:10px; border-radius:50%; background:var(--line); }
   .exchange { padding:0 16px 18px; }
   .typed {
-    background:#0b100e; border:1px solid var(--line); border-radius:10px;
+    background:#0c1736; border:1px solid var(--line); border-radius:10px;
     padding:14px 16px; font-size:1.02rem; min-height:56px;
   }
   .caret { display:inline-block; width:2px; height:1.1em; background:var(--accent);
@@ -181,7 +181,7 @@
 </script>
 </head>
 <body>
-<a href="https://apps.apple.com/us/developer/barret-wilde/id6798571978" style="display:block;background:#34c76e;color:#04140b;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Life and Invoice Maker are on the App Store &rarr;</a>
+<a href="https://apps.apple.com/us/developer/barret-wilde/id6798571978" style="display:block;background:#e0303f;color:#ffffff;text-align:center;padding:11px 14px;font-weight:700;font-size:.92rem;text-decoration:none;line-height:1.35;letter-spacing:.01em">Life and Invoice Maker are on the App Store &rarr;</a>
 
 <!--NAV-->
 <nav>
@@ -244,7 +244,7 @@
              style="height:52px; width:auto; vertical-align:middle; object-fit:contain; display:block" />
       </a>
       <a href="https://play.google.com/store/apps/details?id=com.barretops.life"
-         style="display:inline-block; background:var(--accent); color:#04140b;
+         style="display:inline-block; background:var(--accent); color:#ffffff;
                 padding:15px 26px; border-radius:10px; font-weight:700;
                 text-decoration:none; font-size:1rem;">
         Get it on Google Play

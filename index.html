@@ -14,9 +14,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
-    --bg:#080b0a; --panel:#101614; --panel2:#151d19; --line:#1e2a25;
-    --fg:#f1f7f3; --dim:#8ea69a; --faint:#5f7268;
-    --accent:#34c76e; --accent2:#7ee2a8; --soft:rgba(52,199,110,.13);
+    --bg:#0a1430; --panel:#12204a; --panel2:#172a5a; --line:#26386e;
+    --fg:#f4f6fb; --dim:#a9b4d0; --faint:#7480a3;
+    --accent:#e0303f; --accent2:#ff8a94; --soft:rgba(224,48,63,.13);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,7 +35,7 @@
   .divider{height:1px;background:var(--line)}
 
   nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
-      background:rgba(8,11,10,.72);border-bottom:1px solid var(--line)}
+      background:rgba(10,20,48,.72);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
   .brand{font-weight:800;letter-spacing:-.02em;font-size:1.06rem;text-decoration:none}
   .brand .dot{color:var(--accent)}
@@ -47,7 +47,7 @@
   .hero{position:relative;padding:76px 0 44px;overflow:hidden}
   .hero::before{
     content:"";position:absolute;inset:-40% 0 auto 0;height:640px;pointer-events:none;
-    background:radial-gradient(52% 46% at 50% 34%,rgba(52,199,110,.16),transparent 70%);
+    background:radial-gradient(52% 46% at 50% 34%,rgba(224,48,63,.16),transparent 70%);
   }
   .herogrid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
   @media(max-width:900px){.herogrid{grid-template-columns:1fr;gap:44px}}
@@ -59,7 +59,7 @@
   .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.95rem;
        padding:13px 22px;border-radius:999px;transition:transform .08s,border-color .15s,background .15s}
   .btn:active{transform:translateY(1px)}
-  .btn.primary{background:var(--accent);color:#04150b}
+  .btn.primary{background:var(--accent);color:#ffffff}
   .btn.primary:hover{background:var(--accent2)}
   .btn.ghost{border:1px solid var(--line);color:var(--fg)}
   .btn.ghost:hover{border-color:var(--accent)}
@@ -68,12 +68,12 @@
 
   .phone{
     position:relative;width:292px;max-width:78vw;margin:0 auto;aspect-ratio:9/18.4;
-    border-radius:38px;border:1px solid var(--line);background:linear-gradient(180deg,#0e1412,#0a100e);
-    box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 8px #0c110f;
+    border-radius:38px;border:1px solid var(--line);background:linear-gradient(180deg,#0f1a3c,#0b1534);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 8px #0d1838;
     padding:16px 14px;display:flex;flex-direction:column;overflow:hidden;
   }
-  .phone .notch{width:78px;height:5px;border-radius:99px;background:#1c2622;margin:2px auto 14px}
-  .phone .box{border:1px solid var(--line);background:#0b100e;border-radius:14px;
+  .phone .notch{width:78px;height:5px;border-radius:99px;background:#22325f;margin:2px auto 14px}
+  .phone .box{border:1px solid var(--line);background:#0c1736;border-radius:14px;
     padding:11px 12px;font-size:.86rem;min-height:64px}
   .phone .box .ph{color:var(--faint)}
   .caret{display:inline-block;width:2px;height:1em;background:var(--accent);
@@ -96,7 +96,7 @@
   }
 
   .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    background:radial-gradient(120% 150% at 50% 0%,rgba(52,199,110,.07),transparent 62%)}
+    background:radial-gradient(120% 150% at 50% 0%,rgba(224,48,63,.07),transparent 62%)}
   .stats .wrap{padding:46px 24px}
   .statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
   @media(max-width:620px){.statgrid{grid-template-columns:repeat(2,1fr);gap:28px 12px}}
@@ -107,8 +107,8 @@
   .stats .note b{color:var(--accent);font-weight:650}
   .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);
          margin-right:7px;vertical-align:middle;animation:pulse 2.4s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,199,110,.5)}
-                   50%{opacity:.55;box-shadow:0 0 0 6px rgba(52,199,110,0)}}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(224,48,63,.5)}
+                   50%{opacity:.55;box-shadow:0 0 0 6px rgba(224,48,63,0)}}
   @media(prefers-reduced-motion:reduce){.pulse{animation:none}}
 
   .cards{display:grid;gap:18px;grid-template-columns:1fr 1fr}
